@@ -1,0 +1,50 @@
+:root {
+  --line-bottom: calc(15% - 53px);
+  --primary-color: #AC98D4;
+}
+
+@mixin responsive-size($width, $height, $max-w: null, $max-h: null, $min-w: null, $min-h: null) {
+  width: $width;
+  height: $height;
+  @if $max-w { max-width: $max-w; }
+  @if $max-h { max-height: $max-h; }
+  @if $min-w { min-width: $min-w; }
+  @if $min-h { min-height: $min-h; }
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000000;
+  overflow: hidden;
+}
+
+.desktop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  background: #000000;
+  overflow: hidden;
+  transform-origin: center center;
+}
+
+//линия
+.rectangle30 {
+  position: absolute;
+  width: 86%;
+  height: 5px;
+  left: 8%;
+  bottom: var(--line-bottom);
+  background: var(--primary-color);
+  z-index: 15;
+}
+
+

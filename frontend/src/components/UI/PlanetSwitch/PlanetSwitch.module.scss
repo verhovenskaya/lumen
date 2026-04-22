@@ -1,0 +1,193 @@
+:root {
+  --line-bottom: calc(15% - 53px);
+  --primary-color: #AC98D4;
+  --accent-color: #E7BD00;
+  --planet-size: 4.5vw;
+  --max-planet-size: 65px;
+  --min-planet-size: 40px;
+}
+
+@mixin responsive-size($width, $height, $max-w: null, $max-h: null, $min-w: null, $min-h: null) {
+  width: $width;
+  height: $height;
+  @if $max-w { max-width: $max-w; }
+  @if $max-h { max-height: $max-h; }
+  @if $min-w { min-width: $min-w; }
+  @if $min-h { min-height: $min-h; }
+}
+
+@mixin planet-position($left-percent) {
+  position: absolute;
+  left: $left-percent;
+  bottom: var(--line-bottom);
+  transform: translate(-50%, 50%);
+  @include responsive-size(var(--planet-size), var(--planet-size), var(--max-planet-size), var(--max-planet-size), var(--min-planet-size), var(--min-planet-size));
+  border-radius: 50%;
+  z-index: 20;
+  margin-bottom: 20px;
+}
+
+@mixin planet-switch($left-percent) {
+  position: absolute;
+  left: $left-percent;
+  bottom: var(--line-bottom);
+  transform: translate(-50%, 40%);
+  @include responsive-size(var(--planet-size), var(--planet-size), var(--max-planet-size), var(--max-planet-size), var(--min-planet-size), var(--min-planet-size));
+  border-radius: 50%;
+  z-index: 25;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translate(-50%, 40%) scale(1.15);
+    box-shadow: 0 0 15px 3px var(--glow-color, var(--accent-color));
+  }
+}
+
+@mixin label-position($left-percent) {
+  position: absolute;
+  left: $left-percent;
+  bottom: calc(var(--line-bottom) - 5% - 20px);
+  transform: translateX(-50%);
+  font-family: 'Abhaya Libre ExtraBold', 'Abhaya Libre', serif;
+  font-weight: 800;
+  font-size: clamp(14px, 2vw, 22px);
+  color: #FFFFFF;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 20;
+}
+
+.planetSwitchSun { @include planet-switch(8%); }
+.labelSun { @include label-position(8%); }
+
+.planetSwitchMercury { @include planet-switch(17.33%); }
+.labelMercury { @include label-position(17.33%); }
+
+.ellipseVenus {
+  @include planet-position(26.67%);
+  background-size: cover;
+}
+.planetSwitchVenus { @include planet-switch(26.67%); }
+.labelVenus { @include label-position(26.67%); }
+
+.ellipseEarth {
+  @include planet-position(36%);
+  background-size: cover;
+}
+.planetSwitchEarth { @include planet-switch(36%); }
+.labelEarth { @include label-position(36%); }
+
+.ellipseMars {
+  @include planet-position(45.33%);
+  background-size: cover;
+}
+.planetSwitchMars { @include planet-switch(45.33%); }
+.labelMars { @include label-position(45.33%); }
+
+.ellipseJupiter {
+  @include planet-position(54.67%);
+  background-size: cover;
+}
+.planetSwitchJupiter { @include planet-switch(54.67%); }
+.labelJupiter { @include label-position(54.67%); }
+
+.extraImageSaturn {
+  position: absolute;
+  left: 64%;
+  bottom: var(--line-bottom);
+  transform: translate(-50%, 40%);
+  @include responsive-size(var(--planet-size), var(--planet-size), var(--max-planet-size), var(--max-planet-size), var(--min-planet-size), var(--min-planet-size));
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 20;
+}
+.planetSwitchSaturn { @include planet-switch(64%); }
+.labelSaturn { @include label-position(64%); }
+
+.ellipseUranus {
+  @include planet-position(73.33%);
+  background-size: cover;
+}
+.planetSwitchUranus { @include planet-switch(73.33%); }
+.labelUranus { @include label-position(73.33%); }
+
+.ellipseNeptune {
+  @include planet-position(82.67%);
+  background-size: cover;
+}
+.planetSwitchNeptune { @include planet-switch(82.67%); }
+.labelNeptune { @include label-position(82.67%); }
+.ellipseMoon {
+  @include planet-position(92%);
+  background-size: cover;
+}
+.planetSwitchMoon {
+  position: absolute;
+  left: 92%;
+  bottom: var(--line-bottom);
+  transform: translate(-50%, 40%);
+  @include responsive-size(var(--planet-size), var(--planet-size), var(--max-planet-size), var(--max-planet-size), var(--min-planet-size), var(--min-planet-size));
+  border-radius: 50%;
+  z-index: 25;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translate(-50%, 40%) scale(1.15);
+    box-shadow: 0 0 15px 3px var(--glow-color, var(--accent-color));
+  }
+}
+.labelMoon {
+  @include label-position(92%);
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 
+      0 0 12px 2px var(--glow-color, var(--accent-color)),
+      0 0 25px 4px var(--glow-color, var(--accent-color)),
+      inset 0 0 5px 1px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px 5px var(--glow-color, var(--accent-color)),
+      0 0 45px 10px var(--glow-color, var(--accent-color)),
+      inset 0 0 10px 2px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 
+      0 0 12px 2px var(--glow-color, var(--accent-color)),
+      0 0 25px 4px var(--glow-color, var(--accent-color)),
+      inset 0 0 5px 1px rgba(255, 255, 255, 0.4);
+  }
+}
+
+.active {
+  transform: translate(-50%, 40%) scale(1.2) !important;
+  animation: pulse-glow 2s ease-in-out infinite;
+  
+  &:hover {
+    animation: none;
+    transform: translate(-50%, 40%) scale(1.25) !important;
+    box-shadow: 
+      0 0 25px 6px var(--glow-color, var(--accent-color)),
+      0 0 50px 12px var(--glow-color, var(--accent-color)),
+      inset 0 0 10px 2px rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
+.planetSwitchMoon.active {
+  transform: translate(-50%, 40%) scale(1.2) !important;
+  animation: pulse-glow 2s ease-in-out infinite;
+  
+  &:hover {
+    animation: none;
+    transform: translate(-50%, 40%) scale(1.25) !important;
+    box-shadow: 
+      0 0 25px 6px var(--glow-color, var(--accent-color)),
+      0 0 50px 12px var(--glow-color, var(--accent-color)),
+      inset 0 0 10px 2px rgba(255, 255, 255, 0.5) !important;
+  }
+}

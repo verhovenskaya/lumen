@@ -1,0 +1,141 @@
+export interface PlanetConfig {
+  id: string;
+  name: string;
+  label: string;
+  texturePath: string;
+  position: number;
+  hasRings?: boolean;
+  ringTexturePath?: string;
+  scale?: number;
+  switchClass?: string;
+  labelClass?: string;
+  imageClass?: string;
+  isMoon?: boolean;
+  color?: string;  
+}
+
+export const PLANETS: PlanetConfig[] = [
+  {
+    id: 'sun',
+    name: 'Sun',
+    label: 'солнце',
+    texturePath: '/assets/textures/8k_sun.jpg',
+    position: 8,
+    scale: 1.5,
+    switchClass: 'planetSwitchSun',
+    labelClass: 'labelSun',
+    color: '#FDB813',  
+  },
+  {
+    id: 'mercury',
+    name: 'Mercury',
+    label: 'меркурий',
+    texturePath: '/assets/textures/8k_mercury.jpg',
+    position: 17.33,
+    scale: 0.8,
+    switchClass: 'planetSwitchMercury',
+    labelClass: 'labelMercury',
+    color: '#8C8C8C',  
+  },
+  {
+    id: 'venus',
+    name: 'Venus',
+    label: 'венера',
+    texturePath: '/assets/textures/4k_venus.jpg',
+    position: 26.67,
+    scale: 0.85,
+    switchClass: 'planetSwitchVenus',
+    labelClass: 'labelVenus',
+    imageClass: 'ellipseVenus',
+    color: '#E6B800',  
+  },
+  {
+    id: 'earth',
+    name: 'Earth',
+    label: 'земля',
+    texturePath: '/assets/textures/8k_earth.jpg',
+    position: 36,
+    scale: 0.9,
+    switchClass: 'planetSwitchEarth',
+    labelClass: 'labelEarth',
+    imageClass: 'ellipseEarth',
+    color: '#2271B3', 
+  },
+  {
+    id: 'mars',
+    name: 'Mars',
+    label: 'марс',
+    texturePath: '/assets/textures/8k_mars.jpg',
+    position: 45.33,
+    scale: 0.85,
+    switchClass: 'planetSwitchMars',
+    labelClass: 'labelMars',
+    imageClass: 'ellipseMars',
+    color: '#C1440E', 
+  },
+  {
+    id: 'jupiter',
+    name: 'Jupiter',
+    label: 'юпитер',
+    texturePath: '/assets/textures/8k_jupiter.jpg',
+    position: 54.67,
+    scale: 1.2,
+    switchClass: 'planetSwitchJupiter',
+    labelClass: 'labelJupiter',
+    imageClass: 'ellipseJupiter',
+    color: '#D8A27A',  
+  },
+  {
+    id: 'saturn',
+    name: 'Saturn',
+    label: 'сатурн',
+    texturePath: '/assets/textures/8k_saturn.jpg',
+    position: 64,
+    hasRings: true,
+    ringTexturePath: '/assets/textures/8k_saturn_ring_alpha.png',
+    scale: 1.1,
+    switchClass: 'planetSwitchSaturn',
+    labelClass: 'labelSaturn',
+    imageClass: 'extraImageSaturn',
+    color: '#E0BB87', 
+  },
+  {
+    id: 'uranus',
+    name: 'Uranus',
+    label: 'уран',
+    texturePath: '/assets/textures/2k_uranus.jpg',
+    position: 73.33,
+    hasRings: true,
+    ringTexturePath: '/assets/textures/8k_saturn_ring_alpha.png',
+    scale: 0.95,
+    switchClass: 'planetSwitchUranus',
+    labelClass: 'labelUranus',
+    imageClass: 'ellipseUranus',
+    color: '#4FD0E7',  
+  },
+  {
+    id: 'neptune',
+    name: 'Neptune',
+    label: 'нептун',
+    texturePath: '/assets/textures/2k_neptune.jpg',
+    position: 82.67,
+    scale: 0.95,
+    switchClass: 'planetSwitchNeptune',
+    labelClass: 'labelNeptune',
+    imageClass: 'ellipseNeptune',
+    color: '#4169E1',  
+  },
+  {
+    id: 'moon',
+    name: 'Moon',
+    label: 'луна',
+    texturePath: '/assets/textures/8k_moon.jpg',
+    position: 92,
+    scale: 0.7,
+    isMoon: true,
+    switchClass: 'planetSwitchMoon',
+    labelClass: 'labelMoon',
+    imageClass: 'ellipseMoon',
+    color: '#CCCCCC',  
+  },
+];
