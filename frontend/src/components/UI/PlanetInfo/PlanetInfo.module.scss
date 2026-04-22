@@ -1,0 +1,272 @@
+:root {
+  --primary-color: #AC98D4;
+  --accent-color: #E7BD00;
+  --panel-width: 440px;
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 300;
+  pointer-events: none;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at 70% 50%,
+    transparent 0%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.2) 70%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: auto;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.rightPanel {
+  position: absolute;
+  right: 30px;
+  top: 44%;
+  transform: translateY(-50%);
+  width: var(--panel-width);
+  height: auto;
+  max-height: 600px;
+  
+  background: linear-gradient(
+    180deg,
+    #0f0c1eeb 0%,
+    rgba(10, 8, 20, 0.88) 100%
+  );
+  backdrop-filter: blur(12px);
+  
+  border-radius: 24px;
+  
+  border: 1px solid rgba(172, 152, 212, 0.25);
+  border-right: 2px solid rgba(172, 152, 212, 0.4);
+
+  box-shadow: 
+    -10px 0 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 30px rgba(172, 152, 212, 0.03);
+  
+  padding: 28px 24px;
+  
+  pointer-events: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  font-weight: 300;
+  z-index: 10;
+  
+  &:hover {
+    border-color: var(--primary-color);
+    background: rgba(172, 152, 212, 0.1);
+    color: var(--primary-color);
+  }
+}
+
+.planetHeader {
+  margin-bottom: 16px;
+  padding-right: 30px;  
+}
+
+.planetName {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin: 0 0 4px 0;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  text-shadow: 0 0 20px rgba(172, 152, 212, 0.3);
+}
+
+.planetNameEn {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(172, 152, 212, 0.4) 0%,
+    rgba(172, 152, 212, 0.1) 100%
+  );
+  margin: 20px 0;
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.infoBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.label {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.value {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 20px;
+  color: #FFFFFF;
+  text-align: right;
+}
+
+.footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  text-align: right;
+}
+
+.dataSource {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.cornerTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-top: 2px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  border-radius: 24px 0 0 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.cornerBottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  border-bottom: 2px solid var(--primary-color);
+  border-right: 2px solid var(--primary-color);
+  border-radius: 0 0 24px 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --panel-width: 300px;
+  }
+  
+  .rightPanel {
+    right: 15px;
+    padding: 20px 16px;
+  }
+  
+  .planetName {
+    font-size: 28px;
+  }
+  
+  .value {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --panel-width: 260px;
+  }
+  
+  .rightPanel {
+    right: 10px;
+  }
+}
+
+.description {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 17px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 5px 0;
+  
+  p {
+    margin: 0;
+  }
+}

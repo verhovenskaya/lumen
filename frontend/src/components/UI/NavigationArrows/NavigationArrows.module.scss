@@ -21,7 +21,7 @@
   justify-content: center;
   cursor: pointer;
   z-index: 30;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, left 0.3s ease, right 0.3s ease;
   
   &:hover {
     background: rgba(172, 152, 212, 1);
@@ -45,6 +45,10 @@
     border-color: transparent #FFFFFF transparent transparent;
     margin-left: -5px;
   }
+  
+  &.shifted {
+    left: 2%;
+  }
 }
 
 .navRight {
@@ -56,5 +60,9 @@
     border-width: 12px 0 12px 20px;
     border-color: transparent transparent transparent #FFFFFF;
     margin-right: -5px;
+  }
+  
+  &.shifted {
+    right: calc(5% + var(--panel-width, 340px) + 20px);
   }
 }

@@ -7,11 +7,12 @@ export interface PlanetConfig {
   hasRings?: boolean;
   ringTexturePath?: string;
   scale?: number;
+  displayScale?: number;  
   switchClass?: string;
   labelClass?: string;
   imageClass?: string;
   isMoon?: boolean;
-  color?: string;  
+  color?: string;
 }
 
 export const PLANETS: PlanetConfig[] = [
@@ -22,9 +23,10 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_sun.jpg',
     position: 8,
     scale: 1.5,
+    displayScale: 2.2, 
     switchClass: 'planetSwitchSun',
     labelClass: 'labelSun',
-    color: '#FDB813',  
+    color: '#FDB813',
   },
   {
     id: 'mercury',
@@ -33,9 +35,10 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_mercury.jpg',
     position: 17.33,
     scale: 0.8,
+    displayScale: 0.6, 
     switchClass: 'planetSwitchMercury',
     labelClass: 'labelMercury',
-    color: '#8C8C8C',  
+    color: '#8C8C8C',
   },
   {
     id: 'venus',
@@ -44,22 +47,24 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/4k_venus.jpg',
     position: 26.67,
     scale: 0.85,
+    displayScale: 0.85,  
     switchClass: 'planetSwitchVenus',
     labelClass: 'labelVenus',
     imageClass: 'ellipseVenus',
-    color: '#E6B800',  
+    color: '#E6B800',
   },
   {
     id: 'earth',
     name: 'Earth',
     label: 'земля',
-    texturePath: '/assets/textures/8k_earth.jpg',
+    texturePath: '/assets/textures/8k_earth_daymap.jpg',
     position: 36,
     scale: 0.9,
+    displayScale: 1.0, 
     switchClass: 'planetSwitchEarth',
     labelClass: 'labelEarth',
     imageClass: 'ellipseEarth',
-    color: '#2271B3', 
+    color: '#2271B3',
   },
   {
     id: 'mars',
@@ -68,10 +73,11 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_mars.jpg',
     position: 45.33,
     scale: 0.85,
+    displayScale: 0.75,  
     switchClass: 'planetSwitchMars',
     labelClass: 'labelMars',
     imageClass: 'ellipseMars',
-    color: '#C1440E', 
+    color: '#C1440E',
   },
   {
     id: 'jupiter',
@@ -80,10 +86,11 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_jupiter.jpg',
     position: 54.67,
     scale: 1.2,
+    displayScale: 1.8,  
     switchClass: 'planetSwitchJupiter',
     labelClass: 'labelJupiter',
     imageClass: 'ellipseJupiter',
-    color: '#D8A27A',  
+    color: '#D8A27A',
   },
   {
     id: 'saturn',
@@ -94,10 +101,11 @@ export const PLANETS: PlanetConfig[] = [
     hasRings: true,
     ringTexturePath: '/assets/textures/8k_saturn_ring_alpha.png',
     scale: 1.1,
+    displayScale: 1.6,  
     switchClass: 'planetSwitchSaturn',
     labelClass: 'labelSaturn',
     imageClass: 'extraImageSaturn',
-    color: '#E0BB87', 
+    color: '#E0BB87',
   },
   {
     id: 'uranus',
@@ -108,10 +116,11 @@ export const PLANETS: PlanetConfig[] = [
     hasRings: true,
     ringTexturePath: '/assets/textures/8k_saturn_ring_alpha.png',
     scale: 0.95,
+    displayScale: 1.2, 
     switchClass: 'planetSwitchUranus',
     labelClass: 'labelUranus',
     imageClass: 'ellipseUranus',
-    color: '#4FD0E7',  
+    color: '#4FD0E7',
   },
   {
     id: 'neptune',
@@ -120,10 +129,11 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/2k_neptune.jpg',
     position: 82.67,
     scale: 0.95,
+    displayScale: 1.2,  
     switchClass: 'planetSwitchNeptune',
     labelClass: 'labelNeptune',
     imageClass: 'ellipseNeptune',
-    color: '#4169E1',  
+    color: '#4169E1',
   },
   {
     id: 'moon',
@@ -132,10 +142,11 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_moon.jpg',
     position: 92,
     scale: 0.7,
+    displayScale: 0.5,  
     isMoon: true,
     switchClass: 'planetSwitchMoon',
     labelClass: 'labelMoon',
     imageClass: 'ellipseMoon',
-    color: '#CCCCCC',  
+    color: '#CCCCCC',
   },
 ];
