@@ -36,7 +36,6 @@
   transform-origin: center center;
 }
 
-//линия
 .rectangle30 {
   position: absolute;
   width: 86%;
@@ -47,4 +46,51 @@
   z-index: 15;
 }
 
+.simulationButton {
+  position: absolute;
+  left: 110px;  
+  top: 30px;
+  width: 80px;
+  height: 60px;
+  background: var(--primary-color);  
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 100;
+  
+  &:hover {
+    background: lighten(#AC98D4, 10%);
+    transform: scale(1.05);
+  }
+  
+  .gamepadIcon {
+    font-size: 28px;
+    filter: brightness(0) invert(1);  
+  }
+}
 
+.backButton {
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  padding: 12px 24px;
+  background: rgba(15, 12, 30, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(172, 152, 212, 0.4);
+  border-radius: 12px;
+  color: white;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 100;
+  
+  &:hover {
+    border-color: var(--primary-color);
+    background: rgba(172, 152, 212, 0.2);
+  }
+}

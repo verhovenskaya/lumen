@@ -7,12 +7,18 @@ export interface PlanetConfig {
   hasRings?: boolean;
   ringTexturePath?: string;
   scale?: number;
-  displayScale?: number;  
+  displayScale?: number;
+  infoScale?: number;
+  infoDistance?: number;
   switchClass?: string;
   labelClass?: string;
   imageClass?: string;
   isMoon?: boolean;
   color?: string;
+
+  orbitRadius?: number;    
+  orbitSpeed?: number;     
+  orbitColor?: string;     
 }
 
 export const PLANETS: PlanetConfig[] = [
@@ -23,10 +29,15 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_sun.jpg',
     position: 8,
     scale: 1.5,
-    displayScale: 2.2, 
+    displayScale: 2.2,
+    infoScale: 1.5,
+    infoDistance: 7,
     switchClass: 'planetSwitchSun',
     labelClass: 'labelSun',
     color: '#FDB813',
+    orbitRadius: 0,       
+    orbitSpeed: 0,
+    orbitColor: '#FDB813',
   },
   {
     id: 'mercury',
@@ -35,10 +46,15 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_mercury.jpg',
     position: 17.33,
     scale: 0.8,
-    displayScale: 0.6, 
+    displayScale: 0.6,
+    infoScale: 1.0,
+    infoDistance: 5.5,
     switchClass: 'planetSwitchMercury',
     labelClass: 'labelMercury',
     color: '#8C8C8C',
+    orbitRadius: 3.5,
+    orbitSpeed: 0.8,
+    orbitColor: '#8C8C8C',
   },
   {
     id: 'venus',
@@ -47,11 +63,16 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/4k_venus.jpg',
     position: 26.67,
     scale: 0.85,
-    displayScale: 0.85,  
+    displayScale: 0.85,
+    infoScale: 1.4,
+    infoDistance: 4.5,
     switchClass: 'planetSwitchVenus',
     labelClass: 'labelVenus',
     imageClass: 'ellipseVenus',
     color: '#E6B800',
+    orbitRadius: 5.0,
+    orbitSpeed: 0.6,
+    orbitColor: '#E6B800',
   },
   {
     id: 'earth',
@@ -60,11 +81,16 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_earth_daymap.jpg',
     position: 36,
     scale: 0.9,
-    displayScale: 1.0, 
+    displayScale: 1.0,
+    infoScale: 1.5,
+    infoDistance: 4.5,
     switchClass: 'planetSwitchEarth',
     labelClass: 'labelEarth',
     imageClass: 'ellipseEarth',
     color: '#2271B3',
+    orbitRadius: 6.5,
+    orbitSpeed: 0.5,
+    orbitColor: '#2271B3',
   },
   {
     id: 'mars',
@@ -73,11 +99,16 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_mars.jpg',
     position: 45.33,
     scale: 0.85,
-    displayScale: 0.75,  
+    displayScale: 0.75,
+    infoScale: 1.4,
+    infoDistance: 4.5,
     switchClass: 'planetSwitchMars',
     labelClass: 'labelMars',
     imageClass: 'ellipseMars',
     color: '#C1440E',
+    orbitRadius: 8.0,
+    orbitSpeed: 0.4,
+    orbitColor: '#C1440E',
   },
   {
     id: 'jupiter',
@@ -86,11 +117,16 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_jupiter.jpg',
     position: 54.67,
     scale: 1.2,
-    displayScale: 1.8,  
+    displayScale: 1.8,
+    infoScale: 1.6,
+    infoDistance: 5.0,
     switchClass: 'planetSwitchJupiter',
     labelClass: 'labelJupiter',
     imageClass: 'ellipseJupiter',
     color: '#D8A27A',
+    orbitRadius: 10.5,
+    orbitSpeed: 0.25,
+    orbitColor: '#D8A27A',
   },
   {
     id: 'saturn',
@@ -101,11 +137,16 @@ export const PLANETS: PlanetConfig[] = [
     hasRings: true,
     ringTexturePath: '/assets/textures/8k_saturn_ring_alpha.png',
     scale: 1.1,
-    displayScale: 1.6,  
+    displayScale: 1.6,
+    infoScale: 1.4,
+    infoDistance: 5.5,
     switchClass: 'planetSwitchSaturn',
     labelClass: 'labelSaturn',
     imageClass: 'extraImageSaturn',
     color: '#E0BB87',
+    orbitRadius: 13.0,
+    orbitSpeed: 0.18,
+    orbitColor: '#E0BB87',
   },
   {
     id: 'uranus',
@@ -116,11 +157,16 @@ export const PLANETS: PlanetConfig[] = [
     hasRings: true,
     ringTexturePath: '/assets/textures/8k_saturn_ring_alpha.png',
     scale: 0.95,
-    displayScale: 1.2, 
+    displayScale: 1.2,
+    infoScale: 1.3,
+    infoDistance: 5.0,
     switchClass: 'planetSwitchUranus',
     labelClass: 'labelUranus',
     imageClass: 'ellipseUranus',
     color: '#4FD0E7',
+    orbitRadius: 15.5,
+    orbitSpeed: 0.13,
+    orbitColor: '#4FD0E7',
   },
   {
     id: 'neptune',
@@ -129,11 +175,16 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/2k_neptune.jpg',
     position: 82.67,
     scale: 0.95,
-    displayScale: 1.2,  
+    displayScale: 1.2,
+    infoScale: 1.3,
+    infoDistance: 5.0,
     switchClass: 'planetSwitchNeptune',
     labelClass: 'labelNeptune',
     imageClass: 'ellipseNeptune',
     color: '#4169E1',
+    orbitRadius: 18.0,
+    orbitSpeed: 0.1,
+    orbitColor: '#4169E1',
   },
   {
     id: 'moon',
@@ -142,11 +193,16 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/8k_moon.jpg',
     position: 92,
     scale: 0.7,
-    displayScale: 0.5,  
+    displayScale: 0.5,
+    infoScale: 1.5,
+    infoDistance: 4.0,
     isMoon: true,
     switchClass: 'planetSwitchMoon',
     labelClass: 'labelMoon',
     imageClass: 'ellipseMoon',
     color: '#CCCCCC',
+    orbitRadius: 2.0,      
+    orbitSpeed: 0.8,
+    orbitColor: '#CCCCCC',
   },
 ];
