@@ -6,6 +6,11 @@ export interface PlanetConfig {
   position: number;
   hasRings?: boolean;
   ringTexturePath?: string;
+  ringInnerRadius?: number;
+  ringOuterRadius?: number;
+  ringColor?: string;
+  ringOpacity?: number;
+  ringRotation?: [number, number, number];
   scale?: number;
   displayScale?: number;
   infoScale?: number;
@@ -15,7 +20,6 @@ export interface PlanetConfig {
   imageClass?: string;
   isMoon?: boolean;
   color?: string;
-
   orbitRadius?: number;    
   orbitSpeed?: number;     
   orbitColor?: string;     
@@ -35,7 +39,7 @@ export const PLANETS: PlanetConfig[] = [
     switchClass: 'planetSwitchSun',
     labelClass: 'labelSun',
     color: '#FDB813',
-    orbitRadius: 0,       
+    orbitRadius: 0,
     orbitSpeed: 0,
     orbitColor: '#FDB813',
   },
@@ -120,6 +124,12 @@ export const PLANETS: PlanetConfig[] = [
     displayScale: 1.8,
     infoScale: 1.6,
     infoDistance: 5.0,
+    hasRings: true,
+    ringInnerRadius: 1.3,      
+    ringOuterRadius: 1.7,
+    ringColor: '#8B7355',
+    ringOpacity: 0.15,
+    ringRotation: [0.1, 0, 0.1],
     switchClass: 'planetSwitchJupiter',
     labelClass: 'labelJupiter',
     imageClass: 'ellipseJupiter',
@@ -155,7 +165,11 @@ export const PLANETS: PlanetConfig[] = [
     texturePath: '/assets/textures/2k_uranus.jpg',
     position: 73.33,
     hasRings: true,
-    ringTexturePath: '/assets/textures/8k_saturn_ring_alpha.png',
+    ringInnerRadius: 1.1,
+    ringOuterRadius: 1.5,
+    ringColor: '#6A7A8A',
+    ringOpacity: 0.3,
+    ringRotation: [Math.PI / 2, 0, 0.3], 
     scale: 0.95,
     displayScale: 1.2,
     infoScale: 1.3,
@@ -174,6 +188,12 @@ export const PLANETS: PlanetConfig[] = [
     label: 'нептун',
     texturePath: '/assets/textures/2k_neptune.jpg',
     position: 82.67,
+    hasRings: true,
+    ringInnerRadius: 1.0,
+    ringOuterRadius: 1.35,
+    ringColor: '#5A6A8A',
+    ringOpacity: 0.2,
+    ringRotation: [0.15, 0, 0.15],
     scale: 0.95,
     displayScale: 1.2,
     infoScale: 1.3,
@@ -201,7 +221,7 @@ export const PLANETS: PlanetConfig[] = [
     labelClass: 'labelMoon',
     imageClass: 'ellipseMoon',
     color: '#CCCCCC',
-    orbitRadius: 2.0,      
+    orbitRadius: 2.0,
     orbitSpeed: 0.8,
     orbitColor: '#CCCCCC',
   },

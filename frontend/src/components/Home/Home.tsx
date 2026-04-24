@@ -1,5 +1,6 @@
 import React from 'react';
-import { Canvas3D } from '../Canvas3D';
+import { MainScene } from '../Canvas3D/MainScene';
+import { SimulationScene } from '../Canvas3D/SimulationScene';
 import { Header } from '../UI/Header/Header';
 import { PlanetSwitch } from '../UI/PlanetSwitch/PlanetSwitch';
 import { NavigationArrows } from '../UI/NavigationArrows/NavigationArrows';
@@ -16,7 +17,7 @@ export const Home: React.FC = () => {
   const { planets, activePlanet, setPlanetById, nextPlanet, prevPlanet } = usePlanets();
   const { isMenuOpen, toggleMenu } = useMenu();
   const { selectedPlanet, isInfoOpen, viewMode, openInfo, closeInfo } = usePlanetInfo();
-  const { mode, isSimulation, toggleMode } = useSimulation();
+  const { isSimulation, toggleMode } = useSimulation();
 
   const handlePlanetClick = (planet: typeof activePlanet) => {
     setPlanetById(planet.id);
@@ -35,20 +36,16 @@ export const Home: React.FC = () => {
         <div className={styles.rectangle24} />
         <div className={styles.rectangle25} />
 
-        <Canvas3D 
-          activePlanet={activePlanet} 
-          viewMode={viewMode} 
-          appMode={mode}
-        />
+        {isSimulation ? (
+          <SimulationScene />
+        ) : (
+          <MainScene activePlanet={activePlanet} viewMode={viewMode} />
+        )}
 
         <Header isShifted={viewMode === 'shifted' && !isSimulation} />
         <BurgerMenu isOpen={isMenuOpen} onToggle={toggleMenu} />
         
-        <button 
-          className={styles.simulationButton}
-          onClick={toggleMode}
-          title={isSimulation ? 'Вернуться к исследованию' : 'Открыть симуляцию'}
-        >
+        <button className={styles.simulationButton} onClick={toggleMode}>
           <span className={styles.gamepadIcon}>🎮</span>
         </button>
         
@@ -59,9 +56,7 @@ export const Home: React.FC = () => {
               onNext={() => handleArrowClick('next')}
               isShifted={isInfoOpen}  
             />
-            
             <div className={styles.rectangle30} />
-            
             {planets.map((planet) => (
               <PlanetSwitch
                 key={planet.id}
@@ -70,19 +65,8 @@ export const Home: React.FC = () => {
                 onClick={() => handlePlanetClick(planet)}
               />
             ))}
-
-            <PlanetInfo 
-              planet={selectedPlanet} 
-              isOpen={isInfoOpen} 
-              onClose={closeInfo} 
-            />
+            <PlanetInfo planet={selectedPlanet} isOpen={isInfoOpen} onClose={closeInfo} />
           </>
-        )}
-
-        {isSimulation && (
-          <button className={styles.backButton} onClick={toggleMode}>
-            ← Назад
-          </button>
         )}
 
         <div className={styles.ellipse18} />

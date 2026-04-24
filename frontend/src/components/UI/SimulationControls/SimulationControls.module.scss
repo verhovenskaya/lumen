@@ -1,0 +1,91 @@
+:root {
+  --primary-color: #AC98D4;
+  --accent-color: #E7BD00;
+}
+
+.controls {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: rgba(10, 8, 20, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(172, 152, 212, 0.3);
+  border-radius: 16px;
+  z-index: 200;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(172, 152, 212, 0.1);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.controlButton {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: var(--primary-color);
+    background: rgba(172, 152, 212, 0.15);
+    color: #FFFFFF;
+  }
+  
+  &.active {
+    border-color: var(--accent-color);
+    background: rgba(231, 189, 0, 0.15);
+    color: var(--accent-color);
+  }
+}
+
+.speedDisplay {
+  min-width: 55px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid rgba(172, 152, 212, 0.3);
+  border-radius: 10px;
+  color: var(--primary-color);
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: var(--primary-color);
+    background: rgba(172, 152, 212, 0.1);
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 4px;
+}

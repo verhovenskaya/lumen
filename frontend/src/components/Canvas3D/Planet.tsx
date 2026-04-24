@@ -1,21 +1,29 @@
 import React, { useRef } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { Mesh, DoubleSide, TextureLoader } from 'three';
+import { ProceduralRings } from './ProceduralRings';
 import { type PlanetConfig } from '../../config/planets.config';
+import { type SimulationPlanet } from '../../config/simulation.config';
 
 interface PlanetProps {
-  config: PlanetConfig;
+  config: PlanetConfig | SimulationPlanet;
 }
 
 export const Planet: React.FC<PlanetProps> = ({ config }) => {
   const meshRef = useRef<Mesh>(null);
   const ringRef = useRef<Mesh>(null);
-  
+
   const planetTexture = useLoader(TextureLoader, config.texturePath);
+  const hasTextureRings = config.hasRings && 'ringTexturePath' in config && !!config.ringTexturePath;
   
-  const ringTexture = config.hasRings && config.ringTexturePath 
-    ? useLoader(TextureLoader, config.ringTexturePath)
+  const ringTexture = hasTextureRings
+    ? useLoader(TextureLoader, config.ringTexturePath!)
     : null;
+
+  const hasProceduralRings = config.hasRings && 
+    'ringInnerRadius' in config && 
+    !!config.ringInnerRadius && 
+    !('ringTexturePath' in config && config.ringTexturePath);
 
   useFrame(() => {
     if (meshRef.current) {
@@ -26,12 +34,20 @@ export const Planet: React.FC<PlanetProps> = ({ config }) => {
     }
   });
 
-  const getRingRotation = () => {
-    if (config.id === 'uranus') {
-      return [0.1, 0, 0.3];
-    }
-    return [Math.PI / 2.2, 0.2, 0];
+  const getProceduralRingProps = () => {
+    if (!hasProceduralRings) return null;
+    
+    const simConfig = config as SimulationPlanet;
+    return {
+      innerRadius: (simConfig.ringInnerRadius || 1.0) * 2,
+      outerRadius: (simConfig.ringOuterRadius || 1.5) * 2,
+      color: simConfig.ringColor || '#ffffff',
+      opacity: simConfig.ringOpacity || 0.5,
+      rotation: simConfig.ringRotation || [0.4, 0, 0.2] as [number, number, number],
+    };
   };
+
+  const proceduralProps = getProceduralRingProps();
 
   return (
     <>
@@ -44,25 +60,29 @@ export const Planet: React.FC<PlanetProps> = ({ config }) => {
         />
       </mesh>
       
-      {config.hasRings && (
-        <mesh 
-          ref={ringRef} 
-          rotation={getRingRotation() as any}
-        >
-          <ringGeometry args={[
-            config.id === 'uranus' ? 2.2 : 2.4,  
-            config.id === 'uranus' ? 3.8 : 4.5,  
-            128
-          ]} />
+      {/* кольца сатурна */}
+      {hasTextureRings && ringTexture && (
+        <mesh ref={ringRef} rotation={[Math.PI / 2.2, 0.2, 0]}>
+          <ringGeometry args={[1, 1.4, 128]} />
           <meshStandardMaterial 
             map={ringTexture}
-            color={!ringTexture && config.id === 'uranus' ? '#4a6a8a' : undefined}
             side={DoubleSide}
             transparent={true}
-            opacity={config.id === 'uranus' ? 0.4 : 0.8}
+            opacity={0.8}
             depthWrite={false}
           />
         </mesh>
+      )}
+      
+      {/* кольца юпитера, урана и нептуна */}
+      {proceduralProps && (
+        <ProceduralRings
+          innerRadius={proceduralProps.innerRadius}
+          outerRadius={proceduralProps.outerRadius}
+          color={proceduralProps.color}
+          opacity={proceduralProps.opacity}
+          rotation={proceduralProps.rotation}
+        />
       )}
     </>
   );
