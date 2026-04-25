@@ -1,0 +1,217 @@
+:root {
+  --primary-color: #AC98D4;
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  overflow: hidden;
+}
+
+.desktop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/assets/spacecraft-bg.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.backButton {
+  position: absolute;
+  top: 105px;
+  left: 20px;
+  padding: 8px 16px;
+  background: rgba(15, 12, 30, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(172, 152, 212, 0.3);
+  border-radius: 10px;
+  color: white;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: var(--primary-color);
+    background: rgba(172, 152, 212, 0.2);
+  }
+}
+
+.pageTitle {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-weight: 800;
+  font-size: 32px;
+  color: var(--primary-color);
+  margin: 110px 0 25px;
+  letter-spacing: 3px;
+}
+
+.carousel {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 50px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 501px);
+  grid-template-rows: repeat(2, 277px);
+  gap: 20px;
+  justify-content: center;
+}
+
+.cardWrapper {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dimLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, transparent 40%);
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.dimRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, rgba(0,0,0,0.5) 0%, transparent 40%);
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.carouselArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 55px;
+  height: 55px;
+  background: transparent;  
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 25;
+  
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-radius: 3px;  
+    transition: all 0.2s ease;
+  }
+  
+  &:hover::after {
+    filter: drop-shadow(0 0 8px rgba(172, 152, 212, 0.6));
+  }
+}
+
+.arrowLeft {
+  left: 30px;
+  
+  &::after {
+    border-width: 18px 24px 18px 0;
+    border-color: transparent white transparent transparent;
+  }
+  
+  &:hover::after {
+    border-color: transparent var(--primary-color) transparent transparent;
+  }
+}
+
+.arrowRight {
+  right: 30px;
+  
+  &::after {
+    border-width: 18px 0 18px 24px;
+    border-color: transparent transparent transparent white;
+  }
+  
+  &:hover::after {
+    border-color: transparent transparent transparent var(--primary-color);
+  }
+}
+
+.indicator {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.activeDot {
+  background: var(--primary-color);
+  transform: scale(1.4);
+  box-shadow: 0 0 8px var(--primary-color);
+}
+
+@media (max-width: 1600px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1600px;
+  }
+}

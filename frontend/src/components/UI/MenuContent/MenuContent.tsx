@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MENU_ITEMS } from '../../../config/menu.config';
 import styles from './MenuContent.module.scss';
 
@@ -7,26 +8,26 @@ interface MenuContentProps {
 }
 
 export const MenuContent: React.FC<MenuContentProps> = ({ onClose }) => {
+  const navigate = useNavigate();
+
   const handleMenuClick = (key: string) => {
     onClose();
-
+    
     switch (key) {
       case 'Missions':
-        window.location.href = '/missions';
+        navigate('/missions');
         break;
       case 'Spacecraft':
-        window.location.href = '/spacecraft';
+        navigate('/spacecraft');  
         break;
       case 'Satellites':
-        window.location.href = '/satellites';
+        navigate('/satellites');
         break;
       case 'Chat':
-        window.location.href = '/chat';
+        navigate('/chat');
         break;
       case 'Settings':
-        window.location.href = '/settings';
-        break;
-      default:
+        navigate('/settings');
         break;
     }
   };
