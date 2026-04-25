@@ -19,9 +19,9 @@
   font-size: clamp(16px, 2.5vw, 24px);
   color: #FFFFFF;
   z-index: 201;
+  transition: color 0.2s ease;
 }
 
-//открытое меню
 .rectangle31 {
   position: absolute;
   @include responsive-size(30vw, calc(45vw + 100px), 460px, calc(470px + 100px), 250px, calc(300px + 100px));
@@ -41,6 +41,49 @@
   font-size: clamp(24px, 4vw, 36px);
   color: #FFFFFF;
   z-index: 201;
+}
+
+.menuItemWrapper {
+  cursor: pointer;
+  
+  &:hover {
+    .iconCircle {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      transform: scale(1.1);
+      
+      .icon {
+        filter: brightness(0) invert(1); 
+      }
+    }
+    
+    [class*="menu"] {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.iconCircle {
+  position: absolute;
+  @include responsive-size(4vw, 4vw, 60px, 60px, 30px, 30px);
+  margin-top: -15px;
+  left: 1%;
+  background: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  z-index: 201;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 15px rgba(172, 152, 212, 0.2);
+}
+
+.icon {
+  font-size: clamp(18px, 2.5vw, 28px);
+  filter: brightness(0) saturate(100%) invert(67%) sepia(15%) saturate(1192%) hue-rotate(215deg) brightness(90%) contrast(88%);
+  transition: filter 0.25s ease;
+  line-height: 1;
 }
 
 .menuMissions {
@@ -66,59 +109,4 @@
 .menuSettings {
   @include menu-item;
   top: 63%;
-}
-
-.ellipseMissions {
-  position: absolute;
-  @include responsive-size(4vw, 4vw, 60px, 60px, 30px, 30px);
-  margin-top: -15px;
-  left: 1%;
-  top: 15%;
-  background: #FFFFFF;
-  border-radius: 50%;
-  z-index: 201;
-}
-
-.ellipseSpacecraft {
-  position: absolute;
-  @include responsive-size(4vw, 4vw, 60px, 60px, 30px, 30px);
-  margin-top: -15px;
-  left: 1%;
-  top: 27%;
-  background: #FFFFFF;
-  border-radius: 50%;
-  z-index: 201;
-}
-
-.ellipseSatellites {
-  position: absolute;
-  @include responsive-size(4vw, 4vw, 60px, 60px, 30px, 30px);
-  margin-top: -15px;
-  left: 1%;
-  top: 39%;
-  background: #FFFFFF;
-  border-radius: 50%;
-  z-index: 201;
-}
-
-.ellipseChat {
-  position: absolute;
-  @include responsive-size(4vw, 4vw, 60px, 60px, 30px, 30px);
-  margin-top: -15px;
-  left: 1%;
-  top: 51%;
-  background: #FFFFFF;
-  border-radius: 50%;
-  z-index: 201;
-}
-
-.ellipseSettings {
-  position: absolute;
-  @include responsive-size(4vw, 4vw, 60px, 60px, 30px, 30px);
-  margin-top: -15px;
-  left: 1%;
-  top: 63%;
-  background: #FFFFFF;
-  border-radius: 50%;
-  z-index: 201;
 }

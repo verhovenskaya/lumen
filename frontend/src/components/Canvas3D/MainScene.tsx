@@ -1,7 +1,8 @@
-import React, { Suspense, useRef, useEffect } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
 import { Planet } from './Planet';
+import { LoadingScreen } from '../UI/LoadingScreen/LoadingScreen';
 import { type PlanetConfig } from '../../config/planets.config';
 import { type ViewMode } from '../../hooks/usePlanetInfo';
 import styles from './Canvas3D.module.scss';
@@ -14,7 +15,7 @@ interface MainSceneProps {
 
 const SceneController = ({ viewMode, planetId }: { viewMode: ViewMode; planetId: string }) => {
   const { camera } = useThree();
-  const targetPosition = useRef(new THREE.Vector3());
+  const targetPosition = useRef(new THREE.Vector3(0, 0, 8));
   
   const shouldZoom = viewMode === 'shifted' && planetId !== 'sun';
 
@@ -34,50 +35,65 @@ const SceneController = ({ viewMode, planetId }: { viewMode: ViewMode; planetId:
   return null;
 };
 
-export const MainScene: React.FC<MainSceneProps> = ({ activePlanet, viewMode = 'center' }) => {
+const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; onReady: () => void }> = ({ 
+  activePlanet, viewMode, onReady 
+}) => {
   const isShifted = viewMode === 'shifted';
   const isSun = activePlanet.id === 'sun';
   
-  const planetOffsetX = isShifted ? -2 : 0;
-  
-  const planetScale = isShifted
-    ? (isSun ? 1.0 : (activePlanet.scale || 1) * 1.5)
-    : (activePlanet.scale || 1);
+  useEffect(() => {
+    const timer = setTimeout(() => onReady(), 500);
+    return () => clearTimeout(timer);
+  }, [onReady]);
+
+  return (
+    <>
+      <ambientLight intensity={isShifted && !isSun ? 1.2 : 0.5} />
+      <directionalLight position={[5, 5, 5]} intensity={isShifted && !isSun ? 1.5 : 1} />
+      <pointLight position={[-5, -5, -5]} intensity={0.5} />
+      
+      {isShifted && !isSun && (
+        <>
+          <spotLight position={[-2, 3, 4]} angle={0.5} penumbra={0.3} intensity={1.8} color="#ffffff" />
+          <pointLight position={[-1, 1, 3]} intensity={1.0} color={activePlanet.color || '#ffffff'} />
+        </>
+      )}
+      
+      <group position={[isShifted ? -2 : 0, 0, 0]} scale={
+        isShifted ? (isSun ? 1.0 : (activePlanet.scale || 1) * 1.5) : (activePlanet.scale || 1)
+      }>
+        <Planet config={activePlanet} />
+      </group>
+      
+      <Stars radius={100} depth={50} count={5000} factor={4} />
+      
+      <OrbitControls 
+        enableZoom={!isShifted}
+        enablePan={!isShifted}
+        enableRotate={!isShifted}
+        minDistance={isShifted && !isSun ? 2 : 3}
+        maxDistance={12}
+        autoRotate={!isShifted}
+        target={[isShifted ? -2 : 0, 0, 0]}
+        enableDamping={true}
+        dampingFactor={0.05}
+      />
+      
+      <SceneController viewMode={viewMode} planetId={activePlanet.id} />
+    </>
+  );
+};
+
+export const MainScene: React.FC<MainSceneProps> = ({ activePlanet, viewMode = 'center' }) => {
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div className={styles.canvasContainer}>
+      {isLoading && <LoadingScreen message="Загрузка планеты..." />}
+      
       <Canvas camera={{ position: [0, 0, 8], fov: 45 }} shadows={false}>
         <Suspense fallback={null}>
-          <ambientLight intensity={isShifted && !isSun ? 1.2 : 0.5} />
-          <directionalLight position={[5, 5, 5]} intensity={isShifted && !isSun ? 1.5 : 1} />
-          <pointLight position={[-5, -5, -5]} intensity={0.5} />
-          
-          {isShifted && !isSun && (
-            <>
-              <spotLight position={[-2, 3, 4]} angle={0.5} penumbra={0.3} intensity={1.8} color="#ffffff" />
-              <pointLight position={[-1, 1, 3]} intensity={1.0} color={activePlanet.color || '#ffffff'} />
-            </>
-          )}
-          
-          <group position={[planetOffsetX, 0, 0]} scale={planetScale}>
-            <Planet config={activePlanet} />
-          </group>
-          
-          <Stars radius={100} depth={50} count={5000} factor={4} />
-          
-          <OrbitControls 
-            enableZoom={!isShifted}
-            enablePan={!isShifted}
-            enableRotate={!isShifted}
-            minDistance={isShifted && !isSun ? 2 : 3}
-            maxDistance={12}
-            autoRotate={!isShifted}
-            target={[planetOffsetX, 0, 0]}
-            enableDamping={true}
-            dampingFactor={0.05}
-          />
-          
-          <SceneController viewMode={viewMode} planetId={activePlanet.id} />
+          <SceneContent activePlanet={activePlanet} viewMode={viewMode} onReady={() => setIsLoading(false)} />
         </Suspense>
       </Canvas>
     </div>

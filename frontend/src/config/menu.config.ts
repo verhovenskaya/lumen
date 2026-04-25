@@ -6,9 +6,9 @@ export interface MenuItemConfig {
 }
 
 export const MENU_ITEMS: MenuItemConfig[] = [
-  { key: 'Missions', label: 'МИССИИ', icon: 'goalIcon', top: '15%' },
-  { key: 'Spacecraft', label: 'КОСМИЧЕСКИЕ АППАРАТЫ', icon: 'satelliteIcon', top: '27%' },
-  { key: 'Satellites', label: 'СПУТНИКИ', icon: 'planetMenuIcon', top: '39%' },
-  { key: 'Chat', label: 'ЧАТ', icon: 'chatIcon', top: '51%' },
-  { key: 'Settings', label: 'НАСТРОЙКИ', icon: 'settingsIcon', top: '63%' },
+  { key: 'Missions', label: 'МИССИИ', icon: '🎯', top: '15%' },
+  { key: 'Spacecraft', label: 'КОСМИЧЕСКИЕ АППАРАТЫ', icon: '🚀', top: '27%' },
+  { key: 'Satellites', label: 'СПУТНИКИ', icon: '🛰️', top: '39%' },
+  { key: 'Chat', label: 'ЧАТ', icon: '💬', top: '51%' },
+  { key: 'Settings', label: 'НАСТРОЙКИ', icon: '⚙️', top: '63%' },
 ];
