@@ -1,5 +1,6 @@
-import React from 'react';
-import styles from './SpacecraftModal.module.scss'; 
+import React, { useState, useEffect } from 'react';
+import styles from './SpacecraftModal.module.scss';
+import { getVehicleDetail } from '../../../api/nasaApi';
 
 interface SpacecraftModalProps {
   spacecraft: {
@@ -14,6 +15,37 @@ interface SpacecraftModalProps {
 }
 
 export const SpacecraftModal: React.FC<SpacecraftModalProps> = ({ spacecraft, isOpen, onClose }) => {
+  const [detail, setDetail] = useState<{
+    missions: string[];
+    files: number;
+    description: string;
+  } | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen && spacecraft) {
+      setLoading(true);
+      getVehicleDetail(spacecraft.name).then(data => {
+        if (data) {
+          setDetail({
+            missions: data.parents?.mission?.map(m => 
+              m.mission.split('/mission/').pop() || ''
+            ) || [],
+            files: data.files?.length || 0,
+            description: data.files?.[0]?.description?.substring(0, 300) || 'Информация отсутствует',
+          });
+        } else {
+          setDetail({
+            missions: [],
+            files: 0,
+            description: 'Информация загружается из NASA API...',
+          });
+        }
+        setLoading(false);
+      });
+    }
+  }, [isOpen, spacecraft]);
+
   if (!isOpen || !spacecraft) return null;
 
   return (
@@ -44,19 +76,23 @@ export const SpacecraftModal: React.FC<SpacecraftModalProps> = ({ spacecraft, is
           </div>
           
           <div className={styles.detailRow}>
-            <span className={styles.label}>Запуск:</span>
-            <span className={styles.value}>—</span>
+            <span className={styles.label}>Файлов данных:</span>
+            <span className={styles.value}>
+              {loading ? '...' : detail?.files || 0}
+            </span>
           </div>
           
-          <div className={styles.detailRow}>
-            <span className={styles.label}>Статус:</span>
-            <span className={styles.value}>Активный</span>
-          </div>
+          {detail?.missions.length ? (
+            <div className={styles.detailRow}>
+              <span className={styles.label}>Миссии:</span>
+              <span className={styles.value}>{detail.missions.join(', ')}</span>
+            </div>
+          ) : null}
           
           <div className={styles.divider} />
           
           <p className={styles.description}>
-           NASA API
+            {loading ? 'Загрузка...' : detail?.description || 'NASA API'}
           </p>
         </div>
       </div>
