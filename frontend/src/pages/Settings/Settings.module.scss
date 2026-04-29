@@ -1,0 +1,246 @@
+:root {
+  --primary-color: #AC98D4;
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  overflow: hidden;  
+}
+
+.desktop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;  
+  overflow-x: hidden;
+  
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+  }
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.backButton {
+  position: absolute;
+  top: 100px;
+  left: 25px;
+  padding: 8px 16px;
+  background: rgba(15, 12, 30, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(172, 152, 212, 0.3);
+  border-radius: 10px;
+  color: white;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.2s;
+  
+  &:hover {
+    border-color: var(--primary-color);
+    background: rgba(172, 152, 212, 0.2);
+  }
+}
+
+.pageTitle {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-weight: 800;
+  font-size: 32px;
+  color: var(--primary-color);
+  margin: 130px 0 50px;  
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(172, 152, 212, 0.4);
+}
+
+.settingsContainer {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  background: rgba(15, 12, 30, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(172, 152, 212, 0.2);
+  border-radius: 16px;
+  padding: 20px 22px;
+  transition: border-color 0.2s;
+  
+  &:hover {
+    border-color: rgba(172, 152, 212, 0.4);
+  }
+}
+
+.sectionTitle {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: #FFFFFF;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;  
+  gap: 12px;                
+  flex-wrap: wrap;
+}
+
+.option {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Abhaya Libre', serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #FFFFFF;
+  }
+  
+  &.active {
+    background: rgba(172, 152, 212, 0.25);
+    border-color: var(--primary-color);
+    color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(172, 152, 212, 0.2);
+  }
+}
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  
+  &:last-child { margin-bottom: 0; }
+}
+
+.sliderLabel {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 100px;
+  
+  &::first-letter,
+  img,
+  span {
+    filter: brightness(0) saturate(100%) invert(67%) sepia(15%) saturate(1192%) hue-rotate(215deg) brightness(90%) contrast(88%);
+  }
+}
+.slider {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+  
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s;
+    
+    &:hover { transform: scale(1.2); }
+  }
+}
+
+.sliderValue {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 14px;
+  color: var(--primary-color);
+  min-width: 40px;
+  text-align: right;
+}
+
+.toggleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  
+  &:last-child { border-bottom: none; }
+}
+
+.toggleLabel {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.toggle {
+  width: 48px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 13px;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  transition: background 0.3s;
+  
+  &.toggleOn { background: var(--primary-color); }
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  transition: transform 0.3s;
+  
+  .toggleOn & { transform: translateX(22px); }
+}
+

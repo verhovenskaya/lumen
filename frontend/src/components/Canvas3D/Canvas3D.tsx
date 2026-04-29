@@ -7,7 +7,7 @@ import { OrbitLine } from './OrbitLine';
 import { type PlanetConfig } from '../../config/planets.config';
 import { type ViewMode } from '../../hooks/usePlanetInfo';
 import { type AppMode } from '../../hooks/useSimulation';
-import { PLANETS } from '../../config/planets.config';
+import { SIMULATION_PLANETS } from '../../config/simulation.config'; 
 import styles from './Canvas3D.module.scss';
 import * as THREE from 'three';
 
@@ -76,10 +76,12 @@ export const Canvas3D: React.FC<Canvas3DProps> = ({
           
           {isSimulation ? (
             <>
-              <Planet config={PLANETS[0]} />
+              <group position={[0, 0, 0]}>
+                <Planet config={SIMULATION_PLANETS[0]} />
+              </group>
               <pointLight position={[0, 0, 0]} intensity={2} color="#FDB813" />
               
-              {PLANETS.filter(p => p.orbitRadius && p.id !== 'sun').map(planet => (
+              {SIMULATION_PLANETS.filter(p => p.orbitRadius && p.id !== 'sun').map(planet => (
                 <OrbitLine 
                   key={`orbit-${planet.id}`} 
                   radius={planet.orbitRadius!} 
@@ -87,7 +89,7 @@ export const Canvas3D: React.FC<Canvas3DProps> = ({
                 />
               ))}
               
-              {PLANETS.filter(p => p.id !== 'sun').map(planet => (
+              {SIMULATION_PLANETS.filter(p => p.id !== 'sun').map(planet => (
                 <OrbitingPlanet key={planet.id} planet={planet} />
               ))}
             </>
@@ -102,6 +104,10 @@ export const Canvas3D: React.FC<Canvas3DProps> = ({
               
               <group position={[planetOffsetX, 0, 0]} scale={planetScale}>
                 <Planet config={activePlanet} />
+                {isSun && (
+                  <>
+                  </>
+                )}
               </group>
               
               <SceneController viewMode={viewMode} planetId={activePlanet.id} />

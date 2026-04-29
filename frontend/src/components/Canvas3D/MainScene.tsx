@@ -40,6 +40,10 @@ const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; o
 }) => {
   const isShifted = viewMode === 'shifted';
   const isSun = activePlanet.id === 'sun';
+  const planetOffsetX = isShifted ? -2 : 0;
+  const planetScale = isShifted
+    ? (isSun ? 1.0 : (activePlanet.scale || 1) * 1.5)
+    : (activePlanet.scale || 1);
   
   useEffect(() => {
     const timer = setTimeout(() => onReady(), 500);
@@ -48,9 +52,20 @@ const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; o
 
   return (
     <>
-      <ambientLight intensity={isShifted && !isSun ? 1.2 : 0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={isShifted && !isSun ? 1.5 : 1} />
-      <pointLight position={[-5, -5, -5]} intensity={0.5} />
+      {isSun ? (
+        <>
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[5, 5, 5]} intensity={0.5} />
+          <pointLight position={[0, 0, 0]} intensity={3} color="#ffaa00" distance={50} />
+          <pointLight position={[0, 0, 0]} intensity={1.5} color="#ff6600" distance={30} />
+        </>
+      ) : (
+        <>
+          <ambientLight intensity={isShifted ? 1.2 : 0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={isShifted ? 1.5 : 1} />
+          <pointLight position={[-5, -5, -5]} intensity={0.5} />
+        </>
+      )}
       
       {isShifted && !isSun && (
         <>
@@ -59,22 +74,24 @@ const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; o
         </>
       )}
       
-      <group position={[isShifted ? -2 : 0, 0, 0]} scale={
-        isShifted ? (isSun ? 1.0 : (activePlanet.scale || 1) * 1.5) : (activePlanet.scale || 1)
-      }>
+      <group position={[planetOffsetX, 0, 0]} scale={planetScale}>
         <Planet config={activePlanet} />
+        {isSun && (
+          <>
+          </>
+        )}
       </group>
       
-      <Stars radius={100} depth={50} count={5000} factor={4} />
+      <Stars radius={100} depth={50} count={isSun ? 3000 : 5000} factor={4} />
       
       <OrbitControls 
         enableZoom={!isShifted}
         enablePan={!isShifted}
         enableRotate={!isShifted}
-        minDistance={isShifted && !isSun ? 2 : 3}
-        maxDistance={12}
+        minDistance={isSun ? 4 : (isShifted && !isSun ? 2 : 3)}
+        maxDistance={isSun ? 15 : 12}
         autoRotate={!isShifted}
-        target={[isShifted ? -2 : 0, 0, 0]}
+        target={[planetOffsetX, 0, 0]}
         enableDamping={true}
         dampingFactor={0.05}
       />
