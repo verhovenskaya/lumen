@@ -31,11 +31,13 @@ const SceneContent: React.FC<SceneContentProps> = ({ onReady, speed }) => {
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 10, 5]} intensity={0.6} />
+      <ambientLight intensity={0.2} />
       
       <Planet config={sun} />
-      <pointLight position={[0, 0, 0]} intensity={2.5} color="#FDB813" />
+      
+      <pointLight position={[0, 0, 0]} intensity={10} color="#fff8dd" distance={80} decay={1} />
+      <pointLight position={[0, 0, 0]} intensity={8} color="#ffcc88" distance={50} decay={1} />
+      <pointLight position={[0, 0, 0]} intensity={4} color="#ffaa44" distance={25} decay={1} />
       
       {solarPlanets.filter(p => p.orbitRadius).map(planet => (
         <OrbitLine 
@@ -63,7 +65,7 @@ const SceneContent: React.FC<SceneContentProps> = ({ onReady, speed }) => {
         <OrbitingPlanet key={moon.id} planet={moon} speed={speed} />
       ))}
       
-      <Stars radius={100} depth={50} count={3000} factor={4} />
+      <Stars radius={100} depth={50} count={2000} factor={4} />
       
       <OrbitControls 
         enableZoom={true}
@@ -87,7 +89,15 @@ export const SimulationScene: React.FC = () => {
     <div className={styles.canvasContainer}>
       {isLoading && <LoadingScreen />}
       
-      <Canvas camera={{ position: [0, 30, 5], fov: 45 }} shadows={false}>
+      <Canvas 
+        camera={{ position: [0, 30, 5], fov: 45 }} 
+        shadows={false}
+        gl={{ 
+          alpha: false,
+          depth: true,         
+          stencil: false,
+        }}
+      >
         <Suspense fallback={null}>
           <SceneContent onReady={() => setIsLoading(false)} speed={effectiveSpeed} />
         </Suspense>

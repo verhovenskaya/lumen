@@ -27,27 +27,13 @@ export const Planet: React.FC<PlanetProps> = ({ config }) => {
 
   const isSun = config.id === 'sun';
 
-  <meshStandardMaterial 
-  map={planetTexture} 
-  roughness={isSun ? 1 : 0.5}
-  metalness={0}
-  emissive={isSun ? '#ffaa00' : '#000000'}
-  emissiveIntensity={isSun ? 2.5 : 0}
-/>
-
-
   useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.002;
-    }
-    if (ringRef.current) {
-      ringRef.current.rotation.y += 0.0005;
-    }
+    if (meshRef.current) meshRef.current.rotation.y += 0.002;
+    if (ringRef.current) ringRef.current.rotation.y += 0.0005;
   });
 
   const getProceduralRingProps = () => {
     if (!hasProceduralRings) return null;
-    
     const simConfig = config as SimulationPlanet;
     return {
       innerRadius: (simConfig.ringInnerRadius || 1.0) * 2,
@@ -64,14 +50,17 @@ export const Planet: React.FC<PlanetProps> = ({ config }) => {
     <>
       <mesh ref={meshRef} scale={config.scale || 1}>
         <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial 
-          map={planetTexture} 
-          roughness={0.5} 
-          metalness={0.1} 
-        />
+        {isSun ? (
+          <meshBasicMaterial map={planetTexture} />
+        ) : (
+          <meshStandardMaterial 
+            map={planetTexture} 
+            roughness={0.5} 
+            metalness={0.1} 
+          />
+        )}
       </mesh>
       
-      {/* кольца сатурна */}
       {hasTextureRings && ringTexture && (
         <mesh ref={ringRef} rotation={[Math.PI / 2.2, 0.2, 0]}>
           <ringGeometry args={[1, 1.4, 128]} />
@@ -85,7 +74,6 @@ export const Planet: React.FC<PlanetProps> = ({ config }) => {
         </mesh>
       )}
       
-      {/* кольца юпитера, урана и нептуна */}
       {proceduralProps && (
         <ProceduralRings
           innerRadius={proceduralProps.innerRadius}
