@@ -45,9 +45,11 @@ export const Home: React.FC = () => {
         <Header isShifted={viewMode === 'shifted' && !isSimulation} />
         <BurgerMenu isOpen={isMenuOpen} onToggle={toggleMenu} />
         
-        <button className={styles.simulationButton} onClick={toggleMode}>
-          <span className={styles.gamepadIcon}>🎮</span>
-        </button>
+        {!isInfoOpen && (
+          <button className={styles.simulationButton} onClick={toggleMode}>
+            <span className={styles.gamepadIcon}>🎮</span>
+          </button>
+        )}
         
         {!isSimulation && (
           <>

@@ -8,16 +8,17 @@ import { type ViewMode } from '../../hooks/usePlanetInfo';
 import styles from './Canvas3D.module.scss';
 import * as THREE from 'three';
 
+
 interface MainSceneProps {
   activePlanet: PlanetConfig;
   viewMode?: ViewMode;
 }
 
-const SceneController = ({ viewMode, planetId }: { viewMode: ViewMode; planetId: string }) => {
+const SceneController = ({ viewMode}: { viewMode: ViewMode; planetId: string }) => {
   const { camera } = useThree();
   const targetPosition = useRef(new THREE.Vector3(0, 0, 8));
   
-  const shouldZoom = viewMode === 'shifted' && planetId !== 'sun';
+  const shouldZoom = viewMode === 'shifted';
 
   useEffect(() => {
     if (viewMode === 'center') {
@@ -42,8 +43,8 @@ const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; o
   const isSun = activePlanet.id === 'sun';
   const planetOffsetX = isShifted ? -2 : 0;
   const planetScale = isShifted
-    ? (isSun ? 1.0 : (activePlanet.scale || 1) * 1.5)
-    : (activePlanet.scale || 1);
+  ? (activePlanet.infoScale || activePlanet.scale || 1)
+  : (activePlanet.scale || 1);
   
   useEffect(() => {
     const timer = setTimeout(() => onReady(), 500);
@@ -54,10 +55,11 @@ const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; o
     <>
       {isSun ? (
         <>
-          <ambientLight intensity={0.3} />
-          <directionalLight position={[5, 5, 5]} intensity={0.5} />
-          <pointLight position={[0, 0, 0]} intensity={3} color="#ffaa00" distance={50} />
-          <pointLight position={[0, 0, 0]} intensity={1.5} color="#ff6600" distance={30} />
+          <ambientLight intensity={0.8} />
+          <pointLight position={[0, 0, 0]} intensity={5} color="#ffcc00" distance={80} />
+          <pointLight position={[0, 0, 0]} intensity={3} color="#ff8800" distance={50} />
+          <pointLight position={[0, 0, 0]} intensity={1.5} color="#ff4400" distance={25} />
+          <directionalLight position={[5, 5, 5]} intensity={0.3} />
         </>
       ) : (
         <>
@@ -76,10 +78,7 @@ const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; o
       
       <group position={[planetOffsetX, 0, 0]} scale={planetScale}>
         <Planet config={activePlanet} />
-        {isSun && (
-          <>
-          </>
-        )}
+
       </group>
       
       <Stars radius={100} depth={50} count={isSun ? 3000 : 5000} factor={4} />

@@ -25,6 +25,17 @@ export const Planet: React.FC<PlanetProps> = ({ config }) => {
     !!config.ringInnerRadius && 
     !('ringTexturePath' in config && config.ringTexturePath);
 
+  const isSun = config.id === 'sun';
+
+  <meshStandardMaterial 
+  map={planetTexture} 
+  roughness={isSun ? 1 : 0.5}
+  metalness={0}
+  emissive={isSun ? '#ffaa00' : '#000000'}
+  emissiveIntensity={isSun ? 2.5 : 0}
+/>
+
+
   useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.002;
