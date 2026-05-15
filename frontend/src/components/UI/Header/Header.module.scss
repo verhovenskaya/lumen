@@ -30,7 +30,6 @@
   }
 }
 
-// Лого
 .group2 {
   position: relative;
   @include responsive-size(75px, 75px);
@@ -39,40 +38,28 @@
 
 .ellipse3 {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; right: 0; top: 0; bottom: 0;
   background: #FFFFFF;
   border-radius: 50%;
 }
 
 .ellipse1 {
   position: absolute;
-  left: 10.22%;
-  right: 10.22%;
-  top: 10.27%;
-  bottom: 10.16%;
+  left: 10.22%; right: 10.22%; top: 10.27%; bottom: 10.16%;
   background: #202020;
   border-radius: 50%;
 }
 
 .ellipse2 {
   position: absolute;
-  left: 19.78%;
-  right: 19.78%;
-  top: 19.86%;
-  bottom: 19.75%;
+  left: 19.78%; right: 19.78%; top: 19.86%; bottom: 19.75%;
   background: var(--primary-color);
   border-radius: 50%;
 }
 
 .ellipse4 {
   position: absolute;
-  left: 65.33%;
-  right: 10.22%;
-  top: 0;
-  bottom: 75.57%;
+  left: 65.33%; right: 10.22%; top: 0; bottom: 75.57%;
   background: var(--primary-color);
   border-radius: 50%;
 }
@@ -90,12 +77,43 @@
   }
 }
 
-.profileButton {
+
+.rightGroup {
   position: absolute;
   right: 25px;
-  top: 20px;
-  width: 65px;
-  height: 65px;
+  top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  z-index: 50;
+}
+
+
+.missionsLink {
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-weight: 800;
+  font-size: 20px;
+  cursor: pointer;
+  letter-spacing: 3px;
+  padding: 0;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(172, 152, 212, 0.4);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: #C4B5FD;
+    text-shadow: 0 0 20px rgba(172, 152, 212, 0.7);
+  }
+}
+
+
+.profileButton {
+  width: 50px;
+  height: 50px;
   background: var(--primary-color);
   border: none;
   border-radius: 50%;
@@ -104,26 +122,24 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  z-index: 50;
   transition: all 0.25s ease;
-  box-shadow: 0 0 20px rgba(172, 152, 212, 0.3);
+  box-shadow: 0 0 15px rgba(172, 152, 212, 0.3);
   
   &:hover {
     background: #C4B5FD;
     transform: scale(1.08);
-    box-shadow: 0 0 30px rgba(172, 152, 212, 0.5);
+    box-shadow: 0 0 25px rgba(172, 152, 212, 0.5);
   }
 }
 
 .profileInner {
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
   background: #FFFFFF;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s ease;
 }
 
 .profileIcon {

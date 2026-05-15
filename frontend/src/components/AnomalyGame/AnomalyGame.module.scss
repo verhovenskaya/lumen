@@ -1,0 +1,174 @@
+:root { --primary-color: #AC98D4; }
+
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+
+.container {
+  position: relative;
+  width: 90vw; height: 85vh;
+  background: transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: flex; flex-direction: column;
+
+  &.fullscreen {
+    width: 100vw !important; height: 100vh !important;
+    border-radius: 0;
+  }
+}
+
+.titleBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 10px;
+  background: rgba(195, 181, 253, 0.25);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  flex-shrink: 0;
+  user-select: none;
+  cursor: default;
+}
+
+.titleLeft { display: flex; align-items: center; gap: 8px; }
+
+.titleText {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 12px; color: #fff;
+}
+
+.titleButtons { display: flex; }
+
+.titleBtn {
+  width: 46px; height: 32px;
+  background: transparent; border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+  &:hover { background: rgba(255, 255, 255, 0.15); }
+}
+
+.closeWinBtn:hover {
+  background: #e81123 !important;
+  color: #fff !important;
+}
+
+.windowBody {
+  flex: 1; overflow: hidden; position: relative;
+  background: #000;
+}
+
+.introScreen {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100%; gap: 14px; text-align: center; padding: 40px;
+}
+
+.introTitle {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 26px; color: var(--primary-color); margin: 0; font-weight: 600;
+}
+
+.introText {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;
+}
+
+.nextBtn, .startMissionBtn {
+  padding: 8px 20px; border-radius: 4px;
+  font-family: 'Segoe UI', sans-serif; font-size: 13px; cursor: pointer; margin-top: 6px;
+}
+
+.nextBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ddd;
+  &:hover { background: rgba(255, 255, 255, 0.15); }
+}
+
+.startMissionBtn {
+  background: var(--primary-color); border: none; color: #fff;
+  font-size: 15px; padding: 10px 30px;
+  &:hover { background: #C4B5FD; }
+}
+
+.hud {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 16px;
+  z-index: 10;
+}
+
+.hudItem {
+  padding: 10px 18px;
+  background: rgba(15, 12, 30, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(172, 152, 212, 0.3);
+  border-radius: 12px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 16px; color: #fff;
+  box-shadow: 0 0 15px rgba(172, 152, 212, 0.1);
+  white-space: nowrap;
+}
+
+.hudLabel {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 13px; color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+.hudValue {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 20px; color: var(--primary-color);
+  text-shadow: 0 0 8px rgba(172, 152, 212, 0.5);
+}
+
+.hudTimer {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 20px; color: var(--primary-color);
+  text-shadow: 0 0 8px rgba(172, 152, 212, 0.5);
+
+  &.danger {
+    color: #ff6666;
+    text-shadow: 0 0 8px rgba(255, 100, 100, 0.5);
+    animation: pulse 1s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.hint {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.279);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px; font-style: italic;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.gameOverlay {
+  position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px; z-index: 30;
+
+  h2 {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 24px; color: var(--primary-color); margin: 0;
+  }
+  p { font-family: 'Segoe UI', sans-serif; font-size: 14px; color: #ccc; margin: 0; }
+  button {
+    padding: 8px 20px; background: var(--primary-color);
+    border: none; border-radius: 4px; color: #fff; font-size: 13px; cursor: pointer;
+  }
+}

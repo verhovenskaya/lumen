@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MainScene } from '../Canvas3D/MainScene';
 import { SimulationScene } from '../Canvas3D/SimulationScene';
 import { Header } from '../UI/Header/Header';
@@ -7,10 +7,12 @@ import { NavigationArrows } from '../UI/NavigationArrows/NavigationArrows';
 import { BurgerMenu } from '../UI/BurgerMenu/BurgerMenu';
 import { MenuContent } from '../UI/MenuContent/MenuContent';
 import { PlanetInfo } from '../UI/PlanetInfo/PlanetInfo';
+import { MissionPanel } from '../UI/MissionPanel/MissionPanel';
 import { usePlanets } from '../../hooks/usePlanets';
 import { useMenu } from '../../hooks/useMenu';
 import { usePlanetInfo } from '../../hooks/usePlanetInfo';
 import { useSimulation } from '../../hooks/useSimulation';
+import { useMissions } from '../../hooks/useMissions';
 import styles from './Home.module.scss';
 
 export const Home: React.FC = () => {
@@ -18,10 +20,13 @@ export const Home: React.FC = () => {
   const { isMenuOpen, toggleMenu } = useMenu();
   const { selectedPlanet, isInfoOpen, viewMode, openInfo, closeInfo } = usePlanetInfo();
   const { isSimulation, toggleMode } = useSimulation();
+  const [showMissions, setShowMissions] = useState(false);
+  const { missions, viewedPlanetsCount, markPlanetViewed, completeMission } = useMissions();
 
   const handlePlanetClick = (planet: typeof activePlanet) => {
     setPlanetById(planet.id);
     openInfo(planet);
+    markPlanetViewed(planet.id);  
   };
 
   const handleArrowClick = (direction: 'prev' | 'next') => {
@@ -42,15 +47,18 @@ export const Home: React.FC = () => {
           <MainScene activePlanet={activePlanet} viewMode={viewMode} />
         )}
 
-        <Header isShifted={viewMode === 'shifted' && !isSimulation} />
+        <Header 
+          isShifted={viewMode === 'shifted' && !isSimulation} 
+          onMissionsClick={() => setShowMissions(true)}
+        />
         <BurgerMenu isOpen={isMenuOpen} onToggle={toggleMenu} />
-        
+
         {!isInfoOpen && (
           <button className={styles.simulationButton} onClick={toggleMode}>
             <span className={styles.gamepadIcon}>🎮</span>
           </button>
         )}
-        
+
         {!isSimulation && (
           <>
             <NavigationArrows 
@@ -69,6 +77,15 @@ export const Home: React.FC = () => {
             ))}
             <PlanetInfo planet={selectedPlanet} isOpen={isInfoOpen} onClose={closeInfo} />
           </>
+        )}
+
+        {showMissions && (
+          <MissionPanel 
+  missions={missions} 
+  viewedCount={viewedPlanetsCount} 
+  onClose={() => setShowMissions(false)}
+  onCompleteMission={completeMission}  // ← Передаём
+/>
         )}
 
         <div className={styles.ellipse18} />

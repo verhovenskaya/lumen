@@ -3,11 +3,13 @@ import styles from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
-  isShifted?: boolean;  
+  isShifted?: boolean;
+  onMissionsClick?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isShifted = false }) => {
+export const Header: React.FC<HeaderProps> = ({ isShifted = false, onMissionsClick }) => {
   const navigate = useNavigate();
+
   const renderLumen = () => {
     const vowels = new Set(['U', 'E']);
     return 'LUMEN'.split('').map((char, i) => (
@@ -29,11 +31,14 @@ export const Header: React.FC<HeaderProps> = ({ isShifted = false }) => {
         <div className={styles.lumen}>{renderLumen()}</div>
       </div>
       
-       <button className={styles.profileButton} onClick={() => navigate('/profile')}>
-        <div className={styles.profileInner}>
-          <span className={styles.profileIcon}>👤</span>
-        </div>
-      </button>
+      <div className={styles.rightGroup}>
+        <button className={styles.missionsLink} onClick={onMissionsClick}>
+          МИССИИ
+        </button>
+        <button className={styles.profileButton} onClick={() => navigate('/profile')}>
+         
+        </button>
+      </div>
     </>
   );
 };
