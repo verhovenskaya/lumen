@@ -36,13 +36,13 @@
   position: absolute;
 
   left: 50%;
-  top: 20px;
+  top: 16px;
 
   transform: translateX(-50%);
 
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
 
   z-index: 50;
 
@@ -59,7 +59,7 @@
 .group2 {
   position: relative;
 
-  @include responsive-size(75px, 75px);
+  @include responsive-size(56px, 56px);
 
   z-index: 10;
 }
@@ -115,7 +115,7 @@
 .lumen {
   font-family: 'Jaro', sans-serif;
 
-  font-size: clamp(40px, 10vw, 96px);
+  font-size: clamp(64px, 9vw, 42px);
 
   color: white;
 
@@ -133,8 +133,8 @@
 .rightGroup {
   position: absolute;
 
-  right: 30px;
-  top: 25px;
+  right: 24px;
+  top: 20px;
 
   display: flex;
   gap: 14px;
@@ -143,10 +143,10 @@
 }
 
 .actionButton {
-  width: 84px;
-  height: 64px;
+  width: 68px;
+  height: 54px;
 
-  border-radius: 18px;
+  border-radius: 16px;
 
   border: 1px solid rgba(196, 181, 253, 0.45);
 
@@ -160,35 +160,33 @@
 
   position: relative;
 
-  overflow: hidden;
+  overflow: visible;
 
   transition:
-    transform 0.25s ease,
     box-shadow 0.25s ease,
     background-color 0.25s ease;
 
   box-shadow:
     0 0 12px rgba(172, 152, 212, 0.35),
-    0 0 40px rgba(172, 152, 212, 0.18),
+    0 0 36px rgba(172, 152, 212, 0.18),
     inset 0 2px 8px rgba(255, 255, 255, 0.18);
 
   &:hover {
-    transform:
-      translateY(-2px)
-      scale(1.06);
-
     background-color: #c4b5fd;
 
     box-shadow:
-      0 0 18px rgba(196, 181, 253, 0.6),
-      0 0 60px rgba(172, 152, 212, 0.35),
+      0 0 16px rgba(196, 181, 253, 0.6),
+      0 0 52px rgba(172, 152, 212, 0.35),
       inset 0 2px 10px rgba(255, 255, 255, 0.25);
   }
 
   &:active {
-    transform:
-      translateY(-1px)
-      scale(1.03);
+    background-color: #9a86c0;
+
+    box-shadow:
+      0 0 10px rgba(196, 181, 253, 0.5),
+      0 0 30px rgba(172, 152, 212, 0.3),
+      inset 0 2px 6px rgba(255, 255, 255, 0.2);
   }
 
   &:hover::after {
@@ -201,9 +199,9 @@
 
     transform: translateX(-50%);
 
-    padding: 8px 14px;
+    padding: 6px 12px;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
     background: rgba(10, 10, 18, 0.96);
 
@@ -211,7 +209,7 @@
 
     color: #d8ccff;
 
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
 
     white-space: nowrap;
@@ -224,53 +222,14 @@
 }
 
 .icon {
-  font-size: 28px;
-
-  filter:
-    brightness(0)
-    invert(1);
-
+  font-size: 24px;
+  color: #ffffff;
   opacity: 0.95;
+  pointer-events: none;
 }
 
 .profileButton {
   border-radius: 50%;
-  width: 64px;
-  height: 64px;
-}
-
-.profileCircle {
-  width: 26px;
-  height: 26px;
-
-  border-radius: 50%;
-
-  background: white;
-
-  box-shadow:
-    0 0 10px rgba(255, 255, 255, 0.45),
-    0 0 24px rgba(255, 255, 255, 0.18);
-
-  position: relative;
-
-  &::after {
-    content: '';
-
-    position: absolute;
-
-    width: 36px;
-    height: 18px;
-
-    left: 50%;
-    bottom: -20px;
-
-    transform: translateX(-50%);
-
-    border-radius: 20px 20px 14px 14px;
-
-    background: white;
-
-    box-shadow:
-      0 0 10px rgba(255, 255, 255, 0.35);
-  }
+  width: 54px;
+  height: 54px;
 }

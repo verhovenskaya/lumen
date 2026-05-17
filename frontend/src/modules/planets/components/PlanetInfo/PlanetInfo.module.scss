@@ -1,7 +1,7 @@
 :root {
   --primary-color: #AC98D4;
   --accent-color: #E7BD00;
-  --panel-width: 440px;
+  --panel-width: 340px;               
 }
 
 .wrapper {
@@ -38,12 +38,12 @@
 
 .rightPanel {
   position: absolute;
-  right: 30px;
+  right: 24px;                      
   top: 44%;
   transform: translateY(-50%);
   width: var(--panel-width);
   height: auto;
-  max-height: 600px;
+  max-height: 480px;                 
   
   background: linear-gradient(
     180deg,
@@ -52,16 +52,16 @@
   );
   backdrop-filter: blur(12px);
   
-  border-radius: 24px;
+  border-radius: 20px;              
   
   border: 1px solid rgba(172, 152, 212, 0.25);
   border-right: 2px solid rgba(172, 152, 212, 0.4);
 
   box-shadow: 
-    -10px 0 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 30px rgba(172, 152, 212, 0.03);
+    -8px 0 32px rgba(0, 0, 0, 0.4),
+    inset 0 0 24px rgba(172, 152, 212, 0.03);
   
-  padding: 28px 24px;
+  padding: 22px 20px;                
   
   pointer-events: auto;
   overflow-y: auto;
@@ -86,7 +86,7 @@
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(-50%) translateX(60px);
+    transform: translateY(-50%) translateX(50px);
   }
   to {
     opacity: 1;
@@ -96,20 +96,20 @@
 
 .closeButton {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 36px;
-  height: 36px;
+  top: 12px;                        
+  right: 12px;                       
+  width: 30px;                        
+  height: 30px;                       
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  border-radius: 8px;                
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 24px;
+  font-size: 20px;                   
   font-weight: 300;
   z-index: 10;
   
@@ -121,25 +121,25 @@
 }
 
 .planetHeader {
-  margin-bottom: 16px;
-  padding-right: 30px;  
+  margin-bottom: 12px;                
+  padding-right: 24px;               
 }
 
 .planetName {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 36px;
+  font-size: 28px;                   
   font-weight: 800;
   color: #FFFFFF;
   text-transform: uppercase;
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
   letter-spacing: 2px;
   line-height: 1.1;
-  text-shadow: 0 0 20px rgba(172, 152, 212, 0.3);
+  text-shadow: 0 0 16px rgba(172, 152, 212, 0.3);
 }
 
 .planetNameEn {
   font-family: 'Abhaya Libre', serif;
-  font-size: 14px;
+  font-size: 12px;                    
   color: rgba(255, 255, 255, 0.45);
   margin: 0;
   text-transform: uppercase;
@@ -154,20 +154,20 @@
     rgba(172, 152, 212, 0.4) 0%,
     rgba(172, 152, 212, 0.1) 100%
   );
-  margin: 20px 0;
+  margin: 16px 0;                    
 }
 
 .infoSection {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;                          
 }
 
 .infoBlock {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 8px 0;
+  padding: 6px 0;                    
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   
   &:last-of-type {
@@ -177,7 +177,7 @@
 
 .label {
   font-family: 'Abhaya Libre', serif;
-  font-size: 14px;
+  font-size: 12px;                   
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -185,20 +185,20 @@
 
 .value {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 20px;
+  font-size: 17px;                    
   color: #FFFFFF;
   text-align: right;
 }
 
 .footer {
-  margin-top: 20px;
-  padding-top: 16px;
+  margin-top: 16px;                  
+  padding-top: 12px;                 
   text-align: right;
 }
 
 .dataSource {
   font-family: 'Abhaya Libre', serif;
-  font-size: 11px;
+  font-size: 10px;                    
   color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -208,11 +208,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 40px;
-  height: 40px;
+  width: 32px;                        
+  height: 32px;                       
   border-top: 2px solid var(--primary-color);
   border-left: 2px solid var(--primary-color);
-  border-radius: 24px 0 0 0;
+  border-radius: 20px 0 0 0;          
   opacity: 0.5;
   pointer-events: none;
 }
@@ -221,52 +221,52 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 40px;
-  height: 40px;
+  width: 32px;                        
+  height: 32px;                       
   border-bottom: 2px solid var(--primary-color);
   border-right: 2px solid var(--primary-color);
-  border-radius: 0 0 24px 0;
+  border-radius: 0 0 20px 0;        
   opacity: 0.5;
   pointer-events: none;
 }
 
+.description {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 14px;                   
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4px 0;
+  
+  p {
+    margin: 0;
+  }
+}
+
 @media (max-width: 768px) {
   :root {
-    --panel-width: 300px;
+    --panel-width: 280px;             
   }
   
   .rightPanel {
-    right: 15px;
-    padding: 20px 16px;
+    right: 12px;                      
+    padding: 18px 14px;               
   }
   
   .planetName {
-    font-size: 28px;
+    font-size: 24px;                  
   }
   
   .value {
-    font-size: 18px;
+    font-size: 16px;                  
   }
 }
 
 @media (max-width: 480px) {
   :root {
-    --panel-width: 260px;
+    --panel-width: 240px;            
   }
   
   .rightPanel {
-    right: 10px;
-  }
-}
-
-.description {
-  font-family: 'Abhaya Libre', serif;
-  font-size: 17px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 5px 0;
-  
-  p {
-    margin: 0;
+    right: 8px;                     
   }
 }

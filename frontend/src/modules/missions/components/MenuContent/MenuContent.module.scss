@@ -5,20 +5,20 @@
 .panel {
   position: fixed;
 
-  width: 450px;
+  width: 340px;
   max-height: 80vh;
 
-  left: 10px;
-  top: 13px;
+  left: 8px;
+  top: 10px;
 
-  padding: 22px;
+  padding: 18px;
 
   z-index: 200;
 
   overflow-y: auto;
   overflow-x: hidden;
 
-  border-radius: 18px;
+  border-radius: 16px;
 
   background: rgba(10, 8, 20, 0.95);
 
@@ -27,7 +27,7 @@
   border: 1px solid rgba(172, 152, 212, 0.2);
 
   box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.5);
+    0 12px 32px rgba(0, 0, 0, 0.5);
 
   animation: fadeIn 0.25s ease;
 
@@ -45,7 +45,7 @@
   from {
     opacity: 0;
     transform:
-      translateY(-8px)
+      translateY(-6px)
       scale(0.98);
   }
 
@@ -58,48 +58,48 @@
 }
 
 .menuTitle {
-  margin: 8px 0 34px;
+  margin: -4px 0 15px;
 
   font-family: 'Abhaya Libre ExtraBold', serif;
 
-  font-size: 44px;
+  font-size: 24px;
   font-weight: 800;
 
-  letter-spacing: 4px;
+  letter-spacing: 3px;
 
   color: var(--primary-color);
 
   text-shadow:
-    0 0 15px rgba(172, 152, 212, 0.35);
+    0 0 12px rgba(172, 152, 212, 0.35);
 }
 
 .menuList {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 5px;
 }
 
 .menuItem {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 16px;
 
-  padding: 20px 4px;
+  padding: 16px 4px;
 
   cursor: pointer;
 
   transition: transform 0.2s ease;
 
   &:hover {
-    transform: translateX(6px);
+    transform: translateX(5px);
 
     .icon {
       color: var(--primary-color);
 
-      transform: scale(1.08);
+      transform: scale(1.06);
 
       filter:
-        drop-shadow(0 0 12px rgba(172, 152, 212, 0.6));
+        drop-shadow(0 0 10px rgba(172, 152, 212, 0.6));
     }
 
     .menuLabel {
@@ -109,14 +109,14 @@
 }
 
 .icon {
-  width: 45px;
-  height: 45px;
+  width: 36px;
+  height: 36px;
 
   color: #AC98D4;
 
   flex-shrink: 0;
 
-  margin-left: -13px;
+  margin-left: -14px;
 
   transition:
     color 0.25s ease,
@@ -124,12 +124,13 @@
     filter 0.25s ease;
 
   filter:
-    drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.15));
 }
+
 .menuLabel {
   font-family: 'Abhaya Libre ExtraBold', serif;
 
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 800;
 
   color: white;

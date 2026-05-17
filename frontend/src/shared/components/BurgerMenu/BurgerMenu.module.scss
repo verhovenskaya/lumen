@@ -1,6 +1,6 @@
-$menu-size: 45px;      
-$line-height: 10px;      
-$line-radius: 3px;      
+$menu-size: 36px;        
+$line-height: 8px;       
+$line-radius: 3px;
 
 .burgerMenu {
   position: absolute;
@@ -9,14 +9,14 @@ $line-radius: 3px;
   cursor: pointer;
   width: $menu-size;
   height: $menu-size;
-  left: 25px;
-  top: 30px;
+  left: 20px;
+  top: 20px;
   z-index: 100;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   padding: 0;
 }
 
@@ -33,8 +33,8 @@ $line-radius: 3px;
   position: absolute;
   width: $menu-size;
   height: $menu-size;
-  left: 20px;
-  top: 23px;
+  left: 16px;
+  top: 18px;
   z-index: 202;
   cursor: pointer;
 }
@@ -45,7 +45,7 @@ $line-radius: 3px;
   height: $line-height;
   left: 0;
   top: 50%;
-  margin-top: calc($line-height / 2);
+  margin-top: calc($line-height / 2 * -1);
   background: #FFFFFF;
   border-radius: $line-radius;
   transform: rotate(45deg);
@@ -57,7 +57,7 @@ $line-radius: 3px;
   height: $line-height;
   left: 0;
   top: 50%;
-  margin-top: calc($line-height / 2);
+  margin-top: calc($line-height / 2 * -1);
   background: #FFFFFF;
   border-radius: $line-radius;
   transform: rotate(-45deg);

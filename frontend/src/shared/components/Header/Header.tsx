@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaRocket, FaUserAstronaut, FaGamepad } from 'react-icons/fa';
 
 import styles from './Header.module.scss';
 
@@ -15,6 +16,26 @@ export const Header: React.FC<HeaderProps> = ({
   onSimulationClick,
 }) => {
   const navigate = useNavigate();
+
+  const handleSimulationClick = () => {
+    if (onSimulationClick) {
+      onSimulationClick();
+    } else {
+      navigate('/simulation');
+    }
+  };
+
+  const handleMissionsClick = () => {
+    if (onMissionsClick) {
+      onMissionsClick();
+    } else {
+      navigate('/missions');
+    }
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
 
   const renderLumen = () => {
     const vowels = new Set(['U', 'E']);
@@ -49,29 +70,32 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className={styles.rightGroup}>
+        {/* 1. Симуляция */}
         <button
           className={styles.actionButton}
-          onClick={onSimulationClick}
           title="Симуляция"
+          onClick={handleSimulationClick}
         >
-          <span className={styles.icon}>🎮</span>
+          <FaGamepad className={styles.icon} />
         </button>
 
+        {/* 2. Миссии */}
         <button
           className={styles.actionButton}
-          onClick={onMissionsClick}
           title="Миссии"
+          onClick={handleMissionsClick}
         >
-          <span className={styles.icon}>🎯</span>
+          <FaRocket className={styles.icon} />
         </button>
 
+        {/* 3. Профиль */}
         <button
-  className={`${styles.actionButton} ${styles.profileButton}`}
-  onClick={() => navigate('/profile')}
-  title="Профиль"
->
-  <div className={styles.profileCircle} />
-</button>
+          className={`${styles.actionButton} ${styles.profileButton}`}
+          title="Профиль"
+          onClick={handleProfileClick}
+        >
+          <FaUserAstronaut className={styles.icon} />
+        </button>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 :root {
-  --line-bottom: calc(15% - 53px);
+  --line-bottom: calc(15% - 45px);
   --primary-color: #AC98D4;
   --accent-color: #E7BD00;
   --planet-size: 4.5vw;
@@ -47,11 +47,11 @@
 @mixin label-position($left-percent) {
   position: absolute;
   left: $left-percent;
-  bottom: calc(var(--line-bottom) - 5% - 20px);
+  bottom: calc(var(--line-bottom) - 5% - 17px);  
   transform: translateX(-50%);
   font-family: 'Abhaya Libre ExtraBold', 'Abhaya Libre', serif;
   font-weight: 800;
-  font-size: clamp(14px, 2vw, 22px);
+  font-size: clamp(12px, 2vw, 16px);
   color: #FFFFFF;
   text-align: center;
   white-space: nowrap;
@@ -119,10 +119,12 @@
 }
 .planetSwitchNeptune { @include planet-switch(82.67%); }
 .labelNeptune { @include label-position(82.67%); }
+
 .ellipseMoon {
   @include planet-position(92%);
   background-size: cover;
 }
+
 .planetSwitchMoon {
   position: absolute;
   left: 92%;
@@ -139,6 +141,7 @@
     box-shadow: 0 0 15px 3px var(--glow-color, var(--accent-color));
   }
 }
+
 .labelMoon {
   @include label-position(92%);
 }
