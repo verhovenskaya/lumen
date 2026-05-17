@@ -7,21 +7,18 @@ import { AnomalyGame } from '../../AnomalyGame/AnomalyGame';
 
 interface MissionPanelProps {
   missions: Mission[];
-  viewedCount: number;
+  isOpen: boolean;
   onClose: () => void;
   onCompleteMission: (missionId: string) => void;
 }
 
 export const MissionPanel: React.FC<MissionPanelProps> = ({ 
-  missions, viewedCount, onClose, onCompleteMission 
+  missions, isOpen, onClose, onCompleteMission 
 }) => {
-  const [isMinimized, setIsMinimized] = useState(false);
   const [position, setPosition] = useState({ x: window.innerWidth - 340, y: 100 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [activeGame, setActiveGame] = useState<string | null>(null);
-
-  const completedCount = missions.filter(m => m.completed).length;
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('button')) return;
@@ -52,20 +49,10 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
     setActiveGame(null);
   };
 
-  if (isMinimized) {
-    return (
-      <div className={styles.floatingButton} onClick={() => setIsMinimized(false)}>
-        <span className={styles.floatingIcon}>⚡</span>
-        {completedCount > 0 && (
-          <span className={styles.floatingBadge}>{completedCount}/{missions.length}</span>
-        )}
-      </div>
-    );
-  }
+  if (!isOpen) return null;
 
   return (
     <>
-      {/* Игры */}
       {activeGame === 'rover' && (
         <RoverGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('rover_mission')} />
       )}
@@ -80,16 +67,7 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
         <div className={styles.header} onMouseDown={handleMouseDown}>
           <h3 className={styles.title}>МИССИИ</h3>
           <div className={styles.headerButtons}>
-            <button className={styles.minimizeButton} onClick={() => setIsMinimized(true)}>—</button>
             <button className={styles.closeButton} onClick={onClose}>✕</button>
-          </div>
-        </div>
-
-        <div className={styles.overallProgress}>
-          <span className={styles.progressLabel}>Планет изучено</span>
-          <span className={styles.progressCount}>{viewedCount}/10</span>
-          <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${(viewedCount / 10) * 100}%` }} />
           </div>
         </div>
 
@@ -103,25 +81,30 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
                 <span className={styles.missionTitle}>{mission.title}</span>
               </div>
               <p className={styles.missionDesc}>{mission.description}</p>
-              <div className={styles.missionProgress}>
-                <div className={styles.progressBar}>
-                  <div 
-                    className={`${styles.progressFill} ${mission.completed ? styles.completedFill : ''}`} 
-                    style={{ width: `${(mission.progress / mission.maxProgress) * 100}%` }} 
-                  />
-                </div>
-                <span className={styles.progressText}>{mission.progress}/{mission.maxProgress}</span>
-              </div>
-              {mission.completed && <p className={styles.reward}>{mission.reward}</p>}
               
-              {mission.game && !mission.completed && (
-                <button 
-                  className={styles.playButton}
-                  onClick={() => setActiveGame(mission.game!)}
-                >
-                  ▶ ЗАПУСТИТЬ
-                </button>
-              )}
+              <div className={styles.missionRow}>
+                <div className={styles.missionProgress}>
+                  <div className={styles.progressBar}>
+                    <div 
+                      className={`${styles.progressFill} ${mission.completed ? styles.completedFill : ''}`} 
+                      style={{ width: `${(mission.progress / mission.maxProgress) * 100}%` }} 
+                    />
+                  </div>
+                  <span className={styles.progressText}>{mission.progress}/{mission.maxProgress}</span>
+                </div>
+
+                {mission.game && !mission.completed && (
+                  <button 
+                    className={styles.playButton}
+                    onClick={() => setActiveGame(mission.game!)}
+                    title="Запустить"
+                  >
+                    <span className={styles.playIcon} />
+                  </button>
+                )}
+              </div>
+
+              {mission.completed && <p className={styles.reward}>{mission.reward}</p>}
             </div>
           ))}
         </div>

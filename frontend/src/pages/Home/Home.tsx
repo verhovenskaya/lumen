@@ -46,20 +46,17 @@ export const Home: React.FC = () => {
     toggleMode,
   } = useSimulation();
 
-  const [showMissions, setShowMissions] = useState(false);
+  const [isMissionsOpen, setIsMissionsOpen] = useState(false);
 
   const {
     missions,
-    viewedPlanetsCount,
-    markPlanetViewed,
+    markPlanetViewed,        
     completeMission,
   } = useMissions();
 
   const handlePlanetClick = (planet: typeof activePlanet) => {
     setPlanetById(planet.id);
-
     openInfo(planet);
-
     markPlanetViewed(planet.id);
   };
 
@@ -90,7 +87,8 @@ export const Home: React.FC = () => {
 
         <Header
           isShifted={viewMode === 'shifted' && !isSimulation}
-          onMissionsClick={() => setShowMissions(true)}
+          isMissionsOpen={isMissionsOpen}
+          onMissionsToggle={() => setIsMissionsOpen(prev => !prev)}
           onSimulationClick={toggleMode}
         />
 
@@ -126,14 +124,12 @@ export const Home: React.FC = () => {
           </>
         )}
 
-        {showMissions && (
-          <MissionPanel
-            missions={missions}
-            viewedCount={viewedPlanetsCount}
-            onClose={() => setShowMissions(false)}
-            onCompleteMission={completeMission}
-          />
-        )}
+        <MissionPanel
+          missions={missions}
+          isOpen={isMissionsOpen}
+          onClose={() => setIsMissionsOpen(false)}
+          onCompleteMission={completeMission}
+        />
 
         <div className={styles.ellipse18} />
         <div className={styles.extraImage1} />

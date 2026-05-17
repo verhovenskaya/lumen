@@ -222,7 +222,13 @@
 }
 
 .icon {
-  font-size: 24px;
+  font-size: 28px;
+  color: #ffffff;
+  opacity: 0.95;
+  pointer-events: none;
+}
+.icon1 {
+  font-size: 38px;
   color: #ffffff;
   opacity: 0.95;
   pointer-events: none;

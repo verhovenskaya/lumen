@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 export interface Mission {
   id: string;
@@ -11,19 +11,10 @@ export interface Mission {
   game?: string;
 }
 
-const STORAGE_KEY = 'lumen_missions_v4';  // ← v3 → v4
-const VIEWED_PLANETS_KEY = 'lumen_viewed_planets_v4';
+const STORAGE_KEY = 'lumen_missions_v5';  
+const VIEWED_PLANETS_KEY = 'lumen_viewed_planets_v5';
 
 const defaultMissions: Mission[] = [
-  {
-    id: 'explore_all',
-    title: 'Исследователь',
-    description: 'Открой информацию о каждой планете',
-    progress: 0,
-    maxProgress: 10,
-    completed: false,
-    reward: 'Значок "Исследователь"',
-  },
   {
     id: 'rover_mission',
     title: 'Марсоход-исследователь',
@@ -45,13 +36,15 @@ const defaultMissions: Mission[] = [
     game: 'puzzle',
   },
   {
-  id: 'anomaly_mission',
-  title: 'Космический детектив',
-  description: 'Найди 5 аномалий и расставь планеты по местам за 4 минуты',
-  progress: 0, maxProgress: 1, completed: false,
-  reward: 'Значок "Детектив"',
-  game: 'anomaly',
-},
+    id: 'anomaly_mission',
+    title: 'Космический детектив',
+    description: 'Найди 5 аномалий и расставь планеты по местам за 4 минуты',
+    progress: 0,
+    maxProgress: 1,
+    completed: false,
+    reward: 'Значок "Детектив"',
+    game: 'anomaly',
+  },
 ];
 
 const loadMissions = (): Mission[] => {
@@ -91,21 +84,6 @@ export const useMissions = () => {
       return next;
     });
   }, []);
-
-  useEffect(() => {
-    setMissions(prev => {
-      const updated = prev.map(m => {
-        if (m.id === 'explore_all') {
-          const progress = Math.min(viewedPlanets.length, 10);
-          const completed = progress >= 10;
-          return { ...m, progress, completed };
-        }
-        return m;
-      });
-      saveMissions(updated);
-      return updated;
-    });
-  }, [viewedPlanets]);
 
   const completeMission = useCallback((missionId: string) => {
     setMissions(prev => {

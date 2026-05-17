@@ -6,13 +6,15 @@ import styles from './Header.module.scss';
 
 interface HeaderProps {
   isShifted?: boolean;
-  onMissionsClick?: () => void;
+  isMissionsOpen?: boolean;
+  onMissionsToggle?: () => void;
   onSimulationClick?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   isShifted = false,
-  onMissionsClick,
+  isMissionsOpen = false,
+  onMissionsToggle,
   onSimulationClick,
 }) => {
   const navigate = useNavigate();
@@ -26,8 +28,8 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const handleMissionsClick = () => {
-    if (onMissionsClick) {
-      onMissionsClick();
+    if (onMissionsToggle) {
+      onMissionsToggle();
     } else {
       navigate('/missions');
     }
@@ -81,8 +83,8 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* 2. Миссии */}
         <button
-          className={styles.actionButton}
-          title="Миссии"
+          className={`${styles.actionButton} ${isMissionsOpen ? styles.activeButton : ''}`}
+          title={isMissionsOpen ? 'Закрыть миссии' : 'Миссии'}
           onClick={handleMissionsClick}
         >
           <FaRocket className={styles.icon} />

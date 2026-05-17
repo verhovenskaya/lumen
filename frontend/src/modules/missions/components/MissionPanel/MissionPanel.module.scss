@@ -27,6 +27,7 @@
     border-radius: 4px; 
   }
 }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
@@ -36,8 +37,8 @@
   position: fixed;
   bottom: 50px;
   right: 15px;
-  width: 55px;
-  height: 55px;
+  width: 46px;
+  height: 46px;
   background: #FFFFFF;
   border-radius: 50%;
   display: flex;
@@ -53,7 +54,7 @@
 }
 
 .floatingIcon { 
-  font-size: 22px;
+  font-size: 18px;
   filter: brightness(0) saturate(100%) invert(67%) sepia(15%) saturate(1192%) hue-rotate(215deg) brightness(90%) contrast(88%);
 }
 
@@ -64,15 +65,15 @@
   background: var(--primary-color);
   color: #FFFFFF;
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 5px;
+  padding: 0 4px;
   border: 2px solid #FFFFFF;
 }
 
@@ -80,7 +81,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   cursor: grab;
   padding: 4px 0;
   
@@ -89,11 +90,11 @@
 
 .title {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--primary-color);
   margin: 0;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   text-shadow: 0 0 15px rgba(172, 152, 212, 0.4);
 }
 
@@ -104,14 +105,14 @@
 
 .minimizeButton,
 .closeButton {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  border-radius: 6px;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,20 +125,20 @@
 }
 
 .overallProgress {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .progressLabel {
   font-family: 'Abhaya Libre', serif;
-  font-size: 14px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
 }
 
 .progressCount {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 16px;
+  font-size: 14px;
   color: var(--primary-color);
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .progressBar {
@@ -145,7 +146,7 @@
   height: 4px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
-  margin-top: 8px;
+  margin-top: 6px;
   overflow: hidden;
 }
 
@@ -164,14 +165,14 @@
 .missionList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .mission {
-  padding: 12px;
+  padding: 10px 12px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  border-radius: 8px;
   
   &.completed {
     border-color: rgba(196, 181, 253, 0.4);
@@ -188,14 +189,14 @@
 }
 
 .missionCheck {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
   color: #FFFFFF;
   flex-shrink: 0;
   
@@ -209,56 +210,78 @@
 
 .missionTitle {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 16px;
+  font-size: 14px;
   color: #FFFFFF;
 }
 
 .missionDesc {
   font-family: 'Abhaya Libre', serif;
-  font-size: 13px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
-  margin: 6px 0 8px;
+  margin: 4px 0 6px;
+}
+
+.missionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .missionProgress {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex: 1;
+  
+  .progressBar {
+    flex: 1;
+    margin-top: 0;
+  }
 }
 
 .progressText {
   font-family: 'Abhaya Libre', serif;
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
-  min-width: 30px;
+  min-width: 26px;
+  text-align: right;
 }
 
 .reward {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 13px;
+  font-size: 11px;
   color: var(--completed-color);
   text-shadow: 0 0 8px rgba(196, 181, 253, 0.4);
-  margin: 8px 0 0;
+  margin: 6px 0 0;
 }
 
 .playButton {
-  margin-top: 10px;
-  width: 100%;
-  padding: 10px;
+  width: 32px;
+  height: 32px;
   background: var(--primary-color);
   border: none;
   border-radius: 8px;
-  color: white;
-  font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 14px;
-  font-weight: 800;
   cursor: pointer;
-  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   transition: all 0.2s;
   
   &:hover {
     background: #C4B5FD;
-    transform: scale(1.02);
+    transform: scale(1.08);
     box-shadow: 0 0 15px rgba(172, 152, 212, 0.4);
   }
+}
+
+.playIcon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 7px 0 7px 12px;
+  border-color: transparent transparent transparent #FFFFFF;
+  border-radius: 2px;
+  margin-left: 2px;
 }
