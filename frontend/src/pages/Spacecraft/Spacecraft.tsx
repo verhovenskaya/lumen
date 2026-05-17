@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header } from '../../components/UI/Header/Header';
-import { BurgerMenu } from '../../components/UI/BurgerMenu/BurgerMenu';
-import { MenuContent } from '../../components/UI/MenuContent/MenuContent';
-import { SpacecraftCard } from '../../components/UI/SpacecraftCard/SpacecraftCard';
-import { SpacecraftModal } from '../../components/UI/SpacecraftModal/SpacecraftModal';
-import { LoadingScreen } from '../../components/UI/LoadingScreen/LoadingScreen';
-import { useMenu } from '../../hooks/useMenu';
+import { Header } from '../../shared/components/Header/Header';
+import { BurgerMenu } from '../../shared/components/BurgerMenu/BurgerMenu';
+import { MenuContent } from '../../modules/missions/components/MenuContent/MenuContent';
+import { SpacecraftCard } from '../../modules/spacecraft/components/SpacecraftCard/SpacecraftCard';
+import { SpacecraftModal } from '../../modules/spacecraft/components/SpacecraftModal/SpacecraftModal';
+import { LoadingScreen } from '../../shared/ui/LoadingScreen/LoadingScreen';
+import { useMenu } from '../../modules/missions/hooks/useMenu';
 import { getVehicles, searchImage } from '../../api/nasaApi';
 import styles from './Spacecraft.module.scss';
 

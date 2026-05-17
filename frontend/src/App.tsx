@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home } from './components/Home/Home';
+import { Home } from './pages/Home/Home';
 import { Spacecraft } from './pages/Spacecraft/Spacecraft';
-import { Profile } from './pages/Profile/Profile';
-import { Register } from './pages/Register/Register';
-import { Login } from './pages/Login/Login';
+import { Profile } from './modules/auth/pages/Profile/Profile';
+import { Register } from './modules/auth/pages/Register/Register';
+import { Login } from './modules/auth/pages/Login/Login';
 import { Settings } from './pages/Settings/Settings';
 
 function App() {

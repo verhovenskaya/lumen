@@ -1,0 +1,239 @@
+:root {
+  --primary-color: #AC98D4;
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.container {
+  width: 90vw;
+  height: 85vh;
+  background: #0a0a1a;
+  border: 1px solid rgba(172,152,212,0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+// HUD
+.hud {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 14px 20px;
+  display: flex;
+  gap: 30px;
+  background: rgba(10,8,20,0.9);
+  border-bottom: 1px solid rgba(172,152,212,0.2);
+  z-index: 10;
+}
+
+.hudItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.value {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 22px;
+  color: var(--primary-color);
+  
+  &.danger { color: #ff4444; animation: blink 0.5s infinite; }
+}
+
+@keyframes blink {
+  50% { opacity: 0.5; }
+}
+
+.closeBtn {
+  margin-left: auto;
+  width: 32px; height: 32px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover { border-color: var(--primary-color); color: var(--primary-color); }
+}
+
+.startScreen, .endScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+}
+
+.title {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 36px;
+  color: var(--primary-color);
+  text-align: center;
+  text-shadow: 0 0 20px rgba(172,152,212,0.4);
+}
+
+.desc {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+}
+
+.controls {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.03);
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.startBtn {
+  padding: 14px 40px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover { background: #C4B5FD; transform: scale(1.05); }
+}
+
+// Экраны истории
+.introScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 20px;
+  text-align: center;
+  padding: 40px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.introBg {
+  font-size: 80px;
+  margin-bottom: 10px;
+}
+
+.introTitle {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 40px;
+  color: var(--primary-color);
+  text-shadow: 0 0 20px rgba(172, 152, 212, 0.5);
+  margin: 0;
+}
+
+.introText {
+  font-family: 'Abhaya Libre', serif;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.nextBtn {
+  padding: 12px 30px;
+  background: transparent;
+  border: 1px solid rgba(172, 152, 212, 0.4);
+  border-radius: 10px;
+  color: var(--primary-color);
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+
+  &:hover { background: rgba(172, 152, 212, 0.15); border-color: var(--primary-color); }
+}
+
+.startMissionBtn {
+  padding: 16px 40px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+
+  &:hover { background: #C4B5FD; transform: scale(1.05); }
+}
+
+.hud {
+  position: absolute;
+  top: 15px; left: 20px; right: 60px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  font-size: 18px;
+  color: white;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+  .danger { color: #ff4444; }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 32px; height: 32px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  z-index: 20;
+
+  h2 { font-family: 'Abhaya Libre ExtraBold', serif; font-size: 32px; color: var(--primary-color); margin: 0; }
+  p { font-family: 'Abhaya Libre', serif; font-size: 18px; color: white; margin: 0; }
+  button { padding: 12px 30px; background: var(--primary-color); border: none; border-radius: 10px; color: white; font-size: 16px; cursor: pointer; }
+}

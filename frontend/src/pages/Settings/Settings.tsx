@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header } from '../../components/UI/Header/Header';
-import { BurgerMenu } from '../../components/UI/BurgerMenu/BurgerMenu';
-import { MenuContent } from '../../components/UI/MenuContent/MenuContent';
-import { useMenu } from '../../hooks/useMenu';
+import { Header } from '../../shared/components/Header/Header';
+import { BurgerMenu } from '../../shared/components/BurgerMenu/BurgerMenu';
+import { MenuContent } from '../../modules/missions/components/MenuContent/MenuContent';
+import { useMenu } from '../../modules/missions/hooks/useMenu';
 import styles from './Settings.module.scss';
 
 export const Settings: React.FC = () => {

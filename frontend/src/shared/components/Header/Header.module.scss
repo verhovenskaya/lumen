@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Jaro&display=swap');
+
+:root {
+  --primary-color: #AC98D4;
+}
+
+@mixin responsive-size(
+  $width,
+  $height,
+  $max-w: null,
+  $max-h: null,
+  $min-w: null,
+  $min-h: null
+) {
+  width: $width;
+  height: $height;
+
+  @if $max-w {
+    max-width: $max-w;
+  }
+
+  @if $max-h {
+    max-height: $max-h;
+  }
+
+  @if $min-w {
+    min-width: $min-w;
+  }
+
+  @if $min-h {
+    min-height: $min-h;
+  }
+}
+
+.headerCenter {
+  position: absolute;
+
+  left: 50%;
+  top: 20px;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  z-index: 50;
+
+  transition:
+    left 0.4s ease,
+    transform 0.4s ease;
+
+  &.shifted {
+    left: 20%;
+    transform: translateX(-50%);
+  }
+}
+
+.group2 {
+  position: relative;
+
+  @include responsive-size(75px, 75px);
+
+  z-index: 10;
+}
+
+.ellipse3 {
+  position: absolute;
+  inset: 0;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+}
+
+.ellipse1 {
+  position: absolute;
+
+  left: 10.22%;
+  right: 10.22%;
+  top: 10.27%;
+  bottom: 10.16%;
+
+  background: #202020;
+
+  border-radius: 50%;
+}
+
+.ellipse2 {
+  position: absolute;
+
+  left: 19.78%;
+  right: 19.78%;
+  top: 19.86%;
+  bottom: 19.75%;
+
+  background: var(--primary-color);
+
+  border-radius: 50%;
+}
+
+.ellipse4 {
+  position: absolute;
+
+  left: 65.33%;
+  right: 10.22%;
+  top: 0;
+  bottom: 75.57%;
+
+  background: var(--primary-color);
+
+  border-radius: 50%;
+}
+
+.lumen {
+  font-family: 'Jaro', sans-serif;
+
+  font-size: clamp(40px, 10vw, 96px);
+
+  color: white;
+
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.3);
+
+  .vowel {
+    color: #c4b5fd;
+
+    text-shadow:
+      0 0 15px rgba(196, 181, 253, 0.5);
+  }
+}
+
+.rightGroup {
+  position: absolute;
+
+  right: 30px;
+  top: 25px;
+
+  display: flex;
+  gap: 14px;
+
+  z-index: 100;
+}
+
+.actionButton {
+  width: 84px;
+  height: 64px;
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(196, 181, 253, 0.45);
+
+  background: #AC98D4;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+
+  box-shadow:
+    0 0 12px rgba(172, 152, 212, 0.35),
+    0 0 40px rgba(172, 152, 212, 0.18),
+    inset 0 2px 8px rgba(255, 255, 255, 0.18);
+
+  &:hover {
+    transform:
+      translateY(-2px)
+      scale(1.06);
+
+    background-color: #c4b5fd;
+
+    box-shadow:
+      0 0 18px rgba(196, 181, 253, 0.6),
+      0 0 60px rgba(172, 152, 212, 0.35),
+      inset 0 2px 10px rgba(255, 255, 255, 0.25);
+  }
+
+  &:active {
+    transform:
+      translateY(-1px)
+      scale(1.03);
+  }
+
+  &:hover::after {
+    content: attr(title);
+
+    position: absolute;
+
+    top: calc(100% + 10px);
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 8px 14px;
+
+    border-radius: 10px;
+
+    background: rgba(10, 10, 18, 0.96);
+
+    border: 1px solid rgba(196, 181, 253, 0.35);
+
+    color: #d8ccff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+
+    box-shadow:
+      0 0 15px rgba(172, 152, 212, 0.2);
+  }
+}
+
+.icon {
+  font-size: 28px;
+
+  filter:
+    brightness(0)
+    invert(1);
+
+  opacity: 0.95;
+}
+
+.profileButton {
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+}
+
+.profileCircle {
+  width: 26px;
+  height: 26px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.45),
+    0 0 24px rgba(255, 255, 255, 0.18);
+
+  position: relative;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    width: 36px;
+    height: 18px;
+
+    left: 50%;
+    bottom: -20px;
+
+    transform: translateX(-50%);
+
+    border-radius: 20px 20px 14px 14px;
+
+    background: white;
+
+    box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.35);
+  }
+}

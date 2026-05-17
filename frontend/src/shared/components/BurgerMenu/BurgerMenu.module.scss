@@ -1,0 +1,64 @@
+$menu-size: 45px;      
+$line-height: 10px;      
+$line-radius: 3px;      
+
+.burgerMenu {
+  position: absolute;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: $menu-size;
+  height: $menu-size;
+  left: 25px;
+  top: 30px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+}
+
+.rectangle27,
+.rectangle28,
+.rectangle29 {
+  width: 100%;
+  height: $line-height;
+  background: #D9D9D9;
+  border-radius: $line-radius;
+}
+
+.closedBurger {
+  position: absolute;
+  width: $menu-size;
+  height: $menu-size;
+  left: 20px;
+  top: 23px;
+  z-index: 202;
+  cursor: pointer;
+}
+
+.rectangle27Closed {
+  position: absolute;
+  width: 100%;
+  height: $line-height;
+  left: 0;
+  top: 50%;
+  margin-top: calc($line-height / 2);
+  background: #FFFFFF;
+  border-radius: $line-radius;
+  transform: rotate(45deg);
+}
+
+.rectangle29Closed {
+  position: absolute;
+  width: 100%;
+  height: $line-height;
+  left: 0;
+  top: 50%;
+  margin-top: calc($line-height / 2);
+  background: #FFFFFF;
+  border-radius: $line-radius;
+  transform: rotate(-45deg);
+}

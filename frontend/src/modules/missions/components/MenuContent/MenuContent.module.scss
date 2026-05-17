@@ -1,0 +1,140 @@
+:root {
+  --primary-color: #AC98D4;
+}
+
+.panel {
+  position: fixed;
+
+  width: 450px;
+  max-height: 80vh;
+
+  left: 10px;
+  top: 13px;
+
+  padding: 22px;
+
+  z-index: 200;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border-radius: 18px;
+
+  background: rgba(10, 8, 20, 0.95);
+
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(172, 152, 212, 0.2);
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.5);
+
+  animation: fadeIn 0.25s ease;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-8px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+.menuTitle {
+  margin: 8px 0 34px;
+
+  font-family: 'Abhaya Libre ExtraBold', serif;
+
+  font-size: 44px;
+  font-weight: 800;
+
+  letter-spacing: 4px;
+
+  color: var(--primary-color);
+
+  text-shadow:
+    0 0 15px rgba(172, 152, 212, 0.35);
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  padding: 20px 4px;
+
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateX(6px);
+
+    .icon {
+      color: var(--primary-color);
+
+      transform: scale(1.08);
+
+      filter:
+        drop-shadow(0 0 12px rgba(172, 152, 212, 0.6));
+    }
+
+    .menuLabel {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.icon {
+  width: 45px;
+  height: 45px;
+
+  color: #AC98D4;
+
+  flex-shrink: 0;
+
+  margin-left: -13px;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease,
+    filter 0.25s ease;
+
+  filter:
+    drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+}
+.menuLabel {
+  font-family: 'Abhaya Libre ExtraBold', serif;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  color: white;
+
+  letter-spacing: 1px;
+
+  transition: color 0.25s ease;
+}
