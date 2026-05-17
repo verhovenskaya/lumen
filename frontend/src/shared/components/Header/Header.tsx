@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
           title="Симуляция"
           onClick={handleSimulationClick}
         >
-          <FaGamepad className={styles.icon} />
+          <FaGamepad className={styles.icon1} />
         </button>
 
         {/* 2. Миссии */}
@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({
           title={isMissionsOpen ? 'Закрыть миссии' : 'Миссии'}
           onClick={handleMissionsClick}
         >
-          <FaRocket className={styles.icon} />
+          <FaRocket className={styles.icon2} />
         </button>
 
         {/* 3. Профиль */}
