@@ -4,6 +4,9 @@ import styles from './MissionPanel.module.scss';
 import { RoverGame } from '../../RoverGame/RoverGame';
 import { PuzzleGame } from '../../pages/PuzzleGame/PuzzleGame';
 import { AnomalyGame } from '../../AnomalyGame/AnomalyGame';
+import { VoyagerGame } from '../../voyager/VoyagerGame';
+import { Mars3Game } from '../../mars3/Mars3Game';
+import { PlanetaryWeatherCenter } from '../../PlanetaryWeatherCente/PlanetaryWeatherCenter';
 
 interface MissionPanelProps {
   missions: Mission[];
@@ -57,10 +60,19 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
         <RoverGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('rover_mission')} />
       )}
       {activeGame === 'puzzle' && (
-        <PuzzleGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('puzzle_mission')} />
+        <PuzzleGame onClose={() => setActiveGame(null)} />
       )}
       {activeGame === 'anomaly' && (
         <AnomalyGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('anomaly_mission')} />
+      )}
+      {activeGame === 'voyager' && (
+        <VoyagerGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('voyager_mission')} />
+      )}
+      {activeGame === 'mars3' && (
+        <Mars3Game onClose={() => setActiveGame(null)} onWin={() => handleGameWin('mars3_mission')} />
+      )}
+      {activeGame === 'weatherGame' && (
+        <PlanetaryWeatherCenter onClose={() => setActiveGame(null)} />
       )}
 
       <div className={styles.panel} style={{ left: position.x, top: position.y }}>

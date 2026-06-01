@@ -96,6 +96,7 @@ const SceneContent: React.FC<{ activePlanet: PlanetConfig; viewMode: ViewMode; o
       />
       
       <SceneController viewMode={viewMode} planetId={activePlanet.id} />
+      
     </>
   );
 };

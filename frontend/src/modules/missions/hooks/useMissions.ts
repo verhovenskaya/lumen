@@ -45,6 +45,36 @@ const defaultMissions: Mission[] = [
     reward: 'Значок "Детектив"',
     game: 'anomaly',
   },
+  {
+  id: 'voyager_mission',
+  title: 'Вояджер-1: Последний сигнал',
+  description: 'Поймай сигнал Вояджера-1 и передай данные на Землю',
+  progress: 0,
+  maxProgress: 1,
+  completed: false,
+  reward: 'Значок "Оператор DSN"',
+  game: 'voyager',
+},
+{
+  id: 'mars3_mission',
+  title: 'mars3: Последний сигнал',
+  description: 'Поймай сигнал Вояджера-1 и передай данные на Землю',
+  progress: 0,
+  maxProgress: 1,
+  completed: false,
+  reward: 'Значок "Оператор DSN"',
+  game: 'mars3',
+},
+{
+  id: 'weather_mission',
+  title: 'Атмосферная обсерватория',
+  description: 'Тестовый запуск модуля погоды',
+  progress: 0,
+  maxProgress: 1,
+  completed: false,
+  reward: 'Тест',
+  game: 'weatherGame',
+}
 ];
 
 const loadMissions = (): Mission[] => {

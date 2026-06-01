@@ -1,18 +1,20 @@
-:root { --primary-color: #AC98D4; }
+:root {
+  --primary-color: #AC98D4;
+}
 
 .overlay {
   position: fixed; inset: 0;
   background: rgba(0, 0, 0, 0.4);
   display: flex; align-items: center; justify-content: center;
   z-index: 1000;
+  &.maximized { background: rgba(0, 0, 0, 1); }
 }
 
 .container {
   position: relative;
-  width: 90vw; height: 85vh;
+  width: 92vw; height: 88vh;
   background: transparent;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 8px; overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   display: flex; flex-direction: column;
   &.fullscreen { width: 100vw !important; height: 100vh !important; border-radius: 0; }
@@ -20,77 +22,190 @@
 
 .titleBar {
   display: flex; align-items: center; justify-content: space-between;
-  height: 32px; padding: 0 10px;
+  height: 38px; padding: 0 14px;
   background: rgba(195, 181, 253, 0.25);
   backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   flex-shrink: 0; user-select: none; cursor: default;
 }
-.titleLeft { display: flex; align-items: center; gap: 8px; }
-.titleText { font-family: 'Segoe UI', sans-serif; font-size: 12px; color: #fff; }
+.titleLeft { display: flex; align-items: center; gap: 10px; }
+.titleText { font-family: 'Segoe UI', sans-serif; font-size: 14px; color: #fff; }
 .titleButtons { display: flex; }
 .titleBtn {
-  width: 46px; height: 32px; background: transparent; border: none;
-  color: rgba(255,255,255,0.8); font-size: 12px; cursor: pointer;
+  width: 50px; height: 38px; background: transparent; border: none;
+  color: rgba(255,255,255,0.8); font-size: 14px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background 0.15s;
   &:hover { background: rgba(255,255,255,0.15); }
 }
 .closeWinBtn:hover { background: #e81123 !important; color: #fff !important; }
 
-.windowBody { flex: 1; overflow: hidden; position: relative; background: #000; }
+.windowBody { flex: 1; overflow-y: auto; position: relative; background: #0a0a1a; }
 
 .introScreen {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  height: 100%; gap: 14px; text-align: center; padding: 40px;
+  height: 100%; gap: 18px; text-align: center; padding: 50px;
 }
-.introTitle { font-family: 'Segoe UI', sans-serif; font-size: 26px; color: var(--primary-color); margin: 0; font-weight: 600; }
-.introText { font-family: 'Segoe UI', sans-serif; font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.5; }
-.nextBtn, .startMissionBtn {
-  padding: 8px 20px; border-radius: 4px;
-  font-family: 'Segoe UI', sans-serif; font-size: 13px; cursor: pointer; margin-top: 6px;
+.introTitle { font-family: 'Segoe UI', sans-serif; font-size: 34px; color: var(--primary-color); margin: 0; font-weight: 600; }
+.introText { font-family: 'Segoe UI', sans-serif; font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+.nextBtn, .startMissionBtn, .backBtn {
+  padding: 12px 28px; border-radius: 6px;
+  font-family: 'Segoe UI', sans-serif; font-size: 16px; cursor: pointer; margin-top: 8px;
 }
 .nextBtn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #ddd; &:hover { background: rgba(255,255,255,0.15); } }
-.startMissionBtn { background: var(--primary-color); border: none; color: #fff; font-size: 15px; padding: 10px 30px; &:hover { background: #C4B5FD; } }
+.startMissionBtn { background: var(--primary-color); border: none; color: #fff; font-size: 18px; padding: 14px 36px; &:hover { background: #C4B5FD; } }
+.backBtn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; font-size: 16px; margin-top: 24px; padding: 10px 24px; &:hover { background: rgba(255,255,255,0.08); } }
+
+.starLegend {
+  display: flex; gap: 28px; margin-top: 14px;
+  span { font-family: 'Segoe UI', sans-serif; font-size: 16px; color: rgba(255,255,255,0.5); }
+}
+
+.menuScreen {
+  padding: 40px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 32px;
+}
+.menuTitle {
+  font-family: 'Segoe UI', sans-serif; font-size: 28px; color: var(--primary-color); margin: 0;
+}
+.satelliteGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px; max-width: 750px;
+}
+.satelliteCard {
+  background: rgba(15, 12, 30, 0.8);
+  border: 1px solid rgba(172, 152, 212, 0.2);
+  border-radius: 16px; padding: 24px;
+  cursor: pointer; transition: all 0.2s;
+  text-align: center;
+  &:hover { border-color: rgba(172, 152, 212, 0.5); box-shadow: 0 0 24px rgba(172, 152, 212, 0.15); transform: translateY(-3px); }
+}
+.satelliteThumb {
+  width: 160px; height: 160px; object-fit: cover;
+  border-radius: 12px; margin-bottom: 14px;
+}
+.satelliteCardName {
+  font-family: 'Segoe UI', sans-serif; font-size: 18px; color: #fff; font-weight: 600;
+}
+.satelliteCardYear {
+  font-family: 'Segoe UI', sans-serif; font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 6px;
+}
+
+.satelliteInfoScreen {
+  display: flex; gap: 40px; padding: 40px; height: 100%; align-items: flex-start;
+}
+.satelliteInfoLeft { flex-shrink: 0; }
+.satelliteInfoImage {
+  width: 260px; height: 260px; object-fit: cover;
+  border-radius: 20px; border: 2px solid rgba(172, 152, 212, 0.3);
+}
+.satelliteInfoRight { flex: 1; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; max-height: 100%; }
+.satelliteInfoTitle {
+  font-family: 'Abhaya Libre ExtraBold', serif; font-size: 36px; color: var(--primary-color); margin: 0;
+}
+.satelliteInfoStats {
+  display: flex; gap: 20px; flex-wrap: wrap;
+}
+.statItem {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 12px 20px; background: rgba(255,255,255,0.04);
+  border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);
+}
+.statLabel { font-family: 'Segoe UI', sans-serif; font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+.statValue { font-family: 'Segoe UI', sans-serif; font-size: 18px; color: #fff; }
+.satelliteInfoDesc {
+  font-family: 'Segoe UI', sans-serif; font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0;
+}
+.funFact {
+  background: rgba(172, 152, 212, 0.08);
+  border: 1px solid rgba(172, 152, 212, 0.2);
+  border-radius: 10px; padding: 16px 20px;
+  p { font-family: 'Segoe UI', sans-serif; font-size: 15px; color: rgba(255,255,255,0.6); margin: 8px 0 0; line-height: 1.5; }
+}
+.funFactLabel { font-family: 'Segoe UI', sans-serif; font-size: 12px; color: var(--primary-color); letter-spacing: 2px; font-weight: 600; }
+.levelSelectTitle { font-family: 'Segoe UI', sans-serif; font-size: 16px; color: rgba(255,255,255,0.5); margin: 20px 0 0; text-transform: uppercase; letter-spacing: 1px; }
+.levelGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.levelCard {
+  background: rgba(15, 12, 30, 0.8);
+  border: 1px solid rgba(172, 152, 212, 0.2);
+  border-radius: 12px; padding: 20px;
+  cursor: pointer; text-align: center;
+  transition: all 0.2s;
+  &:hover { border-color: var(--primary-color); box-shadow: 0 0 20px rgba(172, 152, 212, 0.2); }
+}
+.levelName { font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #fff; font-weight: 600; }
+.levelPieces { font-family: 'Segoe UI', sans-serif; font-size: 13px; color: rgba(255,255,255,0.4); margin: 6px 0; }
+.levelStars { font-size: 20px; color: #ffaa00; margin: 8px 0; }
+.levelBestTime { font-family: 'Segoe UI', sans-serif; font-size: 12px; color: rgba(255,255,255,0.3); }
 
 .hud {
-  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 16px; z-index: 10;
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 16px; z-index: 10; flex-wrap: wrap; justify-content: center;
 }
 .hudItem {
-  padding: 10px 18px; background: rgba(15,12,30,0.8); backdrop-filter: blur(10px);
+  padding: 10px 18px; background: rgba(15,12,30,0.85); backdrop-filter: blur(10px);
   border: 1px solid rgba(172,152,212,0.3); border-radius: 12px;
-  display: flex; align-items: center; gap: 8px; font-size: 16px; color: #fff;
+  display: flex; align-items: center; gap: 10px; font-size: 16px; color: #fff;
   box-shadow: 0 0 15px rgba(172,152,212,0.1); white-space: nowrap;
 }
 .hudLabel { font-family: 'Abhaya Libre', serif; font-size: 13px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
-.hudValue { font-family: 'Abhaya Libre ExtraBold', serif; font-size: 20px; color: var(--primary-color); text-shadow: 0 0 8px rgba(172,152,212,0.5); }
-.hudTimer { font-family: 'Abhaya Libre ExtraBold', serif; font-size: 20px; color: var(--primary-color); text-shadow: 0 0 8px rgba(172,152,212,0.5); &.danger { color: #ff6666; animation: pulse 1s infinite; } }
+.hudValue { font-family: 'Abhaya Libre ExtraBold', serif; font-size: 19px; color: var(--primary-color); text-shadow: 0 0 8px rgba(172,152,212,0.5); }
+.hudTimer { font-family: 'Abhaya Libre ExtraBold', serif; font-size: 19px; color: var(--primary-color); &.danger { color: #ff6666; animation: pulse 1s infinite; } }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
-.puzzleArea { position: relative; width: 100%; height: calc(100% - 0px); overflow: hidden; }
-.targetSpot { position: absolute; border: 2px dashed rgba(172,152,212,0.3); border-radius: 8px; background: rgba(255,255,255,0.03); }
+.puzzleArea { position: relative; width: 100%; height: calc(100% - 70px); overflow: hidden; margin-top: 70px; }
+.targetSpot { position: absolute; border: 2px dashed rgba(172,152,212,0.3); border-radius: 10px; background: rgba(255,255,255,0.03); }
 .piece {
-  position: absolute; border-radius: 12px; cursor: grab;
+  position: absolute; border-radius: 14px; cursor: grab;
   transition: box-shadow 0.15s; user-select: none; z-index: 5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   &.dragging { cursor: grabbing; z-index: 20; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
-  &.placed { cursor: default; z-index: 1; opacity: 0.9; }
+  &.placed { cursor: default; z-index: 1; opacity: 0.9; box-shadow: none; }
 }
-
-.completeScreen { display: flex; align-items: center; justify-content: center; height: 100%; gap: 40px; padding: 40px; }
-.completeImage { border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 2px rgba(172,152,212,0.4); &.glow { animation: glowPulse 1s ease; } }
-@keyframes glowPulse { 0%{box-shadow:0 0 0 2px rgba(172,152,212,0.4)} 30%{box-shadow:0 0 30px rgba(172,152,212,0.8),0 0 60px rgba(172,152,212,0.4)} 100%{box-shadow:0 0 0 2px rgba(172,152,212,0.4)} }
-.fullImage { display: block; max-width: 300px; max-height: 300px; }
-.completeInfo { max-width: 400px; }
-.completeTitle { font-family: 'Abhaya Libre ExtraBold', serif; font-size: 28px; color: var(--primary-color); margin: 0 0 12px; }
-.completeText { font-family: 'Abhaya Libre', serif; font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0 0 20px; }
 
 .gameOverlay {
   position: absolute; inset: 0; background: rgba(0,0,0,0.85);
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 10px; z-index: 30;
-  h2 { font-family: 'Segoe UI', sans-serif; font-size: 24px; color: var(--primary-color); margin: 0; }
-  button { padding: 8px 20px; background: var(--primary-color); border: none; border-radius: 4px; color: #fff; font-size: 13px; cursor: pointer; }
+  align-items: center; justify-content: center; gap: 14px; z-index: 30;
+  h2 { font-family: 'Segoe UI', sans-serif; font-size: 30px; color: var(--primary-color); margin: 0; }
+  p { color: #ccc; font-family: 'Segoe UI', sans-serif; font-size: 17px; margin: 0; }
+}
+.starsEarned { display: flex; gap: 10px; font-size: 44px; }
+.starIcon { color: rgba(255,255,255,0.15); transition: all 0.3s; }
+.starActive { color: #ffaa00; text-shadow: 0 0 15px rgba(255, 170, 0, 0.6); animation: starPop 0.5s ease-out; }
+@keyframes starPop { 0% { transform: scale(0); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.gameOverButtons { display: flex; gap: 14px; margin-top: 8px;
+  button {
+    padding: 12px 28px; border-radius: 6px;
+    font-family: 'Segoe UI', sans-serif; font-size: 16px; cursor: pointer;
+    background: var(--primary-color); border: none; color: #fff;
+    &:hover { background: #C4B5FD; }
+    &:last-child { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #ddd; &:hover { background: rgba(255,255,255,0.15); } }
+  }
+}
+
+.satelliteInfoRight::-webkit-scrollbar { width: 6px; }
+.satelliteInfoRight::-webkit-scrollbar-track { background: transparent; }
+.satelliteInfoRight::-webkit-scrollbar-thumb { background: rgba(172, 152, 212, 0.3); border-radius: 3px; }
+
+@media (max-width: 900px) {
+  .container { width: 100vw; height: 100vh; border-radius: 0; }
+  .satelliteGrid { grid-template-columns: 1fr; gap: 16px; max-width: 350px; }
+  .satelliteThumb { width: 120px; height: 120px; }
+  .satelliteCardName { font-size: 16px; }
+  .satelliteInfoScreen { flex-direction: column; padding: 20px; gap: 20px; }
+  .satelliteInfoImage { width: 180px; height: 180px; }
+  .satelliteInfoTitle { font-size: 26px; }
+  .levelGrid { grid-template-columns: repeat(2, 1fr); }
+  .introTitle { font-size: 24px; }
+  .introText { font-size: 15px; }
+  .menuTitle { font-size: 22px; }
+  .hud { gap: 8px; }
+  .hudItem { padding: 6px 10px; }
+  .hudLabel { font-size: 10px; }
+  .hudValue { font-size: 15px; }
+  .hudTimer { font-size: 15px; }
 }

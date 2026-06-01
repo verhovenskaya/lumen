@@ -1,0 +1,893 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.container {
+  width: 1000px;
+  height: 720px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 10px;
+  background: radial-gradient(circle at center, #0f1730 0%, #070d1d 60%, #02050d 100%);
+  box-shadow: 0 0 40px rgba(124,199,255,.15), 0 0 120px rgba(124,199,255,.08);
+}
+
+.titleBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(196, 181, 253, 0.3);
+}
+
+.title {
+  color: #c4b5fd;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.closeBtn {
+  background: rgba(196, 181, 253, 0.1);
+  border: 1px solid rgba(196, 181, 253, 0.3);
+  color: #c4b5fd;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(196, 181, 253, 0.2);
+    border-color: #c4b5fd;
+  }
+}
+
+.novel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.novelText {
+  color: #e0e0e0;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-bottom: 40px;
+}
+
+.novelBtn {
+  background: linear-gradient(135deg, #2a3f6e, #1a2a4a);
+  border: 1px solid rgba(196, 181, 253, 0.5);
+  color: #c4b5fd;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #3a4f7e, #2a3a5a);
+    border-color: #c4b5fd;
+    box-shadow: 0 0 15px rgba(196, 181, 253, 0.3);
+  }
+}
+
+.briefing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.briefingTitle {
+  color: #c4b5fd;
+  font-size: 28px;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+.briefingText {
+  color: #b0b0b0;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.startBtn {
+  background: linear-gradient(135deg, #4a6f9e, #2a4a7a);
+  border: 1px solid rgba(196, 181, 253, 0.6);
+  color: white;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #5a7fae, #3a5a8a);
+    border-color: #c4b5fd;
+    box-shadow: 0 0 20px rgba(196, 181, 253, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+.game {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.terminal {
+  flex: 1;
+  display: flex;
+  background: #06080f;
+}
+
+.sidebar {
+  width: 260px;
+  border-right: 1px solid rgba(196,181,253,.25);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.telemetryBlock {
+  background: rgba(196,181,253,.05);
+  border: 1px solid rgba(196,181,253,.2);
+  padding: 14px;
+  border-radius: 10px;
+}
+
+.telemetryTitle {
+  color: #c4b5fd;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.telemetryValue {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.statusText {
+  color: #8fb8ff;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.mapArea {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marsMap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+
+// ТЕКСТУРА МАРСА
+.marsTexture {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heatmap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: screen;
+}
+
+// ЕДИНЫЙ КУРСОР (красный круг + крест)
+.cursor {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.cursorDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(255, 68, 68, 0.8);
+}
+
+.cursorCrossH {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #ff4444;
+  transform: translateY(-50%);
+  box-shadow: 0 0 4px rgba(255, 68, 68, 0.8);
+}
+
+.cursorCrossV {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #ff4444;
+  transform: translateX(-50%);
+  box-shadow: 0 0 4px rgba(255, 68, 68, 0.8);
+}
+
+.scanPulse {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #c4b5fd;
+  transform: translate(-50%, -50%);
+  animation: pulseScan 1s ease-out;
+  pointer-events: none;
+  z-index: 15;
+}
+
+@keyframes pulseScan {
+  from {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+  }
+  to {
+    width: 260px;
+    height: 260px;
+    opacity: 0;
+  }
+}
+
+.logPanel {
+  height: 110px;
+  border-top: 1px solid rgba(196,181,253,.2);
+  background: #05060a;
+  color: #8fb8ff;
+  font-family: monospace;
+  padding: 12px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+
+.gameOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.archiveScreen {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, rgba(196,181,253,.12), transparent 70%);
+}
+
+.reportCard {
+  width: 700px;
+  background: rgba(0,0,0,.85);
+  border: 1px solid rgba(196,181,253,.5);
+  border-radius: 16px;
+  padding: 40px;
+  color: white;
+  text-align: center;
+}
+
+.reportTitle {
+  color: #c4b5fd;
+  font-size: 24px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.reportSubtitle {
+  color: #ffd700;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.reportText {
+  line-height: 1.7;
+  margin-bottom: 30px;
+  color: #d0d0d0;
+}
+
+.reportBtn {
+  background: linear-gradient(135deg, #4a6f9e, #2a4a7a);
+  border: 1px solid rgba(196, 181, 253, 0.6);
+  color: white;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #5a7fae, #3a5a8a);
+    border-color: #c4b5fd;
+    box-shadow: 0 0 15px rgba(196, 181, 253, 0.3);
+  }
+}
+
+.loseContainer {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 68, 68, 0.5);
+  border-radius: 16px;
+  padding: 40px 60px;
+}
+
+.loseTitle {
+  color: #ff4444;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.loseText {
+  color: #ff8888;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.retryBtn {
+  background: linear-gradient(135deg, #8b3a3a, #5a2a2a);
+  border: 1px solid rgba(255, 68, 68, 0.5);
+  color: #ffaaaa;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #9b4a4a, #6a3a3a);
+    border-color: #ff4444;
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+  }
+}
+// ========== НОВЫЙ ЭКРАН ПОБЕДЫ ==========
+.victoryCard {
+  width: 850px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(196, 181, 253, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+  color: white;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 50px rgba(196, 181, 253, 0.2);
+  animation: victoryAppear 0.5s ease-out;
+}
+
+@keyframes victoryAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.victoryHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(196, 181, 253, 0.3);
+}
+
+.victoryIcon {
+  font-size: 32px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.victoryTitle {
+  color: #ffd700;
+  font-size: 28px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.victoryContent {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.victoryInfo {
+  flex: 1;
+  padding: 20px;
+  background: rgba(196, 181, 253, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(196, 181, 253, 0.2);
+}
+
+.victorySubtitle {
+  color: #c4b5fd;
+  font-size: 18px;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(196, 181, 253, 0.3);
+}
+
+.victoryText {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #d0d0d0;
+  margin-bottom: 20px;
+}
+
+.victoryStats {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(196, 181, 253, 0.1);
+}
+
+.statItem:last-child {
+  border-bottom: none;
+}
+
+.statLabel {
+  color: #8fb8ff;
+}
+
+.statValue {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.futureMission {
+  flex: 1;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(30, 50, 80, 0.4), rgba(15, 25, 45, 0.6));
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  text-align: center;
+}
+
+.futureBadge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: #000;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.landerImage {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 0 20px rgba(196, 181, 253, 0.5));
+    transition: transform 0.3s;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.landerTitle {
+  color: #ffd700;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.landerDescription {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #c0c0c0;
+  margin-bottom: 15px;
+}
+
+.landerSpecs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  color: #8fb8ff;
+}
+
+.spec {
+  display: block;
+  text-align: left;
+  padding: 4px 8px;
+  background: rgba(196, 181, 253, 0.05);
+  border-radius: 4px;
+}
+
+.victoryFooter {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(196, 181, 253, 0.3);
+}
+
+.victoryBtn {
+  background: linear-gradient(135deg, #4a6f9e, #2a4a7a);
+  border: 1px solid rgba(196, 181, 253, 0.6);
+  color: white;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #5a7fae, #3a5a8a);
+    border-color: #c4b5fd;
+    box-shadow: 0 0 15px rgba(196, 181, 253, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+.shareBtn {
+  background: linear-gradient(135deg, #2a6e4a, #1a4a3a);
+  border: 1px solid rgba(100, 255, 150, 0.6);
+  color: #a0ffc0;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #3a7e5a, #2a5a4a);
+    border-color: #80ffa0;
+    box-shadow: 0 0 15px rgba(100, 255, 150, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+// LOSE стили (оставляем как есть, но добавляем небольшие улучшения)
+.loseContainer {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(255, 68, 68, 0.5);
+  border-radius: 20px;
+  padding: 40px 60px;
+  animation: shake 0.5s ease-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.loseTitle {
+  color: #ff4444;
+  font-size: 32px;
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.loseText {
+  color: #ff8888;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.retryBtn {
+  background: linear-gradient(135deg, #8b3a3a, #5a2a2a);
+  border: 1px solid rgba(255, 68, 68, 0.5);
+  color: #ffaaaa;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #9b4a4a, #6a3a3a);
+    border-color: #ff4444;
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+    transform: scale(1.02);
+  }
+}
+
+// ========== ОБРАЗОВАТЕЛЬНЫЕ СТИЛИ ==========
+
+// Брифинг с параметрами
+.eduBriefing {
+  background: rgba(196, 181, 253, 0.08);
+  border: 1px solid rgba(196, 181, 253, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 800px;
+}
+
+.eduBriefing h3 {
+  color: #ffd700;
+  font-size: 16px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.paramsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.paramCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 3px solid #c4b5fd;
+}
+
+.paramIcon {
+  font-size: 28px;
+}
+
+.paramName {
+  font-size: 11px;
+  color: #8fb8ff;
+  letter-spacing: 1px;
+}
+
+.paramValue {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.paramDesc {
+  font-size: 10px;
+  color: #aaa;
+}
+
+// Сигнал бар
+.signalBar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.signalFill {
+  height: 100%;
+  background: linear-gradient(90deg, #4a6f9e, #c4b5fd);
+  border-radius: 2px;
+  transition: width 0.1s ease;
+}
+
+// Предупреждения
+.telemetryWarning {
+  font-size: 10px;
+  margin-top: 6px;
+  color: #ff8888;
+}
+
+// Образовательный блок в игре
+.gameEduBlock {
+  background: rgba(196, 181, 253, 0.05);
+  border: 1px solid rgba(196, 181, 253, 0.15);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: auto;
+}
+
+.eduMiniTitle {
+  font-size: 9px;
+  color: #c4b5fd;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.eduMiniText {
+  font-size: 10px;
+  color: #aaa;
+  line-height: 1.3;
+}
+
+// Образовательный тост
+.eduToast {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  animation: toastSlide 3s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes toastSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+.eduToastContent {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid #c4b5fd;
+  border-radius: 30px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 20px rgba(196, 181, 253, 0.3);
+}
+
+.eduToastIcon {
+  font-size: 18px;
+}
+
+.eduToastText {
+  font-size: 12px;
+  color: #c4b5fd;
+}
+
+// Лог с иконкой
+.logPanel {
+  height: 110px;
+  border-top: 1px solid rgba(196,181,253,.2);
+  background: #05060a;
+  color: #8fb8ff;
+  font-family: monospace;
+  padding: 12px;
+  overflow-y: auto;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logIcon {
+  font-size: 16px;
+}
+
+// Образовательный итог на экране победы
+.eduSummary {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 15px;
+}
+
+.eduSummary h4 {
+  font-size: 12px;
+  color: #ffd700;
+  margin-bottom: 8px;
+}
+
+.eduSummary p {
+  font-size: 11px;
+  color: #bbb;
+  margin: 4px 0;
+  line-height: 1.3;
+}
+
+// Образовательный блок при поражении
+.loseEdu {
+  background: rgba(255, 68, 68, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 15px 0;
+  font-size: 12px;
+  color: #ffaaaa;
+  max-width: 300px;
+}
+
+// ========== ОСТАЛЬНЫЕ СТИЛИ (СОХРАНЯЕМ) ==========
+
+// ... твои остальные стили из прошлого сообщения ...
