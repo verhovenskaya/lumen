@@ -1,0 +1,299 @@
+.panelOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.panel {
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  width: 600px;
+  max-height: 800px;
+  background: rgba(10, 8, 20, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(172, 152, 212, 0.3);
+  overflow-y: auto;
+  pointer-events: auto;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(172, 152, 212, 0.5);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba(172, 152, 212, 0.7);
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+  
+  &:hover {
+    background: rgba(231, 189, 0, 0.2);
+    border-color: var(--accent-color);
+  }
+}
+
+.content {
+  padding: 24px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  font-family: 'Abhaya Libre ExtraBold', serif;
+  color: var(--accent-color);
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+  
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(172, 152, 212, 0.2);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  text-align: center;
+  padding: 40px 20px;
+  
+  p {
+    color: #ff6b6b;
+    margin-bottom: 16px;
+  }
+  
+  button {
+    background: var(--primary-color);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    
+    &:hover {
+      background: var(--accent-color);
+    }
+  }
+}
+
+.featuredImage {
+  margin-bottom: 28px;
+}
+
+.featuredWrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  
+  &:hover .featuredOverlay {
+    opacity: 1;
+  }
+}
+
+.featuredImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.featuredOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 20px 12px 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: white;
+  }
+  
+  .date {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 12px;
+}
+
+.gallery {
+  margin-top: 24px;
+  
+  h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    color: var(--primary-color);
+  }
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.galleryItem {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  &:hover {
+    transform: scale(1.02);
+    border-color: var(--primary-color);
+    
+    .galleryOverlay {
+      opacity: 1;
+    }
+  }
+  
+  &.active {
+    border-color: var(--accent-color);
+  }
+}
+
+.galleryOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  padding: 20px 8px 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.galleryTitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.credit {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  
+  p {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+  }
+}
+
+// PlanetInfoPanel.module.scss
+
+.placeholderImage {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 12px;
+  margin-top: 20px;
+  opacity: 0.5;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}

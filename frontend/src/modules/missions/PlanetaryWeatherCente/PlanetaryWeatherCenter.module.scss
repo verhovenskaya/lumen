@@ -1,0 +1,361 @@
+:root {
+  --primary-color: #AC98D4;
+  --primary-light: #C4B5FD;
+  --primary-pastel: #B8A6DA;
+  --primary-glow: rgba(172, 152, 212, 0.5);
+  --primary-glow-strong: rgba(172, 152, 212, 0.7);
+  --bg-window: rgba(18, 16, 26, 0.92);
+  --bg-panel: rgba(13, 12, 20, 0.85);
+  --border-light: rgba(255, 255, 255, 0.06);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-muted: rgba(255, 255, 255, 0.25);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.container {
+  position: relative;
+  width: 85vw;
+  height: 80vh;
+  min-width: 1000px;
+  min-height: 600px;
+  background: var(--bg-window);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+
+  &.fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    min-width: unset;
+    min-height: unset;
+    border-radius: 0;
+  }
+}
+
+.titleBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 12px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+  user-select: none;
+  cursor: default;
+}
+
+.titleLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.titleText {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.titleButtons {
+  display: flex;
+}
+
+.titleBtn {
+  width: 46px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.closeWinBtn:hover {
+  background: #e81123 !important;
+  color: #fff !important;
+}
+
+.windowBody {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.introScreen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(172, 152, 212, 0.03), rgba(0, 0, 0, 0.2));
+}
+
+.introTitle {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: 6px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.introText {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.startBtn {
+  margin-top: 20px;
+  padding: 10px 32px;
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(172, 152, 212, 0.15);
+    border-color: var(--primary-light);
+    box-shadow: 0 0 12px var(--primary-glow);
+  }
+}
+
+.planetBar {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.planetDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  &.active {
+    background: var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-glow);
+  }
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+}
+
+.scenePanel {
+  flex: 2;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.infoPanel {
+  width: 280px;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.planetName {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.dataSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dataRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 0;
+}
+
+.dataRowFull {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.dataLabel {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dataValue {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.dataValueSmall {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 4px 0;
+}
+
+.eventsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eventsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eventButton {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+
+  &:hover {
+    background: var(--primary-light);
+    transform: translateX(2px);
+    box-shadow: 0 0 16px var(--primary-glow-strong);
+  }
+
+  &.eventActive {
+    background: var(--primary-light);
+    box-shadow: 0 0 20px var(--primary-glow-strong);
+    transform: translateX(2px);
+  }
+}
+
+.eventTitle {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+.eventDescription {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding: 12px;
+  background: rgba(172, 152, 212, 0.08);
+  border-radius: 8px;
+  border-left: 2px solid var(--primary-color);
+  margin-top: 4px;
+}
+
+.dataSource {
+  margin-top: auto;
+  padding-top: 16px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 9px;
+  color: var(--text-muted);
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+}
+
+.hint {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.infoPanel::-webkit-scrollbar {
+  width: 3px;
+}
+
+.infoPanel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.infoPanel::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 2px;
+}
