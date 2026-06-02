@@ -10,55 +10,43 @@ import {
 
 import { generateToken } from "../../utils/jwt";
 
-export const register = async (
-  username: string,
-  password: string
-) => {
-  const existingUser =
-    await findUserByUsername(username);
+export const register = async (username: string, password: string) => {
+  const existingUser = await findUserByUsername(username);
 
   if (existingUser) {
     throw new Error("Пользователь уже существует");
   }
 
-  const passwordHash =
-    await hashPassword(password);
+  const passwordHash = await hashPassword(password);
+  const user = await createUser(username, passwordHash);
 
-  const user = await createUser(
-    username,
-    passwordHash
-  );
-
-  const token = generateToken(user.id);
+  const token = generateToken(user.id); // user.id должен быть number
+  console.log("Generated token for user:", user.id);
 
   return {
-    user,
+    user: {
+      id: user.id,
+      username: user.username,
+    },
     token,
   };
 };
 
-export const login = async (
-  username: string,
-  password: string
-) => {
-  const user =
-    await findUserByUsername(username);
+export const login = async (username: string, password: string) => {
+  const user = await findUserByUsername(username);
 
   if (!user) {
     throw new Error("Неверный логин или пароль");
   }
 
-  const isValid =
-    await comparePassword(
-      password,
-      user.password_hash
-    );
+  const isValid = await comparePassword(password, user.password_hash);
 
   if (!isValid) {
     throw new Error("Неверный логин или пароль");
   }
 
   const token = generateToken(user.id);
+  console.log("Generated token for user:", user.id);
 
   return {
     token,
