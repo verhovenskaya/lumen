@@ -5,7 +5,6 @@ import { RoverGame } from '../../RoverGame/RoverGame';
 import { PuzzleGame } from '../../pages/PuzzleGame/PuzzleGame';
 import { AnomalyGame } from '../../AnomalyGame/AnomalyGame';
 import { VoyagerGame } from '../../voyager/VoyagerGame';
-import { Mars3Game } from '../../mars3/Mars3Game';
 import { PlanetaryWeatherCenter } from '../../PlanetaryWeatherCente/PlanetaryWeatherCenter';
 
 interface MissionPanelProps {
@@ -67,9 +66,6 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
       )}
       {activeGame === 'voyager' && (
         <VoyagerGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('voyager_mission')} />
-      )}
-      {activeGame === 'mars3' && (
-        <Mars3Game onClose={() => setActiveGame(null)} onWin={() => handleGameWin('mars3_mission')} />
       )}
       {activeGame === 'weatherGame' && (
         <PlanetaryWeatherCenter onClose={() => setActiveGame(null)} />
