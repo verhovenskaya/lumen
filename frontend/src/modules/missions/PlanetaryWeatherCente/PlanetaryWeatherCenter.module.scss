@@ -199,7 +199,7 @@
 }
 
 .infoPanel {
-  width: 280px;
+  width: 380px;
   background: var(--bg-panel);
   border-left: 1px solid var(--border-light);
   display: flex;
@@ -211,7 +211,7 @@
 
 .planetName {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 24px;
+  font-size: 34px;
   font-weight: 300;
   letter-spacing: 2px;
   color: var(--text-primary);
@@ -223,7 +223,7 @@
 .dataSection {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 22px;
 }
 
 .dataRow {
@@ -242,7 +242,7 @@
 
 .dataLabel {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 400;
   color: var(--text-muted);
   letter-spacing: 0.5px;
@@ -251,14 +251,14 @@
 
 .dataValue {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 400;
   color: var(--text-primary);
 }
 
 .dataValueSmall {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 11px;
+  font-size: 21px;
   color: var(--text-secondary);
   line-height: 1.4;
 }
@@ -306,7 +306,7 @@
 
 .eventTitle {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 500;
   color: var(--text-primary);
   letter-spacing: 0.3px;
@@ -314,7 +314,7 @@
 
 .eventDescription {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 11px;
+  font-size: 20px;
   color: var(--text-secondary);
   line-height: 1.5;
   padding: 12px;
@@ -328,7 +328,7 @@
   margin-top: auto;
   padding-top: 16px;
   font-family: 'Segoe UI', sans-serif;
-  font-size: 9px;
+  font-size: 20px;
   color: var(--text-muted);
   text-align: center;
   border-top: 1px solid var(--border-light);
@@ -340,7 +340,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-family: 'Segoe UI', sans-serif;
-  font-size: 10px;
+  font-size: 20px;
   color: var(--text-muted);
   letter-spacing: 1px;
   z-index: 10;

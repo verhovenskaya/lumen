@@ -1,6 +1,6 @@
 // src/simulation/components/SimulationScene.tsx
 
-import React, { Suspense, useState, useRef, useCallback } from 'react';
+import React, { Suspense, useState, useRef, useCallback, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
 import { Planet } from '../../planets/components/Planet';
@@ -16,53 +16,87 @@ import { type SimulationPlanet } from '../simulation.config';
 import * as THREE from 'three';
 import styles from '../../planets/components/Canvas3D.module.scss';
 
-// Компонент для управления камерой при выборе планеты
+// Глобальное хранилище позиций планет
+const planetPositions: Record<string, THREE.Vector3> = {};
+
 const CameraController = ({ 
   targetPlanet, 
-  isAnimating 
+  isAnimating,
+  onAnimationComplete,
+  onTargetReady
 }: { 
   targetPlanet: SimulationPlanet | null; 
   isAnimating: boolean;
+  onAnimationComplete?: () => void;
+  onTargetReady?: (target: THREE.Vector3) => void;
 }) => {
   const { camera } = useThree();
-  const targetPosition = useRef(new THREE.Vector3(0, 20, 30));
-  const targetLookAt = useRef(new THREE.Vector3(0, 0, 0));
-  const planetWorldPosition = useRef(new THREE.Vector3(0, 0, 0));
-  
-  // Получаем позицию планеты в мире
+  const targetPosition = useRef(new THREE.Vector3());
+  const targetLookAt = useRef(new THREE.Vector3());
+  const animationProgress = useRef(0);
+  const startPosition = useRef(new THREE.Vector3());
+  const startLookAt = useRef(new THREE.Vector3());
+
   const getPlanetPosition = useCallback(() => {
-    if (!targetPlanet || !targetPlanet.orbitRadius) return new THREE.Vector3(0, 0, 0);
+    if (!targetPlanet) return new THREE.Vector3(0, 0, 0);
     
-    // Здесь нужно получить актуальную позицию планеты из орбиты
-    // В реальном коде можно передавать позицию через ref или context
-    const angle = (Date.now() * targetPlanet.orbitSpeed! * 0.001) % (Math.PI * 2);
+    const savedPosition = planetPositions[targetPlanet.id];
+    if (savedPosition) {
+      return savedPosition.clone();
+    }
+    
+    const savedAngle = (window as any).__planetAngles?.[targetPlanet.id] || 0;
+    const orbitRadius = targetPlanet.orbitRadius || 5;
     return new THREE.Vector3(
-      Math.cos(angle) * targetPlanet.orbitRadius,
+      Math.cos(savedAngle) * orbitRadius,
       0,
-      Math.sin(angle) * targetPlanet.orbitRadius
+      Math.sin(savedAngle) * orbitRadius
     );
   }, [targetPlanet]);
-  
+
+  useEffect(() => {
+    if (isAnimating && targetPlanet) {
+      startPosition.current.copy(camera.position);
+      animationProgress.current = 0;
+      
+      const planetPos = getPlanetPosition();
+      let distance = Math.max(3, targetPlanet.scale * 3.5);
+      
+      if (targetPlanet.id === 'mercury' || targetPlanet.id === 'venus') {
+        distance = 5;
+      } else if (targetPlanet.orbitRadius && targetPlanet.orbitRadius < 8) {
+        distance = 4.5;
+      }
+      
+      targetLookAt.current.copy(planetPos);
+      
+      // Камера сбоку от планеты
+      targetPosition.current.set(
+        planetPos.x + distance * 0.7,
+        planetPos.y + distance * 0.4,
+        planetPos.z + distance
+      );
+    }
+  }, [isAnimating, targetPlanet, getPlanetPosition, camera]);
+
   useFrame(() => {
     if (!isAnimating || !targetPlanet) return;
     
-    // Обновляем позицию планеты
+    animationProgress.current += 0.08;
+    
+    if (animationProgress.current >= 1) {
+      animationProgress.current = 1;
+      const planetPos = getPlanetPosition();
+      if (onTargetReady) onTargetReady(planetPos);
+      if (onAnimationComplete) onAnimationComplete();
+      return;
+    }
+    
+    const easeOut = 1 - Math.pow(1 - animationProgress.current, 3);
     const planetPos = getPlanetPosition();
-    planetWorldPosition.current.copy(planetPos);
     
-    // Камера будет смотреть на планету сбоку-спереди
-    // Позиция камеры: правее и немного выше планеты
     targetLookAt.current.copy(planetPos);
-    
-    // Камера располагается справа от планеты (по оси X) и чуть спереди (по Z)
-    targetPosition.current.set(
-      planetPos.x + 3.5,  // Правее планеты
-      planetPos.y + 1.5,   // Чуть выше
-      planetPos.z + 4      // Спереди
-    );
-    
-    // Плавное перемещение камеры
-    camera.position.lerp(targetPosition.current, 0.08);
+    camera.position.lerpVectors(startPosition.current, targetPosition.current, easeOut);
     camera.lookAt(targetLookAt.current);
   });
   
@@ -72,15 +106,21 @@ const CameraController = ({
 interface SceneContentProps {
   onReady: () => void;
   speed: number;
-  onPlanetClick: (planet: SimulationPlanet, position: THREE.Vector3) => void;
+  isSimulationRunning: boolean;
+  onPlanetClick: (planet: SimulationPlanet, groupRef: THREE.Group) => void;
   selectedPlanetId: string | null;
+  controlsTarget: [number, number, number];
+  onControlsTargetChange: (target: [number, number, number]) => void;
 }
 
 const SceneContent: React.FC<SceneContentProps> = ({ 
   onReady, 
   speed, 
+  isSimulationRunning,
   onPlanetClick,
-  selectedPlanetId 
+  selectedPlanetId,
+  controlsTarget,
+  onControlsTargetChange
 }) => {
   const sun = SIMULATION_PLANETS[0];
   const solarPlanets = SIMULATION_PLANETS.filter(p => 
@@ -88,18 +128,16 @@ const SceneContent: React.FC<SceneContentProps> = ({
   );
   const moons = SIMULATION_PLANETS.filter(p => p.isMoon);
   const asteroidBelts = SIMULATION_PLANETS.filter(p => p.isAsteroidBelt);
-  
-  // Рефы для получения позиций планет
-  const planetRefs = useRef<Map<string, THREE.Group>>(new Map());
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => onReady(), 500);
     return () => clearTimeout(timer);
   }, [onReady]);
 
   const handlePlanetClick = (planet: SimulationPlanet, groupRef: THREE.Group) => {
     const position = groupRef.position.clone();
-    onPlanetClick(planet, position);
+    planetPositions[planet.id] = position;
+    onPlanetClick(planet, groupRef);
   };
 
   return (
@@ -137,6 +175,7 @@ const SceneContent: React.FC<SceneContentProps> = ({
           key={planet.id} 
           planet={planet} 
           speed={speed}
+          isSimulationRunning={isSimulationRunning && !selectedPlanetId}
           onPlanetClick={handlePlanetClick}
           isSelected={selectedPlanetId === planet.id}
         />
@@ -147,6 +186,7 @@ const SceneContent: React.FC<SceneContentProps> = ({
           key={moon.id} 
           planet={moon} 
           speed={speed}
+          isSimulationRunning={isSimulationRunning && !selectedPlanetId}
           onPlanetClick={handlePlanetClick}
           isSelected={selectedPlanetId === moon.id}
         />
@@ -154,15 +194,17 @@ const SceneContent: React.FC<SceneContentProps> = ({
       
       <Stars radius={100} depth={50} count={2000} factor={4} />
       
+      {/* КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: target динамический */}
       <OrbitControls 
-        enableZoom={!selectedPlanetId}
-        enablePan={!selectedPlanetId}
-        enableRotate={!selectedPlanetId}
-        minDistance={5}
-        maxDistance={70}
-        target={[0, 0, 0]}
+        enableZoom={true}
+        enablePan={true}
+        enableRotate={true}
+        minDistance={selectedPlanetId ? 1 : 5}
+        maxDistance={selectedPlanetId ? 20 : 70}
+        target={controlsTarget}
         enableDamping={true}
         dampingFactor={0.08}
+        makeDefault
       />
     </>
   );
@@ -174,27 +216,64 @@ export const SimulationScene: React.FC = () => {
   const [selectedPlanetPosition, setSelectedPlanetPosition] = useState<THREE.Vector3 | null>(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isCameraAnimating, setIsCameraAnimating] = useState(false);
-  const { speed, isPaused, effectiveSpeed, speedUp, slowDown, resetSpeed, togglePause } = useSimulationSpeed();
+  const [controlsTarget, setControlsTarget] = useState<[number, number, number]>([0, 0, 0]);
+  
+  const { speed, isPaused, effectiveSpeed, speedUp, slowDown, resetSpeed, togglePause, setPaused } = useSimulationSpeed();
+  const [isSimulationRunning, setIsSimulationRunning] = useState(true);
 
-  const handlePlanetClick = (planet: SimulationPlanet, position: THREE.Vector3) => {
+  useEffect(() => {
+    if (!selectedPlanet) {
+      setIsSimulationRunning(!isPaused);
+    }
+  }, [isPaused, selectedPlanet]);
+
+  const handlePlanetClick = (planet: SimulationPlanet, groupRef: THREE.Group) => {
+    console.log('Handle planet click:', planet.label);
+    const position = groupRef.position.clone();
+    
+    setIsSimulationRunning(false);
+    if (!isPaused) setPaused(true);
+    
     setSelectedPlanet(planet);
     setSelectedPlanetPosition(position);
     setIsPanelOpen(true);
     setIsCameraAnimating(true);
-    
-    // Опционально: остановить симуляцию при выборе планеты
-    // if (!isPaused) togglePause();
   };
 
   const handleClosePanel = () => {
+    console.log('Close panel, resuming simulation');
+    
     setIsPanelOpen(false);
-    setIsCameraAnimating(false);
     setSelectedPlanet(null);
     setSelectedPlanetPosition(null);
+    setIsSimulationRunning(true);
+    setControlsTarget([0, 0, 0]); // Возвращаем фокус на солнце
     
-    // Опционально: возобновить симуляцию
-    // if (isPaused) togglePause();
+    if (isPaused) setPaused(false);
+    
+    setTimeout(() => {
+      setIsCameraAnimating(false);
+    }, 100);
   };
+
+  const handleCameraAnimationComplete = () => {
+    console.log('Camera animation completed');
+    setIsCameraAnimating(false);
+  };
+
+  const handleTargetReady = (target: THREE.Vector3) => {
+    console.log('Setting new controls target:', target);
+    setControlsTarget([target.x, target.y, target.z]);
+  };
+
+  useEffect(() => {
+    console.log('State changed:', { 
+      isSimulationRunning, 
+      isPaused, 
+      selectedPlanet: selectedPlanet?.label,
+      controlsTarget
+    });
+  }, [isSimulationRunning, isPaused, selectedPlanet, controlsTarget]);
 
   return (
     <div className={styles.canvasContainer}>
@@ -213,8 +292,11 @@ export const SimulationScene: React.FC = () => {
           <SceneContent 
             onReady={() => setIsLoading(false)} 
             speed={effectiveSpeed}
+            isSimulationRunning={isSimulationRunning}
             onPlanetClick={handlePlanetClick}
             selectedPlanetId={selectedPlanet?.id || null}
+            controlsTarget={controlsTarget}
+            onControlsTargetChange={setControlsTarget}
           />
         </Suspense>
         
@@ -222,6 +304,8 @@ export const SimulationScene: React.FC = () => {
           <CameraController 
             targetPlanet={selectedPlanet} 
             isAnimating={isCameraAnimating}
+            onAnimationComplete={handleCameraAnimationComplete}
+            onTargetReady={handleTargetReady}
           />
         )}
       </Canvas>
@@ -236,7 +320,7 @@ export const SimulationScene: React.FC = () => {
         />
       )}
       
-      {!isLoading && !isCameraAnimating && (
+      {!isLoading && !isCameraAnimating && !selectedPlanet && (
         <SimulationControls 
           speed={speed}
           isPaused={isPaused}
@@ -245,6 +329,61 @@ export const SimulationScene: React.FC = () => {
           onResetSpeed={resetSpeed}
           onTogglePause={togglePause}
         />
+      )}
+      
+      {selectedPlanet && !isCameraAnimating && (
+        <div style={{
+          position: 'absolute',
+          bottom: '20px',
+          left: '20px',
+          background: 'rgba(0,0,0,0.85)',
+          padding: '12px 20px',
+          borderRadius: '12px',
+          color: '#ffcc00',
+          fontSize: '14px',
+          zIndex: 100,
+          pointerEvents: 'auto',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255,204,0,0.3)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span>🔍 Просмотр: <strong>{selectedPlanet.label}</strong></span>
+            <span style={{ fontSize: '12px', color: '#aaa' }}>| Симуляция остановлена</span>
+            <button 
+              onClick={handleClosePanel}
+              style={{
+                background: '#ffcc00',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '4px 12px',
+                cursor: 'pointer',
+                color: '#000',
+                fontWeight: 'bold',
+                fontSize: '12px'
+              }}
+            >
+              ✕ Вернуться
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {selectedPlanet && !isCameraAnimating && (
+        <div style={{
+          position: 'absolute',
+          bottom: '20px',
+          right: '20px',
+          background: 'rgba(0,0,0,0.6)',
+          padding: '8px 12px',
+          borderRadius: '8px',
+          color: '#fff',
+          fontSize: '11px',
+          zIndex: 100,
+          pointerEvents: 'none',
+          fontFamily: 'monospace'
+        }}>
+          🖱️ Мышь: вращение | ПКМ: панорамирование | Скролл: масштаб
+        </div>
       )}
     </div>
   );

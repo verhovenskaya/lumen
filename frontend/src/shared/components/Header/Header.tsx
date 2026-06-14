@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaRocket, FaUserAstronaut, FaGamepad } from 'react-icons/fa';
+import { useAuth } from '../../../modules/auth/hooks/useAuth'; // импортируйте useAuth
 
 import styles from './Header.module.scss';
 
@@ -18,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSimulationClick,
 }) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth(); // получаем статус авторизации
 
   const handleSimulationClick = () => {
     if (onSimulationClick) {
@@ -36,7 +38,12 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    // Проверяем авторизацию перед переходом
+    if (isAuthenticated) {
+      navigate('/profile');
+    } else {
+      navigate('/login');
+    }
   };
 
   const renderLumen = () => {
@@ -93,7 +100,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* 3. Профиль */}
         <button
           className={`${styles.actionButton} ${styles.profileButton}`}
-          title="Профиль"
+          title={isAuthenticated ? "Профиль" : "Войти"}
           onClick={handleProfileClick}
         >
           <FaUserAstronaut className={styles.icon} />

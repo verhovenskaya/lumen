@@ -171,3 +171,21 @@
     text-decoration: underline;
   }
 }
+
+.errorMessage {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  color: #ff6b6b;
+  font-family: 'Abhaya Libre', serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}

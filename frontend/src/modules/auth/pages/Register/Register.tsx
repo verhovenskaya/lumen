@@ -1,23 +1,43 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Header } from '../../../../shared/components/Header/Header';
+import { useAuth } from '../../hooks/useAuth';
 import styles from './Register.module.scss';
 
 export const Register: React.FC = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const { register, loading: authLoading } = useAuth();
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    
     if (password !== confirm) {
-      alert('Пароли не совпадают');
+      setError('Пароли не совпадают');
       return;
     }
-    console.log('Register:', { name, email, password });
-    navigate('/login');
+
+    if (password.length < 6) {
+      setError('Пароль должен содержать минимум 6 символов');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await register(username, password);
+      navigate('/profile');
+    } catch (err: any) {
+      setError(err.message || 'Ошибка при регистрации');
+      console.error('Register error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -36,27 +56,21 @@ export const Register: React.FC = () => {
           <h1 className={styles.title}>РЕГИСТРАЦИЯ</h1>
           <p className={styles.subtitle}>Присоединяйтесь к LUMEN</p>
           
+          {error && (
+            <div className={styles.errorMessage}>
+              {error}
+            </div>
+          )}
+          
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
-              <label className={styles.label}>Имя</label>
+              <label className={styles.label}>Имя пользователя</label>
               <input
                 type="text"
                 className={styles.input}
-                placeholder="Ваше имя"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>Email</label>
-              <input
-                type="email"
-                className={styles.input}
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -85,8 +99,12 @@ export const Register: React.FC = () => {
               />
             </div>
             
-            <button type="submit" className={styles.submitButton}>
-              Зарегистрироваться
+            <button 
+              type="submit" 
+              className={styles.submitButton}
+              disabled={loading}
+            >
+              {loading ? 'Регистрация...' : 'Зарегистрироваться'}
             </button>
           </form>
           

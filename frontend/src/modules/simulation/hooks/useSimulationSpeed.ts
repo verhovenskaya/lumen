@@ -1,3 +1,5 @@
+// src/simulation/hooks/useSimulationSpeed.ts
+
 import { useState, useCallback } from 'react';
 
 export const useSimulationSpeed = () => {
@@ -23,6 +25,10 @@ export const useSimulationSpeed = () => {
     setIsPaused(prev => !prev);
   }, []);
 
+  const setPaused = useCallback((paused: boolean) => {
+    setIsPaused(paused);
+  }, []);
+
   return {
     speed,
     isPaused,
@@ -31,5 +37,6 @@ export const useSimulationSpeed = () => {
     slowDown,
     resetSpeed,
     togglePause,
+    setPaused, // Добавляем этот метод
   };
 };

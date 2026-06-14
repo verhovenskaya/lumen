@@ -47,9 +47,15 @@ const Scene3D: React.FC<{
   const orbitRadii = [5, 7, 9, 11.5, 14.5, 18, 21.5, 25];
   const sunPlanet = SIMULATION_PLANETS.find(p => p.id === 'sun');
   const sizeScale: Record<string, number> = {
-    mercury: 0.25, venus: 0.28, earth: 0.29, mars: 0.26,
-    jupiter: 0.40, saturn: 0.37, uranus: 0.32, neptune: 0.31,
-  };
+  mercury: 0.6,
+  venus: 0.7,
+  earth: 0.7,
+  mars: 0.65,
+  jupiter: 1.0,
+  saturn: 0.9,
+  uranus: 0.8,
+  neptune: 0.8,
+};
 
   return (
     <>
@@ -63,7 +69,7 @@ const Scene3D: React.FC<{
         <OrbitLine
           key={`orbit-${planet.id}`}
           radius={orbitRadii[planet.correctIndex]}
-          color="rgba(172, 152, 212, 0.4)"
+          color="rgba(172, 152, 212, 1)"
         />
       ))}
 
@@ -83,7 +89,7 @@ const Scene3D: React.FC<{
             <Html position={[0, 0.35, 0]} center>
               <div
                 style={{
-                  color: '#fff', fontFamily: 'Segoe UI, sans-serif', fontSize: '10px',
+                  color: '#fff', fontFamily: 'Segoe UI, sans-serif', fontSize: '20px',
                   textAlign: 'center', cursor: 'pointer', padding: '2px 6px',
                   background: isSelected ? 'rgba(172,152,212,0.9)' : isCorrect ? 'rgba(68,255,68,0.2)' : 'rgba(251,119,242,0.2)',
                   borderRadius: '4px', whiteSpace: 'nowrap',
@@ -178,7 +184,7 @@ export const AnomalyGame: React.FC<AnomalyGameProps> = ({ onClose, onWin }) => {
       >
         <div className={styles.titleBar} onMouseDown={handleTitleMouseDown}>
           <div className={styles.titleLeft}>
-            <span className={styles.titleText}>Космический детектив{screen === 'game' ? ' — Аномалии' : ''}</span>
+            <span className={styles.titleText}>Планетарный ряд{screen === 'game' ? ' — Аномалии' : ''}</span>
           </div>
           <div className={styles.titleButtons}>
             <button className={styles.titleBtn} onClick={() => setIsMaximized(!isMaximized)}>

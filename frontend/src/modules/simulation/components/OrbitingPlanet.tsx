@@ -13,23 +13,35 @@ interface OrbitingPlanetProps {
   speed?: number;
   onPlanetClick?: (planet: SimulationPlanet, groupRef: THREE.Group) => void;
   isSelected?: boolean;
+  isSimulationRunning?: boolean;
 }
 
 export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({ 
   planet, 
   speed = 1,
   onPlanetClick,
-  isSelected = false
+  isSelected = false,
+  isSimulationRunning = true
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const glowRef = useRef<THREE.Mesh>(null);
+  const rimLightRef = useRef<THREE.PointLight>(null);
   
-  if (!(planet.id in planetAngles)) {
-    planetAngles[planet.id] = Math.random() * Math.PI * 2;
-  }
+  useEffect(() => {
+    if (!(planet.id in planetAngles)) {
+      planetAngles[planet.id] = Math.random() * Math.PI * 2;
+    }
+    if (typeof window !== 'undefined') {
+      (window as any).__planetAngles = planetAngles;
+    }
+  }, [planet.id]);
 
   useFrame((_, delta) => {
-    if (!groupRef.current || speed === 0) return;
+    if (!groupRef.current) return;
+    
+    if (!isSimulationRunning || isSelected) {
+      return;
+    }
 
     const effectiveDelta = delta * speed;
 
@@ -48,14 +60,11 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
       
       groupRef.current.position.set(parentX + moonX, 0, parentZ + moonZ);
     } else if (planet.orbitRadius && planet.orbitSpeed) {
-      // Если планета выбрана, не обновляем её позицию
-      if (!isSelected) {
-        planetAngles[planet.id] += effectiveDelta * planet.orbitSpeed;
-        const angle = planetAngles[planet.id];
-        
-        groupRef.current.position.x = Math.cos(angle) * planet.orbitRadius;
-        groupRef.current.position.z = Math.sin(angle) * planet.orbitRadius;
-      }
+      planetAngles[planet.id] += effectiveDelta * planet.orbitSpeed;
+      const angle = planetAngles[planet.id];
+      
+      groupRef.current.position.x = Math.cos(angle) * planet.orbitRadius;
+      groupRef.current.position.z = Math.sin(angle) * planet.orbitRadius;
     }
   });
 
@@ -70,17 +79,71 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
 
   return (
     <group ref={groupRef}>
-      {/* Эффект свечения для выбранной планеты */}
+      {/* Искусственная подсветка для выбранной планеты */}
       {isSelected && (
-        <mesh ref={glowRef}>
-          <sphereGeometry args={[planet.scale + 0.15, 32, 32]} />
-          <meshBasicMaterial 
-            color={planet.color || '#ffffff'} 
-            transparent 
-            opacity={0.3}
-            side={THREE.BackSide}
+        <>
+          {/* Rim light - контражур сбоку */}
+          <pointLight
+            ref={rimLightRef}
+            position={[1.5, 1, 1.5]}
+            intensity={2.5}
+            color={planet.color || '#ffffff'}
+            distance={5}
+            decay={1}
           />
-        </mesh>
+          {/* Дополнительный свет спереди */}
+          <pointLight
+            position={[1, 0.5, 2]}
+            intensity={1.5}
+            color="#ffffff"
+            distance={4}
+            decay={1}
+          />
+          {/* Мягкий свет снизу */}
+          <pointLight
+            position={[0, -1.5, 0]}
+            intensity={1}
+            color={planet.color || '#ffffff'}
+            distance={3}
+            decay={1}
+          />
+        </>
+      )}
+      
+      {/* Эффект свечения (для визуального выделения) */}
+      {isSelected && (
+        <>
+          {/* Внешнее большое свечение */}
+          <mesh>
+            <sphereGeometry args={[planet.scale + 0.25, 32, 32]} />
+            <meshBasicMaterial 
+              color={planet.color || '#ffffff'} 
+              transparent 
+              opacity={0.15}
+              side={THREE.BackSide}
+            />
+          </mesh>
+          {/* Среднее свечение */}
+          <mesh>
+            <sphereGeometry args={[planet.scale + 0.15, 32, 32]} />
+            <meshBasicMaterial 
+              color={planet.color || '#ffffff'} 
+              transparent 
+              opacity={0.25}
+              side={THREE.BackSide}
+            />
+          </mesh>
+          {/* Внутреннее свечение */}
+          <mesh ref={glowRef}>
+            <sphereGeometry args={[planet.scale + 0.08, 32, 32]} />
+            <meshBasicMaterial 
+              color={planet.color || '#ffffff'} 
+              transparent 
+              opacity={0.4}
+              side={THREE.BackSide}
+            />
+          </mesh>
+        </>
       )}
       
       <group onClick={handleClick}>
@@ -90,7 +153,6 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
   );
 };
 
-// Вспомогательная функция для получения данных родительской планеты
 function getParentPlanetData(parentId: string) {
   const planetsData: Record<string, { orbitRadius: number }> = {
     earth: { orbitRadius: 6.5 },

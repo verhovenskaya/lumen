@@ -302,7 +302,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
+  font-size: 20px;
   color: #fff;
   box-shadow: 0 0 15px rgba(172, 152, 212, 0.1);
   white-space: nowrap;
@@ -310,7 +310,7 @@
 
 .hudLabel {
   font-family: 'Abhaya Libre', serif;
-  font-size: 12px;
+  font-size: 32px;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -318,14 +318,14 @@
 
 .hudValue {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 18px;
+  font-size: 38px;
   color: var(--primary-color);
   text-shadow: 0 0 8px rgba(172, 152, 212, 0.5);
 }
 
 .hudTimer {
   font-family: 'Abhaya Libre ExtraBold', serif;
-  font-size: 18px;
+  font-size: 38px;
   color: var(--primary-color);
   text-shadow: 0 0 8px rgba(172, 152, 212, 0.5);
   &.danger { color: #ff6666; animation: pulse 1s infinite; }

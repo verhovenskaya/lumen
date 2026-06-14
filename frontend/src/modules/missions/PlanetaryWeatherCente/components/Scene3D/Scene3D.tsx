@@ -29,7 +29,7 @@ export const Scene3D: React.FC<Scene3DProps> = ({ planetId, activeEvent }) => {
     <div className="scene3d-container" style={{ width: '100%', height: '100%', borderRadius: '20px', overflow: 'hidden' }}>
       <Canvas
         camera={{ position: [0, 0, 9], fov: 45 }}
-        style={{ background: 'radial-gradient(circle at center, #0a0a2a, #000000)' }}
+        style={{ background: 'radial-gradient(circle at center, #18187f, #5eafdd)' }}
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} />
