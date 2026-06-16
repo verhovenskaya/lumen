@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home/Home';
-import { Spacecraft } from './pages/Spacecraft/Spacecraft';
+import { Spacecraft } from './modules/spacecraft/Spacecraft/Spacecraft';
 import { Profile } from './modules/auth/pages/Profile/Profile';
 import { Register } from './modules/auth/pages/Register/Register';
 import { Login } from './modules/auth/pages/Login/Login';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { type PlanetConfig } from '../../planets.config';
+import { type PlanetConfig } from '../../config/planets.config';
 import planetsData from '../../data/planetsData.json';
 import styles from './PlanetInfo.module.scss';
 
@@ -111,7 +111,7 @@ export const PlanetInfo: React.FC<PlanetInfoProps> = ({ planet, isOpen, onClose 
         </div>
         
         <div className={styles.footer}>
-          <span className={styles.dataSource}>Из головы</span>
+          <span className={styles.dataSource}>Я.И. Перельман «Занимательная астрономия»</span>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { PLANETS, type PlanetConfig } from '../planets.config';
+import { PLANETS, type PlanetConfig } from '../config/planets.config';
 
 export const usePlanets = () => {
   console.log('PLANETS in hook:', PLANETS);

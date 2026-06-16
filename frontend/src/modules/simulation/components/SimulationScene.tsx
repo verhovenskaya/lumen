@@ -1,22 +1,19 @@
-// src/simulation/components/SimulationScene.tsx
-
 import React, { Suspense, useState, useRef, useCallback, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
-import { Planet } from '../../planets/components/Planet';
+import { Planet } from '../../planets/components/Planet/Planet';
 import { OrbitingPlanet } from '../components/OrbitingPlanet';
 import { OrbitLine } from './OrbitLine';
 import { AsteroidBelt } from '../components/AsteroidBelt';
 import { PlanetInfoPanel } from '../../simulation/components/PlanetInfoPanel/PlanetInfoPanel';
 import { LoadingScreen } from '../../../shared/ui/LoadingScreen/LoadingScreen';
-import { SimulationControls } from '../../planets/components/SimulationControls/SimulationControls';
+import { SimulationControls } from './SimulationControls/SimulationControls';
 import { useSimulationSpeed } from '../hooks/useSimulationSpeed';
-import { SIMULATION_PLANETS } from '../../simulation/simulation.config';
-import { type SimulationPlanet } from '../simulation.config';
+import { SIMULATION_PLANETS } from '../config/simulation.config';
+import { type SimulationPlanet } from '../config/simulation.config';
 import * as THREE from 'three';
-import styles from '../../planets/components/Canvas3D.module.scss';
+import styles from '../../planets/components/Canvas3D/Canvas3D.module.scss';
 
-// Глобальное хранилище позиций планет
 const planetPositions: Record<string, THREE.Vector3> = {};
 
 const CameraController = ({ 
@@ -70,7 +67,6 @@ const CameraController = ({
       
       targetLookAt.current.copy(planetPos);
       
-      // Камера сбоку от планеты
       targetPosition.current.set(
         planetPos.x + distance * 0.7,
         planetPos.y + distance * 0.4,
@@ -160,15 +156,16 @@ const SceneContent: React.FC<SceneContentProps> = ({
         />
       ))}
       
+  
       {asteroidBelts.map(belt => (
         <AsteroidBelt 
           key={belt.id}
           radius={belt.orbitRadius!} 
           width={0.8}
-          count={1500}
+          count={500}
           color={belt.orbitColor}
         />
-      ))}
+      ))} 
       
       {solarPlanets.map(planet => (
         <OrbitingPlanet 
@@ -192,9 +189,8 @@ const SceneContent: React.FC<SceneContentProps> = ({
         />
       ))}
       
-      <Stars radius={100} depth={50} count={2000} factor={4} />
+      <Stars radius={100} depth={50} count={500} factor={4} /> 
       
-      {/* КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: target динамический */}
       <OrbitControls 
         enableZoom={true}
         enablePan={true}
@@ -247,7 +243,7 @@ export const SimulationScene: React.FC = () => {
     setSelectedPlanet(null);
     setSelectedPlanetPosition(null);
     setIsSimulationRunning(true);
-    setControlsTarget([0, 0, 0]); // Возвращаем фокус на солнце
+    setControlsTarget([0, 0, 0]);
     
     if (isPaused) setPaused(false);
     
@@ -316,7 +312,6 @@ export const SimulationScene: React.FC = () => {
           planetName={selectedPlanet.label}
           isOpen={isPanelOpen}
           onClose={handleClosePanel}
-          planetPosition={selectedPlanetPosition}
         />
       )}
       

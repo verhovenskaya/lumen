@@ -1,5 +1,3 @@
-// src/simulation/hooks/useSimulationSpeed.ts
-
 import { useState, useCallback } from 'react';
 
 export const useSimulationSpeed = () => {
@@ -37,6 +35,6 @@ export const useSimulationSpeed = () => {
     slowDown,
     resetSpeed,
     togglePause,
-    setPaused, // Добавляем этот метод
+    setPaused, 
   };
 };

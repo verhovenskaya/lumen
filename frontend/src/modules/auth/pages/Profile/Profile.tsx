@@ -113,10 +113,6 @@ export const Profile: React.FC = () => {
           {/* статистика */}
           <div className={styles.statsGrid}>
             <div className={styles.statItem}>
-              <span className={styles.statValue}>{stats?.favoriteMissions || 0}</span>
-              <span className={styles.statLabel}>Избранное</span>
-            </div>
-            <div className={styles.statItem}>
               <span className={styles.statValue}>
                 {stats?.completedMissions || 0}/{stats?.totalMissions || 0}
               </span>

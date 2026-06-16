@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { profileService, type UserProfile, type UserStats } from '../service/profile.service';
-import { authService } from '../../auth/service/auth.service';
 
 export const useProfile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -17,21 +16,21 @@ export const useProfile = () => {
     setError(null);
     
     try {
-      const user = authService.getUser();
-      if (!user || !user.id) {
-        throw new Error('User not found');
-      }
+      console.log('Loading profile...');
       
       const [profileData, statsData] = await Promise.all([
         profileService.getCurrentUser(),
-        profileService.getUserStats(user.id)
+        profileService.getUserStats(),
       ]);
+      
+      console.log('Profile loaded:', profileData);
+      console.log('Stats loaded:', statsData);
       
       setProfile(profileData);
       setStats(statsData);
     } catch (err: any) {
-      setError(err.message || 'Failed to load profile');
       console.error('Load profile error:', err);
+      setError(err.message || 'Failed to load profile');
     } finally {
       setLoading(false);
     }

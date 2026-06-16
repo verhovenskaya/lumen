@@ -1,9 +1,7 @@
-// src/simulation/components/OrbitingPlanet.tsx
-
 import React, { useRef, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Planet } from '../../planets/components/Planet';
-import { type SimulationPlanet } from '../simulation.config';
+import { Planet } from '../../planets/components/Planet/Planet';
+import { type SimulationPlanet } from '../config/simulation.config';
 import * as THREE from 'three';
 
 const planetAngles: Record<string, number> = {};
@@ -82,7 +80,6 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
       {/* Искусственная подсветка для выбранной планеты */}
       {isSelected && (
         <>
-          {/* Rim light - контражур сбоку */}
           <pointLight
             ref={rimLightRef}
             position={[1.5, 1, 1.5]}
@@ -91,7 +88,6 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
             distance={5}
             decay={1}
           />
-          {/* Дополнительный свет спереди */}
           <pointLight
             position={[1, 0.5, 2]}
             intensity={1.5}
@@ -99,7 +95,6 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
             distance={4}
             decay={1}
           />
-          {/* Мягкий свет снизу */}
           <pointLight
             position={[0, -1.5, 0]}
             intensity={1}
@@ -110,10 +105,8 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
         </>
       )}
       
-      {/* Эффект свечения (для визуального выделения) */}
       {isSelected && (
         <>
-          {/* Внешнее большое свечение */}
           <mesh>
             <sphereGeometry args={[planet.scale + 0.25, 32, 32]} />
             <meshBasicMaterial 
@@ -123,7 +116,6 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
               side={THREE.BackSide}
             />
           </mesh>
-          {/* Среднее свечение */}
           <mesh>
             <sphereGeometry args={[planet.scale + 0.15, 32, 32]} />
             <meshBasicMaterial 
@@ -133,7 +125,6 @@ export const OrbitingPlanet: React.FC<OrbitingPlanetProps> = ({
               side={THREE.BackSide}
             />
           </mesh>
-          {/* Внутреннее свечение */}
           <mesh ref={glowRef}>
             <sphereGeometry args={[planet.scale + 0.08, 32, 32]} />
             <meshBasicMaterial 

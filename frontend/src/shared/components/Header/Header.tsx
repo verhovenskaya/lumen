@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSimulationClick,
 }) => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth(); // получаем статус авторизации
+  const { isAuthenticated } = useAuth(); 
 
   const handleSimulationClick = () => {
     if (onSimulationClick) {
@@ -38,7 +38,6 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const handleProfileClick = () => {
-    // Проверяем авторизацию перед переходом
     if (isAuthenticated) {
       navigate('/profile');
     } else {

@@ -1,0 +1,187 @@
+import type { PlanetData, WeatherEvent } from '../types/types';
+
+export const PLANETS_DATA: Record<string, PlanetData> = {
+  mars: {
+    id: 'mars',
+    name: 'Марс',
+    nameEn: 'Mars',
+
+    color: '#d06b4d',
+    textureUrl: '/assets/textures/8k_mars.jpg',
+    normalMapUrl: '/assets/textures/8k_mars.jpg',
+    size: 2,
+    rotationSpeed: 0.002,
+    orbitSpeed: 0.0005,
+  },
+  neptune: {
+    id: 'neptune',
+    name: 'Нептун',
+    nameEn: 'Neptune',
+    color: '#4a80c4',
+    textureUrl: '/assets/textures/8k_mars.jpg',
+    size: 2.2,
+    rotationSpeed: 0.0025,
+    orbitSpeed: 0.0003,
+  },
+  venus: {
+    id: 'venus',
+    name: 'Венера',
+    nameEn: 'Venus',
+    color: '#e6b856',
+    textureUrl: '/assets/textures/8k_venus_surface.jpg',
+    cloudTextureUrl: '/assets/textures/8k_mars.jpg',
+    size: 1.9,
+    rotationSpeed: 0.0015,
+    orbitSpeed: 0.0004,
+  },
+  jupiter: {
+    id: 'jupiter',
+    name: 'Юпитер',
+    nameEn: 'Jupiter',
+    color: '#d4a57a',
+    textureUrl: '/assets/textures/8k_mars.jpg',
+    size: 3.5,
+    rotationSpeed: 0.005,
+    orbitSpeed: 0.0002,
+  },
+  saturn: {
+    id: 'saturn',
+    name: 'Сатурн',
+    nameEn: 'Saturn',
+    color: '#e8d4a8',
+    textureUrl: '/assets/textures/8k_mars.jpg',
+    size: 3.2,
+    rotationSpeed: 0.004,
+    orbitSpeed: 0.0002,
+  },
+};
+
+export const WEATHER_EVENTS: Record<string, WeatherEvent[]> = {
+  mars: [
+    {
+      id: 'dustStorm',
+      title: 'Глобальная пылевая буря',
+      description: 'Пылевые бури на Марсе могут охватывать всю планету и длиться месяцами.',
+      atmosphereData: {
+        temperature: '-63°C → -30°C',
+        pressure: '610 Па → 700 Па',
+        windSpeed: 'до 100 км/ч',
+        visibility: '< 100 м',
+        composition: 'CO₂ 95%, пыль',
+        source: 'NASA Mars Reconnaissance Orbiter',
+      },
+    },
+    {
+      id: 'dustDevil',
+      title: 'Пылевой дьявол',
+      description: 'Локальные пылевые вихри высотой до 20 км.',
+      atmosphereData: {
+        temperature: '-63°C',
+        pressure: '610 Па',
+        windSpeed: 'до 80 км/ч',
+        visibility: '1-5 км',
+        composition: 'CO₂ 95%, пыль',
+        source: 'NASA JPL',
+      },
+    },
+  ],
+  neptune: [
+    {
+      id: 'supersonicWinds',
+      title: 'Сверхзвуковые ветра',
+      description: 'Самые быстрые ветры в Солнечной системе достигают скорости 2100 км/ч — быстрее скорости звука!',
+      atmosphereData: {
+        temperature: '-214°C',
+        pressure: '100 кПа',
+        windSpeed: 'до 2100 км/ч',
+        visibility: 'N/A',
+        composition: 'H₂ 80%, He 19%, CH₄ 1.5%',
+        source: 'NASA Voyager 2',
+      },
+    },
+    {
+      id: 'greatDarkSpot',
+      title: 'Большое Тёмное Пятно',
+      description: 'Гигантский антициклон размером с Землю, бушевавший в 1989 году.',
+      atmosphereData: {
+        temperature: '-214°C',
+        pressure: '100 кПа',
+        windSpeed: 'до 2100 км/ч',
+        visibility: 'N/A',
+        composition: 'H₂ 80%, He 19%, CH₄ 1.5%',
+        source: 'NASA Voyager 2',
+      },
+    },
+    {
+      id: 'methaneIceClouds',
+      title: 'Ледяные метановые облака',
+      description: 'Облака из кристаллов замёрзшего метана, придающие Нептуну глубокий синий цвет.',
+      atmosphereData: {
+        temperature: '-220°C',
+        pressure: '100 кПа',
+        windSpeed: 'до 2100 км/ч',
+        visibility: '10-50 км',
+        composition: 'H₂ 80%, He 19%, CH₄ 1.5%',
+        source: 'NASA Hubble',
+      },
+    },
+  ],
+  venus: [
+    {
+      id: 'acidClouds',
+      title: 'Сернокислотные облака',
+      description: 'Облака из капель серной кислоты отражают 75% солнечного света.',
+      atmosphereData: {
+        temperature: '+462°C',
+        pressure: '9.2 МПа',
+        windSpeed: 'до 360 км/ч',
+        visibility: '< 1 км',
+        composition: 'CO₂ 96.5%, SO₂',
+        source: 'ESA Venus Express',
+      },
+    },
+    {
+      id: 'lightning',
+      title: 'Сверхмощные молнии',
+      description: 'В атмосфере Венеры постоянно бьют молнии, в 10 раз мощнее земных.',
+      atmosphereData: {
+        temperature: '+462°C',
+        pressure: '9.2 МПа',
+        windSpeed: 'до 360 км/ч',
+        visibility: '1-2 км',
+        composition: 'CO₂ 96.5%, SO₂',
+        source: 'NASA Magellan',
+      },
+    },
+  ],
+  jupiter: [
+    {
+      id: 'greatRedSpot',
+      title: 'Большое Красное Пятно',
+      description: 'Гигантский антициклон, бушующий уже 350 лет.',
+      atmosphereData: {
+        temperature: '-110°C',
+        pressure: '100 кПа',
+        windSpeed: 'до 620 км/ч',
+        visibility: 'N/A',
+        composition: 'H₂ 90%, He 10%',
+        source: 'NASA Juno',
+      },
+    },
+  ],
+  saturn: [
+    {
+      id: 'hexagonStorm',
+      title: 'Гексагон Сатурна',
+      description: 'Загадочный шестиугольный ураган на северном полюсе.',
+      atmosphereData: {
+        temperature: '-140°C',
+        pressure: '100 кПа',
+        windSpeed: 'до 1800 км/ч',
+        visibility: 'N/A',
+        composition: 'H₂ 96%, He 3%',
+        source: 'NASA Cassini',
+      },
+    },
+  ],
+};

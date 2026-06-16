@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { type Mission } from '../../hooks/useMissions';
+import { type MissionUI } from '../../service/mission.service';
 import styles from './MissionPanel.module.scss';
-import { RoverGame } from '../../RoverGame/RoverGame';
-import { PuzzleGame } from '../../pages/PuzzleGame/PuzzleGame';
-import { AnomalyGame } from '../../AnomalyGame/AnomalyGame';
-import { VoyagerGame } from '../../voyager/VoyagerGame';
-import { PlanetaryWeatherCenter } from '../../PlanetaryWeatherCente/PlanetaryWeatherCenter';
+import { RoverGame } from '../../games/RoverGame/RoverGame';
+import { PuzzleGame } from '../../games/PuzzleGames/PuzzleGame';
+import { AnomalyGame } from '../../games/AnomalyGame/AnomalyGame';
+import { VoyagerGame } from '../../games/voyager/VoyagerGame';
+import { PlanetaryWeatherCenter } from '../../games/PlanetaryWeatherCenter/components/PlanetaryWeatherCenter';
+import { missionService } from '../../service/mission.service';
 
 interface MissionPanelProps {
-  missions: Mission[];
+  missions: MissionUI[];
   isOpen: boolean;
   onClose: () => void;
   onCompleteMission: (missionId: string) => void;
+  onRefreshMissions?: () => void;  
 }
 
 export const MissionPanel: React.FC<MissionPanelProps> = ({ 
-  missions, isOpen, onClose, onCompleteMission 
+  missions, 
+  isOpen, 
+  onClose, 
+  onCompleteMission,
+  onRefreshMissions  
 }) => {
   const [position, setPosition] = useState({ x: window.innerWidth - 340, y: 100 });
   const [isDragging, setIsDragging] = useState(false);
@@ -46,8 +52,26 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
     };
   }, [isDragging, dragOffset]);
 
-  const handleGameWin = (missionId: string) => {
-    onCompleteMission(missionId);
+  const handleGameWin = async (missionId: string, gameType: string) => {
+    console.log('Game won! Mission:', missionId, 'Game type:', gameType);
+    
+    const mission = missions.find(m => m.game === gameType);
+    
+    if (mission && !mission.completed) {
+      try {
+        await missionService.updateProgress(parseInt(mission.id), mission.maxProgress);
+        console.log('Mission progress updated!');
+        
+        if (onRefreshMissions) {
+          await onRefreshMissions();
+        }
+        
+        onCompleteMission(mission.id);
+      } catch (error) {
+        console.error('Failed to update mission progress:', error);
+      }
+    }
+    
     setActiveGame(null);
   };
 
@@ -55,22 +79,27 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
 
   return (
     <>
+      {/* Рендер игр */}
       {activeGame === 'rover' && (
-        <RoverGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('rover_mission')} />
+        <RoverGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('rover_mission', 'rover')} />
       )}
       {activeGame === 'puzzle' && (
-        <PuzzleGame onClose={() => setActiveGame(null)} />
+        <PuzzleGame 
+          onClose={() => setActiveGame(null)} 
+          onWin={() => handleGameWin('puzzle_mission', 'puzzle')} 
+        />
       )}
       {activeGame === 'anomaly' && (
-        <AnomalyGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('anomaly_mission')} />
+        <AnomalyGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('anomaly_mission', 'anomaly')} />
       )}
       {activeGame === 'voyager' && (
-        <VoyagerGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('voyager_mission')} />
+        <VoyagerGame onClose={() => setActiveGame(null)} onWin={() => handleGameWin('voyager_mission', 'voyager')} />
       )}
-      {activeGame === 'weatherGame' && (
+      {activeGame === 'weather' && (
         <PlanetaryWeatherCenter onClose={() => setActiveGame(null)} />
       )}
 
+      {/* Панель миссий */}
       <div className={styles.panel} style={{ left: position.x, top: position.y }}>
         <div className={styles.header} onMouseDown={handleMouseDown}>
           <h3 className={styles.title}>МИССИИ</h3>
@@ -105,9 +134,9 @@ export const MissionPanel: React.FC<MissionPanelProps> = ({
                   <button 
                     className={styles.playButton}
                     onClick={() => setActiveGame(mission.game!)}
-                    title="Запустить"
+                    title="Запустить миссию"
                   >
-                    <span className={styles.playIcon} />
+                    ▶
                   </button>
                 )}
               </div>

@@ -11,7 +11,7 @@ import { NavigationArrows } from '../../shared/ui/NavigationArrows/NavigationArr
 import { PlanetSwitch } from '../../modules/planets/components/PlanetSwitch/PlanetSwitch';
 import { PlanetInfo } from '../../modules/planets/components/PlanetInfo/PlanetInfo';
 
-import { MenuContent } from '../../modules/missions/components/MenuContent/MenuContent';
+import { MenuContent } from '../../shared/components/MenuContent/MenuContent';
 import { MissionPanel } from '../../modules/missions/components/MissionPanel/MissionPanel';
 
 import { usePlanets } from '../../modules/planets/hooks/usePlanets';
@@ -52,6 +52,7 @@ export const Home: React.FC = () => {
     missions,
     markPlanetViewed,        
     completeMission,
+    refreshMissions,
   } = useMissions();
 
   const handlePlanetClick = (planet: typeof activePlanet) => {
@@ -129,6 +130,7 @@ export const Home: React.FC = () => {
           isOpen={isMissionsOpen}
           onClose={() => setIsMissionsOpen(false)}
           onCompleteMission={completeMission}
+          onRefreshMissions={refreshMissions}
         />
 
         <div className={styles.ellipse18} />

@@ -1,145 +1,75 @@
-import { useState, useCallback } from 'react';
-
-export interface Mission {
-  id: string;
-  title: string;
-  description: string;
-  progress: number;
-  maxProgress: number;
-  completed: boolean;
-  reward: string;
-  game?: string;
-}
-
-const STORAGE_KEY = 'lumen_missions_v5';  
-const VIEWED_PLANETS_KEY = 'lumen_viewed_planets_v5';
-
-const defaultMissions: Mission[] = [
-  {
-    id: 'rover_mission',
-    title: 'Марсоход-исследователь',
-    description: 'Управляй ровером и собери 5 кратеров за 3 минуты',
-    progress: 0,
-    maxProgress: 1,
-    completed: false,
-    reward: 'Значок "Марсианин"',
-    game: 'rover',
-  },
-  {
-    id: 'puzzle_mission',
-    title: 'Спутниковый конструктор',
-    description: 'Собери 3 спутника из пазлов за 5 минут',
-    progress: 0,
-    maxProgress: 1,
-    completed: false,
-    reward: 'Значок "Инженер"',
-    game: 'puzzle',
-  },
-  {
-    id: 'anomaly_mission',
-    title: 'Космический детектив',
-    description: 'Найди 5 аномалий и расставь планеты по местам за 4 минуты',
-    progress: 0,
-    maxProgress: 1,
-    completed: false,
-    reward: 'Значок "Детектив"',
-    game: 'anomaly',
-  },
-  {
-  id: 'voyager_mission',
-  title: 'Вояджер-1: Последний сигнал',
-  description: 'Поймай сигнал Вояджера-1 и передай данные на Землю',
-  progress: 0,
-  maxProgress: 1,
-  completed: false,
-  reward: 'Значок "Оператор DSN"',
-  game: 'voyager',
-},
-{
-  id: 'mars3_mission',
-  title: 'mars3: Последний сигнал',
-  description: 'Поймай сигнал Вояджера-1 и передай данные на Землю',
-  progress: 0,
-  maxProgress: 1,
-  completed: false,
-  reward: 'Значок "Оператор DSN"',
-  game: 'mars3',
-},
-{
-  id: 'weather_mission',
-  title: 'Атмосферная обсерватория',
-  description: 'Тестовый запуск модуля погоды',
-  progress: 0,
-  maxProgress: 1,
-  completed: false,
-  reward: 'Тест',
-  game: 'weatherGame',
-}
-];
-
-const loadMissions = (): Mission[] => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch {}
-  return defaultMissions;
-};
-
-const saveMissions = (missions: Mission[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(missions));
-};
-
-const loadViewedPlanets = (): string[] => {
-  try {
-    const saved = localStorage.getItem(VIEWED_PLANETS_KEY);
-    return saved ? JSON.parse(saved) : [];
-  } catch {
-    return [];
-  }
-};
-
-const saveViewedPlanets = (planets: string[]) => {
-  localStorage.setItem(VIEWED_PLANETS_KEY, JSON.stringify(planets));
-};
+import { useState, useEffect, useCallback } from 'react';
+import { missionService, type MissionUI } from '../service/mission.service';
 
 export const useMissions = () => {
-  const [missions, setMissions] = useState<Mission[]>(loadMissions);
-  const [viewedPlanets, setViewedPlanets] = useState<string[]>(loadViewedPlanets);
+  const [missions, setMissions] = useState<MissionUI[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [updating, setUpdating] = useState(false);
+
+  const loadMissions = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      console.log('Loading missions UI...');
+      const data = await missionService.getMissionsUI();
+      console.log('Missions UI loaded:', data);
+      setMissions(data);
+    } catch (err: any) {
+      console.error('Error loading missions:', err);
+      setError(err.message || 'Failed to load missions');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const updateProgress = useCallback(async (missionId: number, currentLevel: number, additionalData?: any) => {
+    setUpdating(true);
+    try {
+      const updated = await missionService.updateProgress(missionId, currentLevel, additionalData);
+      console.log('Progress updated on backend:', updated);
+      
+      await loadMissions();
+      
+      return updated;
+    } catch (err: any) {
+      console.error('Error updating progress:', err);
+      throw err;
+    } finally {
+      setUpdating(false);
+    }
+  }, [loadMissions]);
+
+  const completeMission = useCallback(async (missionId: string) => {
+    const mission = missions.find(m => m.id === missionId);
+    if (mission && !mission.completed) {
+      console.log('Completing mission:', missionId, 'Max progress:', mission.maxProgress);
+      await updateProgress(parseInt(missionId), mission.maxProgress);
+    }
+  }, [missions, updateProgress]);
+
+  const refreshMissions = useCallback(async () => {
+    await loadMissions();
+  }, [loadMissions]);
 
   const markPlanetViewed = useCallback((planetId: string) => {
-    setViewedPlanets(prev => {
-      if (prev.includes(planetId)) return prev;
-      const next = [...prev, planetId];
-      saveViewedPlanets(next);
-      return next;
-    });
+    console.log('markPlanetViewed:', planetId);
   }, []);
 
-  const completeMission = useCallback((missionId: string) => {
-    setMissions(prev => {
-      const updated = prev.map(m => {
-        if (m.id === missionId && !m.completed) {
-          return { ...m, progress: m.maxProgress, completed: true };
-        }
-        return m;
-      });
-      saveMissions(updated);
-      return updated;
-    });
-  }, []);
-
-  const resetMissions = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(VIEWED_PLANETS_KEY);
-    setViewedPlanets([]);
-    setMissions(defaultMissions);
-  }, []);
+  useEffect(() => {
+    loadMissions();
+  }, [loadMissions]);
 
   return {
     missions,
-    viewedPlanetsCount: viewedPlanets.length,
-    markPlanetViewed,
+    loading,
+    error,
+    updating,
+    loadMissions,
+    updateProgress,
     completeMission,
-    resetMissions,
+    refreshMissions,  
+    markPlanetViewed,
   };
 };

@@ -12,7 +12,7 @@ interface AsteroidBeltProps {
 export const AsteroidBelt: React.FC<AsteroidBeltProps> = ({ 
   radius, 
   width = 0.8, 
-  count = 1500, 
+  count = 500, 
   color = '#8B7355' 
 }) => {
   const pointsRef = useRef<THREE.Points>(null);

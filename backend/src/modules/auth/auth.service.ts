@@ -20,7 +20,7 @@ export const register = async (username: string, password: string) => {
   const passwordHash = await hashPassword(password);
   const user = await createUser(username, passwordHash);
 
-  const token = generateToken(user.id); // user.id должен быть number
+  const token = generateToken(user.id); 
   console.log("Generated token for user:", user.id);
 
   return {

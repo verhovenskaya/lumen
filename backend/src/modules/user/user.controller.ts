@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { AuthRequest } from "../../middleware/auth.middleware";
 import { findUserById } from "./user.repository";
+import { pool } from "../../db/postgres";
 
 export const getCurrentUser = async (req: AuthRequest, res: Response) => {
   try {
@@ -23,6 +24,7 @@ export const getCurrentUser = async (req: AuthRequest, res: Response) => {
       }
     });
   } catch (error) {
+    console.error('Error in getCurrentUser:', error);
     res.status(500).json({ success: false, message: "Error fetching user" });
   }
 };
@@ -31,16 +33,33 @@ export const getUserStats = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.userId;
     
-    // Здесь нужно получить статистику из базы
-    const stats = {
-      totalMissions: 10, // из таблицы missions
-      completedMissions: 0, // из таблицы user_progress где completed=true
-      favoriteMissions: 0, // если есть таблица favorites
-      totalLevels: 0, // сумма current_level из user_progress
-    };
+    if (!userId) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
     
-    res.json({ success: true, data: stats });
+    const result = await pool.query(
+      `SELECT 
+        COUNT(DISTINCT up.mission_id) as total_missions,
+        COUNT(CASE WHEN up.completed = true THEN 1 END) as completed_missions,
+        COALESCE(SUM(up.current_level), 0) as total_levels
+       FROM user_progress up
+       WHERE up.user_id = $1`,
+      [userId]
+    );
+    
+    const stats = result.rows[0];
+    
+    res.json({ 
+      success: true, 
+      data: {
+        totalMissions: parseInt(stats.total_missions) || 0,
+        completedMissions: parseInt(stats.completed_missions) || 0,
+        favoriteMissions: 0, // Можно добавить позже
+        totalLevels: parseInt(stats.total_levels) || 0,
+      }
+    });
   } catch (error) {
+    console.error('Error in getUserStats:', error);
     res.status(500).json({ success: false, message: "Error fetching stats" });
   }
 };

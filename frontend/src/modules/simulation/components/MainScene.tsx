@@ -1,11 +1,11 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
-import { Planet } from '../../planets/components/Planet';
+import { Planet } from '../../planets/components/Planet/Planet';
 import { LoadingScreen } from '../../../shared/ui/LoadingScreen/LoadingScreen';
-import { type PlanetConfig } from '../../planets/planets.config';
+import { type PlanetConfig } from '../../planets/config/planets.config';
 import { type ViewMode } from '../../planets/hooks/usePlanetInfo';
-import styles from '../../planets/components/Canvas3D.module.scss';
+import styles from '../../planets/components/Canvas3D/Canvas3D.module.scss';
 import * as THREE from 'three';
 
 

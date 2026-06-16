@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { PlanetConfig } from '../../../modules/planets/planets.config';
+import type { PlanetConfig } from '../config/planets.config';
 
 export type ViewMode = 'gallery' | 'detail';
 

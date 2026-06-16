@@ -1,103 +1,89 @@
-// src/shared/api/api.client.ts
-
-interface ApiClientConfig {
-  baseURL: string;
-  headers?: Record<string, string>;
-}
-
 class ApiClient {
   private baseURL: string;
-  private defaultHeaders: Record<string, string>;
 
-  constructor(config: ApiClientConfig) {
-    this.baseURL = config.baseURL;
-    this.defaultHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      ...config.headers,
-    };
-  }
-
-  private getFullUrl(path: string): string {
-    // Убираем дублирование /api
-    const cleanPath = path.startsWith('/') ? path : `/${path}`;
-    return `${this.baseURL}${cleanPath}`;
-  }
-
-  private getHeaders(token?: string): Record<string, string> {
-    const headers = { ...this.defaultHeaders };
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-    return headers;
+  constructor(baseURL: string) {
+    this.baseURL = baseURL;
   }
 
   private async request<T>(
-    path: string,
-    options: RequestInit,
-    token?: string
+    endpoint: string,
+    options: RequestInit = {}
   ): Promise<T> {
-    const url = this.getFullUrl(path);
-    console.log(`Making ${options.method} request to:`, url);
-    console.log('Request body:', options.body);
-    
-    const response = await fetch(url, {
-      ...options,
-      headers: this.getHeaders(token),
-    });
+    const url = `${this.baseURL}${endpoint}`;
+    console.log(`${options.method || 'GET'} request to:`, url);
 
-    console.log('Response status:', response.status);
-    
-    // Пытаемся получить текст ошибки для деталей
-    const responseText = await response.text();
-    console.log('Response text:', responseText);
-    
-    if (!response.ok) {
-      let errorMessage = `HTTP error! status: ${response.status}`;
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          ...options.headers,
+        },
+      });
+
+      console.log(' Response status:', response.status);
+
+      const responseText = await response.text();
+      let data;
       try {
-        const errorData = JSON.parse(responseText);
-        errorMessage = errorData.message || errorMessage;
+        data = JSON.parse(responseText);
+        console.log(' Response data:', data);
       } catch {
-        errorMessage = responseText || errorMessage;
+        data = { message: responseText };
       }
-      throw new Error(errorMessage);
+
+      if (!response.ok) {
+        console.error('Response error:', data);
+        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+      }
+
+      return data;
+    } catch (error) {
+      console.error(' Request failed:', error);
+      throw error;
     }
-
-    return JSON.parse(responseText);
   }
 
-  async get<T>(path: string, token?: string): Promise<T> {
-    return this.request<T>(path, { method: 'GET' }, token);
+  async get<T>(endpoint: string, token?: string): Promise<T> {
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return this.request<T>(endpoint, { method: 'GET', headers });
   }
 
-  async post<T>(path: string, data?: any, token?: string): Promise<T> {
-    return this.request<T>(
-      path,
-      {
-        method: 'POST',
-        body: data ? JSON.stringify(data) : undefined,
-      },
-      token
-    );
+  async post<T>(endpoint: string, data?: any, token?: string): Promise<T> {
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return this.request<T>(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers,
+    });
   }
 
-  async put<T>(path: string, data?: any, token?: string): Promise<T> {
-    return this.request<T>(
-      path,
-      {
-        method: 'PUT',
-        body: data ? JSON.stringify(data) : undefined,
-      },
-      token
-    );
+  async put<T>(endpoint: string, data?: any, token?: string): Promise<T> {
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return this.request<T>(endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers,
+    });
   }
 
-  async delete<T>(path: string, token?: string): Promise<T> {
-    return this.request<T>(path, { method: 'DELETE' }, token);
+  async delete<T>(endpoint: string, token?: string): Promise<T> {
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return this.request<T>(endpoint, { method: 'DELETE', headers });
   }
 }
 
-// Создаем экземпляр клиента
-export const apiClient = new ApiClient({
-  baseURL: 'http://localhost:3000/api',
-});
+export const apiClient = new ApiClient('http://localhost:3000/api');

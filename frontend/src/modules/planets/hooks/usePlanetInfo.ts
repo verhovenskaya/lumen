@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { type PlanetConfig } from '../planets.config';
+import { type PlanetConfig } from '../config/planets.config';
 
 export type ViewMode = 'center' | 'shifted';
 

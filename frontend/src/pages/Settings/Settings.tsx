@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../shared/components/Header/Header';
 import { BurgerMenu } from '../../shared/components/BurgerMenu/BurgerMenu';
-import { MenuContent } from '../../modules/missions/components/MenuContent/MenuContent';
+import { MenuContent } from '../../shared/components/MenuContent/MenuContent';
 import { useMenu } from '../../modules/missions/hooks/useMenu';
 import styles from './Settings.module.scss';
 
